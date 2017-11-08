@@ -1,7 +1,10 @@
-CREATE DATABASE TermProject;
-go
+/*CREATE DATABASE TermProject;
+go*/
 
-USE TermProject;
+/*USE TermProject;
+go*/
+
+USE pri0115;
 go
 
 CREATE TABLE [Language] (
