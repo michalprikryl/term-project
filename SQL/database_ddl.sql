@@ -1,7 +1,10 @@
-﻿CREATE DATABASE TermProject;
-go
+/*CREATE DATABASE TermProject;
+go*/
 
-USE TermProject;
+/*USE TermProject;
+go*/
+
+USE pri0115;
 go
 
 CREATE TABLE [Language] (
@@ -32,8 +35,8 @@ CREATE TABLE NodeType (
 	[Description] NVARCHAR(MAX) NULL,
 	Initial BIT NOT NULL,
 	[End] BIT NOT NULL,
-	DiagramID INTEGER NOT NULL,
-	CONSTRAINT FK_NODETYPE_DIAGRAM FOREIGN KEY (DiagramID) REFERENCES DiagramType(ID)
+	DiagramTypeID INTEGER NOT NULL,
+	CONSTRAINT FK_NODETYPE_DIAGRAM FOREIGN KEY (DiagramTypeID) REFERENCES DiagramType(ID)
 );
 
 CREATE TABLE WorkSpace (
