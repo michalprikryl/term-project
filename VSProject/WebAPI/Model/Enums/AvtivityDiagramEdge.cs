@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Model
 {
-    public abstract class Edge
+    public enum AvtivityDiagramEdge
     {
+        ActivityEdge, NamedActivityEdge, InterruptEdge, ConditionEdge, ObjectFlowEdge, Empty
     }
 }
