@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Database;
 using Microsoft.AspNetCore.Mvc;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace WebAPI.Controllers
 {
@@ -25,15 +27,29 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public string Get(string id)
         {
-            var language = _db.Language.First(l => l.Iso6391code == id);
+            //var language = _db.Language.First(l => l.Iso6391code == id);
 
-            return $"Your selected language is {language.Name}.";
+            TestXML xml = new TestXML
+            {
+                Text = "nic",
+                AdditionalData = "some other data"
+            };
+
+            using (FileStream stream = new FileStream(@"C:\Users\Michal\OneDrive\Learn\out.txt", FileMode.Create))
+            {
+                XmlSerializer ser = new XmlSerializer(typeof(TestXML));
+                ser.Serialize(stream, xml);
+            }
+
+            //return $"Your selected language is {language.Name}.";
+            return "";
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post(TestXML model)
         {
+            return Json(new { response = true });
         }
 
         // PUT api/values/5
@@ -47,5 +63,11 @@ namespace WebAPI.Controllers
         public void Delete(int id)
         {
         }
+    }
+
+    public class TestXML
+    {
+        public string Text { get; set; }
+        public string AdditionalData { get; set; }
     }
 }
