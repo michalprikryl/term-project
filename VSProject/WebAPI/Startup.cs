@@ -25,11 +25,8 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //CORS blbosti
+            // CORS
             services.AddCors();
-
-            //parsovani XML na vstupu API
-            //services.AddMvc().AddXmlSerializerFormatters();
 
             // Add framework services.
             services.AddMvc();
@@ -43,9 +40,9 @@ namespace WebAPI
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
+            app.UseCors(options => options.WithOrigins("http://localhost:60001").AllowAnyMethod().AllowAnyHeader()); //https://docs.microsoft.com/en-us/aspnet/core/security/cors - .WithMethods atd.
 
-            app.UseCors(options => options.WithOrigins("http://localhost:53431/").AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader());
+            app.UseMvc();
         }
     }
 }

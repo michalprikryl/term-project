@@ -6,6 +6,8 @@ using Database;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Serialization;
 using System.IO;
+using WebAPI.Model.DataAPI;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers
 {
@@ -27,29 +29,29 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public string Get(string id)
         {
-            //var language = _db.Language.First(l => l.Iso6391code == id);
+            var language = _db.Language.First(l => l.Iso6391code == id);
 
-            TestXML xml = new TestXML
-            {
-                Text = "nic",
-                AdditionalData = "some other data"
-            };
+            //TestXML xml = new TestXML
+            //{
+            //    Text = "nic",
+            //    AdditionalData = "some other data"
+            //};
 
-            using (FileStream stream = new FileStream(@"C:\Users\Michal\OneDrive\Learn\out.txt", FileMode.Create))
-            {
-                XmlSerializer ser = new XmlSerializer(typeof(TestXML));
-                ser.Serialize(stream, xml);
-            }
+            //using (FileStream stream = new FileStream(@"C:\Users\Michal\OneDrive\Learn\out.txt", FileMode.Create))
+            //{
+            //    XmlSerializer ser = new XmlSerializer(typeof(TestXML));
+            //    ser.Serialize(stream, xml);
+            //}
 
-            //return $"Your selected language is {language.Name}.";
-            return "";
+            return $"Your selected language is {language.Name}.";
+            //return "";
         }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post(TestXML model)
+        public IActionResult Post([FromBody]InputData model)
         {
-            return Json(new { response = true });
+            return Json(model);
         }
 
         // PUT api/values/5
@@ -63,11 +65,5 @@ namespace WebAPI.Controllers
         public void Delete(int id)
         {
         }
-    }
-
-    public class TestXML
-    {
-        public string Text { get; set; }
-        public string AdditionalData { get; set; }
     }
 }
