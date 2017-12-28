@@ -27,7 +27,7 @@ namespace WebAPI.Models
         public override List<Edge> OutEdges
         {
             get => OutEdges;
-            set => OutEdges = value.Count > 0 ? value : throw new ArgumentException("¨Fork node must have at least one out edge!");
+            set => OutEdges = value.Count > 0 ? value : throw new ArgumentException("Fork node must have at least one out edge!");
         }
     }
 }

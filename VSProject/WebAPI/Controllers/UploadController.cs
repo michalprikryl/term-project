@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
 
             if (format != DataFormatEnum.Unsupported)
             {
-                DataParser parser = new DataParser(format);
+                Parser parser = new Parser(format);
                 parser.ParseData(model.Data);
             }
             else

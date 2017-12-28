@@ -75,8 +75,11 @@ namespace WebAPI.Models.DataAPI
     [XmlRoot(ElementName = "root")]
     public class Root
     {
+        /// <summary>
+        /// obsahuje jednotlive nodes
+        /// </summary>
         [XmlElement(ElementName = "mxCell")]
-        public List<MxCell> MxCell { get; set; }
+        public List<MxCell> MxCells { get; set; }
     }
 
     [XmlRoot(ElementName = "mxGraphModel")]
