@@ -45,6 +45,8 @@ function send_to_API() {
         success: function (result) {
             if (result !== null) {
                 document.getElementById("result").innerHTML = JSON.stringify(result);
+
+                console.log(result.data);
             } else {
                 document.getElementById("result").innerHTML = "NULL";
             }
