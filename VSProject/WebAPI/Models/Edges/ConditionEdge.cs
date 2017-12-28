@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebAPI.Model
+﻿namespace WebAPI.Models
 {
     public class ConditionEdge : Edge
     {
@@ -19,11 +14,13 @@ namespace WebAPI.Model
             get => Name;
             set => Name = value;
         }
+
         public override Node InNode
         {
             get => InNode;
             set => InNode = value;
         }
+
         public override Node OutNode
         {
             get => OutNode;

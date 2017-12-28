@@ -6,7 +6,7 @@ using Database;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Serialization;
 using System.IO;
-using WebAPI.Model.DataAPI;
+using WebAPI.Models.DataAPI;
 using Newtonsoft.Json;
 
 namespace WebAPI.Controllers

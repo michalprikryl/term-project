@@ -33,12 +33,12 @@ function send_to_API() {
 
     var dataXML = {
         Data: xml,
-        DataFormat: 'json'
+        DataFormat: 'xml'
     };
 
     $.ajax({
         type: 'POST',
-        url: "http://localhost:60000/api/values/",
+        url: "http://localhost:60000/api/upload/",
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(dataXML),

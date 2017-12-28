@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAPI.Model
+namespace WebAPI.Models
 {
-    interface DiagramDTO
+    interface IDiagramDTO
     {
     }
 }

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace WebAPI.Model
+namespace WebAPI.Models
 {
     public class InterruptEdge : Edge
     {
         public InterruptEdge(Node inNode, Node outNode)
         {
-            Name = String.Empty;
+            Name = string.Empty;
             InNode = inNode;
             OutNode = outNode;
         }
@@ -19,11 +16,13 @@ namespace WebAPI.Model
             get => Name;
             set => throw new NotSupportedException("Interrupt edge cannot have name!");
         }
+
         public override Node InNode
         {
             get => InNode;
             set => InNode = value;
         }
+
         public override Node OutNode
         {
             get => OutNode;

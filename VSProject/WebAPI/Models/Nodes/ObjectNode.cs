@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace WebAPI.Model
+namespace WebAPI.Models
 {
     public class ObjectNode : Node
     {
@@ -19,18 +17,17 @@ namespace WebAPI.Model
             get => Name;
             set => Name = value;
         }
+
         public override List<Edge> InEdges
         {
             get => InEdges;
-            set =>
-                InEdges = value.Count > 0 ? value
-                    : throw new ArgumentException("Object node cannot have zero in edges!");
+            set => InEdges = value.Count > 0 ? value : throw new ArgumentException("Object node cannot have zero in edges!");
         }
+
         public override List<Edge> OutEdges
         {
             get => OutEdges;
-            set => OutEdges = value.Count > 0 ? value
-                : throw new ArgumentException("Object node cannot have zero out edges!");
+            set => OutEdges = value.Count > 0 ? value : throw new ArgumentException("Object node cannot have zero out edges!");
         }
     }
 }

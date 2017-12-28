@@ -1,68 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace WebAPI.Model.Builders
+namespace WebAPI.Models.Builders
 {
     public static class NodeBuilder
     {
-        private static ActivityDiagramNodes typeVal = ActivityDiagramNodes.Empty;
-        private static String nameVal = String.Empty;
-        private static List<Edge> inEdgesVal = new List<Edge>();
-        private static List<Edge> outEdgesVal = new List<Edge>();
+        private static ActivityDiagramNodes _typeVal = ActivityDiagramNodes.Empty;
+        private static string _nameVal = string.Empty;
+        private static List<Edge> _inEdgesVal = new List<Edge>();
+        private static List<Edge> _outEdgesVal = new List<Edge>();
 
-        public static void Type (ActivityDiagramNodes type)
+        public static void Type(ActivityDiagramNodes type)
         {
-            NodeBuilder.typeVal = type ;
+            _typeVal = type;
         }
 
-        public static void Name (String name)
+        public static void Name(string name)
         {
-            NodeBuilder.nameVal = name;
+            _nameVal = name;
         }
 
-        public static void InEdges (List<Edge> inEdges)
+        public static void InEdges(List<Edge> inEdges)
         {
-            NodeBuilder.inEdgesVal = inEdges;
+            _inEdgesVal = inEdges;
         }
 
-        public static void OutEdges (List<Edge> outEdges)
+        public static void OutEdges(List<Edge> outEdges)
         {
-            NodeBuilder.outEdgesVal = outEdges;
+            _outEdgesVal = outEdges;
         }
 
-        public static Node Build ()
+        public static Node Build()
         {
-            switch (typeVal)
+            switch (_typeVal)
             {
                 case ActivityDiagramNodes.Empty:
-                    NodeBuilder.ClearBuilder();
+                    ClearBuilder();
                     throw new NotSupportedException("Type for builder was not set!");
                 case ActivityDiagramNodes.InitialNode:
-                    NodeBuilder.ClearBuilder();
-                    return new InitialNode(outEdgesVal);
+                    ClearBuilder();
+                    return new InitialNode(_outEdgesVal);
                 case ActivityDiagramNodes.FinalNode:
-                    NodeBuilder.ClearBuilder();
-                    return new FinalNode(nameVal, inEdgesVal);
+                    ClearBuilder();
+                    return new FinalNode(_nameVal, _inEdgesVal);
                 case ActivityDiagramNodes.ObjectNode:
-                    NodeBuilder.ClearBuilder();
-                    return new ObjectNode(nameVal, inEdgesVal, outEdgesVal);
+                    ClearBuilder();
+                    return new ObjectNode(_nameVal, _inEdgesVal, _outEdgesVal);
                 case ActivityDiagramNodes.DecisionNode:
-                    NodeBuilder.ClearBuilder();
-                    return new DecisionNode(inEdgesVal, outEdgesVal);
+                    ClearBuilder();
+                    return new DecisionNode(_inEdgesVal, _outEdgesVal);
                 case ActivityDiagramNodes.MergeNode:
-                    NodeBuilder.ClearBuilder();
-                    return new MergeNode(inEdgesVal, outEdgesVal);
+                    ClearBuilder();
+                    return new MergeNode(_inEdgesVal, _outEdgesVal);
                 case ActivityDiagramNodes.JoinNode:
-                    NodeBuilder.ClearBuilder();
-                    return new JoinNode(inEdgesVal, outEdgesVal);
+                    ClearBuilder();
+                    return new JoinNode(_inEdgesVal, _outEdgesVal);
                 case ActivityDiagramNodes.ForkNode:
-                    NodeBuilder.ClearBuilder();
-                    return new ForkNode(inEdgesVal, outEdgesVal);
+                    ClearBuilder();
+                    return new ForkNode(_inEdgesVal, _outEdgesVal);
                 case ActivityDiagramNodes.ActionNode:
-                    NodeBuilder.ClearBuilder();
-                    return new ActionNode(nameVal, inEdgesVal, outEdgesVal);
+                    ClearBuilder();
+                    return new ActionNode(_nameVal, _inEdgesVal, _outEdgesVal);
             }
 
             return null;
@@ -70,10 +68,10 @@ namespace WebAPI.Model.Builders
 
         private static void ClearBuilder()
         {
-            NodeBuilder.nameVal = "";
-            NodeBuilder.inEdgesVal = new List<Edge>();
-            NodeBuilder.outEdgesVal = new List<Edge>();
-            NodeBuilder.typeVal = ActivityDiagramNodes.Empty;
+            _nameVal = string.Empty;
+            _inEdgesVal = new List<Edge>();
+            _outEdgesVal = new List<Edge>();
+            _typeVal = ActivityDiagramNodes.Empty;
         }
     }
 }

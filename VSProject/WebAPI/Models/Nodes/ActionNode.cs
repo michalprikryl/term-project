@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace WebAPI.Model
+namespace WebAPI.Models
 {
     public class ActionNode : Node
     {
@@ -14,17 +12,20 @@ namespace WebAPI.Model
             OutEdges = outEdges;
         }
 
-        public override string Name {
+        public override string Name
+        {
             get => Name;
             set => Name = value;
         }
-        public override List<Edge> InEdges {
+
+        public override List<Edge> InEdges
+        {
             get => InEdges;
-            set =>
-                InEdges = value.Count > 0 ? value 
-                    : throw new ArgumentException("Action node cannot have zero in edges!");  
+            set => InEdges = value.Count > 0 ? value : throw new ArgumentException("Action node cannot have zero in edges!");
         }
-        public override List<Edge> OutEdges {
+
+        public override List<Edge> OutEdges
+        {
             get => OutEdges;
             set => OutEdges = value;
         }
