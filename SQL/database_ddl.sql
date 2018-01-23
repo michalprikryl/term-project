@@ -1,11 +1,11 @@
 /*CREATE DATABASE TermProject;
 go*/
 
-/*USE TermProject;
-go*/
-
-USE pri0115;
+USE TermProject;
 go
+
+/*USE pri0115;
+go*/
 
 CREATE TABLE [Language] (
 	ID INTEGER IDENTITY(1,1) PRIMARY KEY,
@@ -43,6 +43,8 @@ CREATE TABLE WorkSpace (
 	ID INTEGER IDENTITY(1,1) PRIMARY KEY,
 	[Name] NVARCHAR(256) NOT NULL,
 	[Description] NVARCHAR(MAX) NULL,
+	DataFile NVARCHAR(MAX) NOT NULL,
+	DataFormat NVARCHAR(25) NOT NULL,
 	CreationDate DATETIME NOT NULL,
 	EditDate DATETIME NULL,
 	UserID INTEGER NOT NULL,

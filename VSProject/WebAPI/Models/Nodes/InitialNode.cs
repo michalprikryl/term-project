@@ -21,7 +21,7 @@ namespace WebAPI.Models
         public override List<Edge> InEdges
         {
             get => InEdges;
-            set => throw new NotSupportedException("Initial node cannot have out edges!");
+            set => throw new NotSupportedException("Initial node cannot have input edges!");
         }
 
         public override List<Edge> OutEdges
