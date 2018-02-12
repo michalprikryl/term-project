@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Database.DBObjects;
+﻿using Database.DBObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace Database
 {
@@ -125,15 +125,15 @@ namespace Database
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.DiagramId).HasColumnName("DiagramID");
+                entity.Property(e => e.DiagramTypeId).HasColumnName("DiagramTypeID");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.HasOne(d => d.Diagram)
+                entity.HasOne(d => d.DiagramType)
                     .WithMany(p => p.NodeType)
-                    .HasForeignKey(d => d.DiagramId)
+                    .HasForeignKey(d => d.DiagramTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_NODETYPE_DIAGRAM");
             });
@@ -175,6 +175,12 @@ namespace Database
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CreationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DataFile).IsRequired();
+
+                entity.Property(e => e.DataFormat)
+                    .IsRequired()
+                    .HasMaxLength(25);
 
                 entity.Property(e => e.EditDate).HasColumnType("datetime");
 
