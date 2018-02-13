@@ -40,7 +40,7 @@ namespace WebAPI
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseCors(options => options.WithOrigins("http://localhost:60001").AllowAnyMethod().AllowAnyHeader()); //https://docs.microsoft.com/en-us/aspnet/core/security/cors - .WithMethods atd.
+            app.UseCors(options => options.WithOrigins("http://localhost:60001", "http://localhost:20260").AllowAnyMethod().AllowAnyHeader()); //https://docs.microsoft.com/en-us/aspnet/core/security/cors - .WithMethods atd.
 
             app.UseMvc();
         }
