@@ -3330,7 +3330,7 @@ EditorUi.prototype.save = function(name)
 					console.log(name);
 					/*new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
 						'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');*/
-
+                    sendToApi(xml);
 					download(name,xml);
 				}
 				else
@@ -3353,6 +3353,32 @@ EditorUi.prototype.save = function(name)
 		}
 	}
 };
+function sendToApi(xml) {
+    var dataXML = {
+        Data: xml,
+        DataFormat: 'xml'
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: "http://localhost:60000/api/values/",
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(dataXML),
+        success: function (result) {
+            if (result !== null) {
+                // document.getElementById("result").innerHTML = JSON.stringify(result);
+                alert("Ok");
+                console.log(result.data);
+            } else {
+                document.getElementById("result").innerHTML = "NULL";
+                alert("KO");
+                
+            }
+        }
+    });
+    console.log("uspesne");
+}
 function download(filename, text) {
   var element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
