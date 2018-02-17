@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Grapheditor</title>
+	<title>Grapheditor</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="styles/grapheditor.css">
+	<link rel="stylesheet" type="text/css" href="styles/grapheditor.css">
 	<script type="text/javascript">
 		// Parses URL parameters. Supported parameters are:
 		// - lang=xy: Specifies the language of the user interface.
@@ -38,7 +38,7 @@
 		// Default resources are included in grapheditor resources
 		mxLoadResources = false;
 	</script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript" src="js/Init.js"></script>
 	<script type="text/javascript" src="jscolor/jscolor.js"></script>
 	<script type="text/javascript" src="sanitizer/sanitizer.min.js"></script>
@@ -72,6 +72,14 @@
 					mxUtils.post(OPEN_URL, '', mxUtils.bind(this, function(req)
 					{
 						var enabled = req.getStatus() != 404;
+
+						console.log(req.getStatus());
+
+						//////////////////
+						/*ODBLOKOVANI ULOZENI*/
+						enabled = true;
+						//////////////////
+
 						this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
 						this.actions.get('import').setEnabled(enabled || Graph.fileSupport);
 						this.actions.get('save').setEnabled(enabled);

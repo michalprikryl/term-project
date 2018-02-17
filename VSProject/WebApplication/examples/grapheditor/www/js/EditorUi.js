@@ -41,7 +41,7 @@ EditorUi = function(editor, container, lightbox)
 		};
 	}
 	
-    // Creates the user interface
+	// Creates the user interface
 	this.actions = new Actions(this);
 	this.menus = this.createMenus();
 	this.createDivs();
@@ -122,7 +122,7 @@ EditorUi = function(editor, container, lightbox)
 		}
 	}));
 
-   	// Escape key hides dialogs, adds space+drag panning
+	// Escape key hides dialogs, adds space+drag panning
 	var spaceKeyPressed = false;
 	
 	// Overrides hovericons to disable while space key is pressed
@@ -152,7 +152,7 @@ EditorUi = function(editor, container, lightbox)
 			this.hideDialog();
 		}
 	});
-   	
+	
 	mxEvent.addListener(document, 'keydown', this.keydownHandler);
 	
 	this.keyupHandler = mxUtils.bind(this, function(evt)
@@ -162,8 +162,8 @@ EditorUi = function(editor, container, lightbox)
 	});
 
 	mxEvent.addListener(document, 'keyup', this.keyupHandler);
-    
-    // Forces panning for middle and right mouse buttons
+	
+	// Forces panning for middle and right mouse buttons
 	var panningHandlerIsForcePanningEvent = graph.panningHandler.isForcePanningEvent;
 	graph.panningHandler.isForcePanningEvent = function(me)
 	{
@@ -313,10 +313,10 @@ EditorUi = function(editor, container, lightbox)
 		updateToolbar();
 	};
 	
-    // Enables scrollbars and sets cursor style for the container
+	// Enables scrollbars and sets cursor style for the container
 	graph.container.setAttribute('tabindex', '0');
-   	graph.container.style.cursor = 'default';
-    
+	graph.container.style.cursor = 'default';
+	
 	// Workaround for page scroll if embedded via iframe
 	if (window.self === window.top && graph.container.parentNode != null)
 	{
@@ -330,22 +330,22 @@ EditorUi = function(editor, container, lightbox)
 		}
 	}
 
-   	// Keeps graph container focused on mouse down
-   	var graphFireMouseEvent = graph.fireMouseEvent;
-   	graph.fireMouseEvent = function(evtName, me, sender)
-   	{
-   		if (evtName == mxEvent.MOUSE_DOWN)
-   		{
-   			this.container.focus();
-   		}
-   		
-   		graphFireMouseEvent.apply(this, arguments);
-   	};
+	// Keeps graph container focused on mouse down
+	var graphFireMouseEvent = graph.fireMouseEvent;
+	graph.fireMouseEvent = function(evtName, me, sender)
+	{
+		if (evtName == mxEvent.MOUSE_DOWN)
+		{
+			this.container.focus();
+		}
+		
+		graphFireMouseEvent.apply(this, arguments);
+	};
 
-   	// Configures automatic expand on mouseover
+	// Configures automatic expand on mouseover
 	graph.popupMenuHandler.autoExpand = true;
 
-    // Installs context menu
+	// Installs context menu
 	if (this.menus != null)
 	{
 		graph.popupMenuHandler.factoryMethod = mxUtils.bind(this, function(menu, cell, evt)
@@ -360,9 +360,9 @@ EditorUi = function(editor, container, lightbox)
 		graph.popupMenuHandler.hideMenu();
 	}));
 
-    // Create handler for key events
+	// Create handler for key events
 	this.keyHandler = this.createKeyHandler(editor);
-    
+	
 	// Getter for key handler
 	this.getKeyHandler = function()
 	{
@@ -403,19 +403,19 @@ EditorUi = function(editor, container, lightbox)
 			for (var i = 0; i < tokens.length; i++)
 			{
 				var tmp = tokens[i];
-		 		var pos = tmp.indexOf('=');
-		 					 		
-		 		if (pos >= 0)
-		 		{
-		 			var key = tmp.substring(0, pos);
-		 			var value = tmp.substring(pos + 1);
-		 			
-		 			if (defaultStyle[key] != null && value == 'none')
-		 			{
-		 				values.push(value);
-		 				keys.push(key);
-		 			}
-		 		}
+				var pos = tmp.indexOf('=');
+									
+				if (pos >= 0)
+				{
+					var key = tmp.substring(0, pos);
+					var value = tmp.substring(pos + 1);
+					
+					if (defaultStyle[key] != null && value == 'none')
+					{
+						values.push(value);
+						keys.push(key);
+					}
+				}
 			}
 
 			// Resets current style
@@ -442,7 +442,7 @@ EditorUi = function(editor, container, lightbox)
 	};
 
 	// Keys that should be ignored if the cell has a value (known: new default for all cells is html=1 so
-    // for the html key this effecticely only works for edges inserted via the connection handler)
+	// for the html key this effecticely only works for edges inserted via the connection handler)
 	var valueStyles = ['fontFamily', 'fontSize', 'fontColor'];
 	
 	// Keys that always update the current edge style regardless of selection
@@ -451,11 +451,11 @@ EditorUi = function(editor, container, lightbox)
 	
 	// Keys that are ignored together (if one appears all are ignored)
 	var keyGroups = [['startArrow', 'startFill', 'startSize', 'endArrow', 'endFill', 'endSize', 'jettySize', 'orthogonalLoop'],
-	                 ['strokeColor', 'strokeWidth'],
-	                 ['fillColor', 'gradientColor'],
-	                 valueStyles,
-	                 ['align'],
-	                 ['html']];
+					 ['strokeColor', 'strokeWidth'],
+					 ['fillColor', 'gradientColor'],
+					 valueStyles,
+					 ['align'],
+					 ['html']];
 	
 	// Adds all keys used above to the styles array
 	for (var i = 0; i < keyGroups.length; i++)
@@ -511,37 +511,37 @@ EditorUi = function(editor, container, lightbox)
 					for (var j = 0; j < tokens.length; j++)
 					{
 						var tmp = tokens[j];
-				 		var pos = tmp.indexOf('=');
-				 					 		
-				 		if (pos >= 0)
-				 		{
-				 			var key = tmp.substring(0, pos);
-				 			var index = mxUtils.indexOf(appliedStyles, key);
-				 			
-				 			if (index >= 0)
-				 			{
-				 				appliedStyles.splice(index, 1);
-				 			}
-				 			
-				 			// Handles special cases where one defined style ignores other styles
-				 			for (var k = 0; k < keyGroups.length; k++)
-				 			{
-				 				var group = keyGroups[k];
-				 				
-				 				if (mxUtils.indexOf(group, key) >= 0)
-				 				{
-				 					for (var l = 0; l < group.length; l++)
-				 					{
-							 			var index2 = mxUtils.indexOf(appliedStyles, group[l]);
-							 			
-							 			if (index2 >= 0)
-							 			{
-							 				appliedStyles.splice(index2, 1);
-							 			}
-				 					}
-				 				}
-				 			}
-				 		}
+						var pos = tmp.indexOf('=');
+											
+						if (pos >= 0)
+						{
+							var key = tmp.substring(0, pos);
+							var index = mxUtils.indexOf(appliedStyles, key);
+							
+							if (index >= 0)
+							{
+								appliedStyles.splice(index, 1);
+							}
+							
+							// Handles special cases where one defined style ignores other styles
+							for (var k = 0; k < keyGroups.length; k++)
+							{
+								var group = keyGroups[k];
+								
+								if (mxUtils.indexOf(group, key) >= 0)
+								{
+									for (var l = 0; l < group.length; l++)
+									{
+										var index2 = mxUtils.indexOf(appliedStyles, group[l]);
+										
+										if (index2 >= 0)
+										{
+											appliedStyles.splice(index2, 1);
+										}
+									}
+								}
+							}
+						}
 					}
 	
 					// Applies the current style to the cell
@@ -776,25 +776,25 @@ EditorUi = function(editor, container, lightbox)
 		{
 			var ff = graph.currentVertexStyle['fontFamily'] || 'Helvetica';
 			var fs = String(graph.currentVertexStyle['fontSize'] || '12');
-	    	var state = graph.getView().getState(graph.getSelectionCell());
-	    	
-	    	if (state != null)
-	    	{
-	    		ff = state.style[mxConstants.STYLE_FONTFAMILY] || ff;
-	    		fs = state.style[mxConstants.STYLE_FONTSIZE] || fs;
-	    		
-	    		if (ff.length > 10)
-	    		{
-	    			ff = ff.substring(0, 8) + '...';
-	    		}
-	    	}
-	    	
-	    	this.toolbar.setFontName(ff);
-	    	this.toolbar.setFontSize(fs);
+			var state = graph.getView().getState(graph.getSelectionCell());
+			
+			if (state != null)
+			{
+				ff = state.style[mxConstants.STYLE_FONTFAMILY] || ff;
+				fs = state.style[mxConstants.STYLE_FONTSIZE] || fs;
+				
+				if (ff.length > 10)
+				{
+					ff = ff.substring(0, 8) + '...';
+				}
+			}
+			
+			this.toolbar.setFontName(ff);
+			this.toolbar.setFontSize(fs);
 		});
 		
-	    graph.getSelectionModel().addListener(mxEvent.CHANGE, update);
-	    graph.getModel().addListener(mxEvent.CHANGE, update);
+		graph.getSelectionModel().addListener(mxEvent.CHANGE, update);
+		graph.getModel().addListener(mxEvent.CHANGE, update);
 	}
 	
 	// Makes sure the current layer is visible when cells are added
@@ -824,32 +824,32 @@ EditorUi = function(editor, container, lightbox)
 	// Timeout is workaround for old IE versions which have a delay for DOM client sizes.
 	// Should not use delay > 0 to avoid handle multiple repaints during window resize
 	this.resizeHandler = mxUtils.bind(this, function()
-   	{
-   		window.setTimeout(mxUtils.bind(this, function()
-   		{
-   			this.refresh();
-   		}), 0);
-   	});
+	{
+		window.setTimeout(mxUtils.bind(this, function()
+		{
+			this.refresh();
+		}), 0);
+	});
 	
-   	mxEvent.addListener(window, 'resize', this.resizeHandler);
-   	
-   	this.orientationChangeHandler = mxUtils.bind(this, function()
-   	{
-   		this.refresh();
-   	});
-   	
-   	mxEvent.addListener(window, 'orientationchange', this.orientationChangeHandler);
-   	
+	mxEvent.addListener(window, 'resize', this.resizeHandler);
+	
+	this.orientationChangeHandler = mxUtils.bind(this, function()
+	{
+		this.refresh();
+	});
+	
+	mxEvent.addListener(window, 'orientationchange', this.orientationChangeHandler);
+	
 	// Workaround for bug on iOS see
 	// http://stackoverflow.com/questions/19012135/ios-7-ipad-safari-landscape-innerheight-outerheight-layout-issue
 	if (mxClient.IS_IOS && !window.navigator.standalone)
 	{
 		this.scrollHandler = mxUtils.bind(this, function()
-	   	{
-	   		window.scrollTo(0, 0);
-	   	});
+		{
+			window.scrollTo(0, 0);
+		});
 		
-	   	mxEvent.addListener(window, 'scroll', this.scrollHandler);
+		mxEvent.addListener(window, 'scroll', this.scrollHandler);
 	}
 
 	/**
@@ -884,10 +884,10 @@ EditorUi = function(editor, container, lightbox)
 		}
 	}));
 
-   	// Resets UI, updates action and menu states
-   	this.editor.resetGraph();
-   	this.init();
-   	this.open();
+	// Resets UI, updates action and menu states
+	this.editor.resetGraph();
+	this.init();
+	this.open();
 };
 
 // Extends mxEventSource
@@ -1314,7 +1314,7 @@ EditorUi.prototype.initCanvas = function()
 	if (this.editor.chromeless)
 	{
 		resize = mxUtils.bind(this, function(autoscale, maxScale)
-	   	{
+		{
 			if (graph.container != null)
 			{
 				var b = (graph.pageVisible) ? graph.view.getBackgroundPageBounds() : graph.getGraphBounds();
@@ -1349,24 +1349,24 @@ EditorUi.prototype.initCanvas = function()
 				graph.container.scrollTop = st * ns / s;
 				graph.container.scrollLeft = sl * ns/ s;
 			}
-	   	});
+		});
 		
 		// Hack to make function available to subclassers
 		this.chromelessResize = resize;
 
 		// Removable resize listener
 		var autoscaleResize = mxUtils.bind(this, function()
-	   	{
+		{
 			resize(false);
-	   	});
+		});
 		
-	   	mxEvent.addListener(window, 'resize', autoscaleResize);
-	   	
-	   	this.destroyFunctions.push(function()
-	   	{
-	   		mxEvent.removeListener(window, 'resize', autoscaleResize);
-	   	});
-	   	
+		mxEvent.addListener(window, 'resize', autoscaleResize);
+		
+		this.destroyFunctions.push(function()
+		{
+			mxEvent.removeListener(window, 'resize', autoscaleResize);
+		});
+		
 		this.editor.addListener('resetGraphView', mxUtils.bind(this, function()
 		{
 			resize(true);
@@ -1395,8 +1395,8 @@ EditorUi.prototype.initCanvas = function()
 		var updateChromelessToolbarPosition = mxUtils.bind(this, function()
 		{
 			var css = mxUtils.getCurrentStyle(graph.container);
-		 	this.chromelessToolbar.style.bottom = ((css != null) ? parseInt(css['margin-bottom'] || 0) : 0) +
-		 		((this.tabContainer != null) ? (20 + parseInt(this.tabContainer.style.height)) : 20) + 'px';
+			this.chromelessToolbar.style.bottom = ((css != null) ? parseInt(css['margin-bottom'] || 0) : 0) +
+				((this.tabContainer != null) ? (20 + parseInt(this.tabContainer.style.height)) : 20) + 'px';
 		});
 		
 		this.editor.addListener('resetGraphView', updateChromelessToolbarPosition);
@@ -1540,9 +1540,9 @@ EditorUi.prototype.initCanvas = function()
 			
 			fadeThread = window.setTimeout(mxUtils.bind(this, function()
 			{
-			 	mxUtils.setOpacity(this.chromelessToolbar, 0);
+				mxUtils.setOpacity(this.chromelessToolbar, 0);
 				fadeThread = null;
-			 	
+				
 				fadeThread2 = window.setTimeout(mxUtils.bind(this, function()
 				{
 					this.chromelessToolbar.style.display = 'none';
@@ -1728,38 +1728,38 @@ EditorUi.prototype.initCanvas = function()
 
 		graph.addMouseListener(
 		{
-		    startX: 0,
-		    startY: 0,
-		    scrollLeft: 0,
-		    scrollTop: 0,
-		    mouseDown: function(sender, me)
-		    {
-		    	this.startX = me.getGraphX();
-		    	this.startY = me.getGraphY();
-			    this.scrollLeft = graph.container.scrollLeft;
-			    this.scrollTop = graph.container.scrollTop;
-		    },
-		    mouseMove: function(sender, me) {},
-		    mouseUp: function(sender, me)
-		    {
-		    	if (mxEvent.isTouchEvent(me.getEvent()))
-		    	{
-			    	if ((Math.abs(this.scrollLeft - graph.container.scrollLeft) < tol &&
-			    		Math.abs(this.scrollTop - graph.container.scrollTop) < tol) &&
-			    		(Math.abs(this.startX - me.getGraphX()) < tol &&
-			    		Math.abs(this.startY - me.getGraphY()) < tol))
-			    	{
-			    		if (parseFloat(ui.chromelessToolbar.style.opacity || 0) > 0)
-			    		{
-			    			fadeOut();
-			    		}
-			    		else
-			    		{
-			    			fadeIn(30);
-			    		}
+			startX: 0,
+			startY: 0,
+			scrollLeft: 0,
+			scrollTop: 0,
+			mouseDown: function(sender, me)
+			{
+				this.startX = me.getGraphX();
+				this.startY = me.getGraphY();
+				this.scrollLeft = graph.container.scrollLeft;
+				this.scrollTop = graph.container.scrollTop;
+			},
+			mouseMove: function(sender, me) {},
+			mouseUp: function(sender, me)
+			{
+				if (mxEvent.isTouchEvent(me.getEvent()))
+				{
+					if ((Math.abs(this.scrollLeft - graph.container.scrollLeft) < tol &&
+						Math.abs(this.scrollTop - graph.container.scrollTop) < tol) &&
+						(Math.abs(this.startX - me.getGraphX()) < tol &&
+						Math.abs(this.startY - me.getGraphY()) < tol))
+					{
+						if (parseFloat(ui.chromelessToolbar.style.opacity || 0) > 0)
+						{
+							fadeOut();
+						}
+						else
+						{
+							fadeIn(30);
+						}
 					}
-		    	}
-		    }
+				}
+			}
 		});
 	}
 	else if (this.editor.extendCanvas)
@@ -2536,16 +2536,16 @@ EditorUi.prototype.addUndoListener = function()
 	
 	var undoMgr = this.editor.undoManager;
 	
-    var undoListener = mxUtils.bind(this, function()
-    {
-    	undo.setEnabled(this.canUndo());
-    	redo.setEnabled(this.canRedo());
-    });
+	var undoListener = mxUtils.bind(this, function()
+	{
+		undo.setEnabled(this.canUndo());
+		redo.setEnabled(this.canRedo());
+	});
 
-    undoMgr.addListener(mxEvent.ADD, undoListener);
-    undoMgr.addListener(mxEvent.UNDO, undoListener);
-    undoMgr.addListener(mxEvent.REDO, undoListener);
-    undoMgr.addListener(mxEvent.CLEAR, undoListener);
+	undoMgr.addListener(mxEvent.ADD, undoListener);
+	undoMgr.addListener(mxEvent.UNDO, undoListener);
+	undoMgr.addListener(mxEvent.REDO, undoListener);
+	undoMgr.addListener(mxEvent.CLEAR, undoListener);
 	
 	// Overrides cell editor to update action states
 	var cellEditorStartEditing = this.editor.graph.cellEditor.startEditing;
@@ -2565,7 +2565,7 @@ EditorUi.prototype.addUndoListener = function()
 	};
 	
 	// Updates the button states once
-    undoListener();
+	undoListener();
 };
 
 /**
@@ -2582,33 +2582,33 @@ EditorUi.prototype.updateActionStates = function()
 	
 	if (cells != null)
 	{
-    	for (var i = 0; i < cells.length; i++)
-    	{
-    		var cell = cells[i];
-    		
-    		if (graph.getModel().isEdge(cell))
-    		{
-    			edgeSelected = true;
-    		}
-    		
-    		if (graph.getModel().isVertex(cell))
-    		{
-    			vertexSelected = true;
-    		}
-    		
-    		if (edgeSelected && vertexSelected)
+		for (var i = 0; i < cells.length; i++)
+		{
+			var cell = cells[i];
+			
+			if (graph.getModel().isEdge(cell))
+			{
+				edgeSelected = true;
+			}
+			
+			if (graph.getModel().isVertex(cell))
+			{
+				vertexSelected = true;
+			}
+			
+			if (edgeSelected && vertexSelected)
 			{
 				break;
 			}
-    	}
+		}
 	}
 	
 	// Updates action states
 	var actions = ['cut', 'copy', 'bold', 'italic', 'underline', 'delete', 'duplicate',
-	               'editStyle', 'editTooltip', 'editLink', 'backgroundColor', 'borderColor',
-	               'edit', 'toFront', 'toBack', 'lockUnlock', 'solid', 'dashed',
-	               'dotted', 'fillColor', 'gradientColor', 'shadow', 'fontColor',
-	               'formattedText', 'rounded', 'toggleRounded', 'sharp', 'strokeColor'];
+				   'editStyle', 'editTooltip', 'editLink', 'backgroundColor', 'borderColor',
+				   'edit', 'toFront', 'toBack', 'lockUnlock', 'solid', 'dashed',
+				   'dotted', 'fillColor', 'gradientColor', 'shadow', 'fontColor',
+				   'formattedText', 'rounded', 'toggleRounded', 'sharp', 'strokeColor'];
 	
 	for (var i = 0; i < actions.length; i++)
 	{
@@ -2623,44 +2623,44 @@ EditorUi.prototype.updateActionStates = function()
 	this.actions.get('wordWrap').setEnabled(vertexSelected);
 	this.actions.get('autosize').setEnabled(vertexSelected);
 	this.actions.get('collapsible').setEnabled(vertexSelected);
-   	var oneVertexSelected = vertexSelected && graph.getSelectionCount() == 1;
+	var oneVertexSelected = vertexSelected && graph.getSelectionCount() == 1;
 	this.actions.get('group').setEnabled(graph.getSelectionCount() > 1 ||
 		(oneVertexSelected && !graph.isContainer(graph.getSelectionCell())));
 	this.actions.get('ungroup').setEnabled(graph.getSelectionCount() == 1 &&
 		(graph.getModel().getChildCount(graph.getSelectionCell()) > 0 ||
 		(oneVertexSelected && graph.isContainer(graph.getSelectionCell()))));
-   	this.actions.get('removeFromGroup').setEnabled(oneVertexSelected &&
-   		graph.getModel().isVertex(graph.getModel().getParent(graph.getSelectionCell())));
+	this.actions.get('removeFromGroup').setEnabled(oneVertexSelected &&
+		graph.getModel().isVertex(graph.getModel().getParent(graph.getSelectionCell())));
 
 	// Updates menu states
-   	var state = graph.view.getState(graph.getSelectionCell());
-    this.menus.get('navigation').setEnabled(selected || graph.view.currentRoot != null);
-    this.actions.get('collapsible').setEnabled(vertexSelected && graph.getSelectionCount() == 1 &&
-    	(graph.isContainer(graph.getSelectionCell()) || graph.model.getChildCount(graph.getSelectionCell()) > 0));
-    this.actions.get('home').setEnabled(graph.view.currentRoot != null);
-    this.actions.get('exitGroup').setEnabled(graph.view.currentRoot != null);
-    this.actions.get('enterGroup').setEnabled(graph.getSelectionCount() == 1 && graph.isValidRoot(graph.getSelectionCell()));
-    var foldable = graph.getSelectionCount() == 1 && graph.isCellFoldable(graph.getSelectionCell())
-    this.actions.get('expand').setEnabled(foldable);
-    this.actions.get('collapse').setEnabled(foldable);
-    this.actions.get('editLink').setEnabled(graph.getSelectionCount() == 1);
-    this.actions.get('openLink').setEnabled(graph.getSelectionCount() == 1 &&
-    	graph.getLinkForCell(graph.getSelectionCell()) != null);
-    this.actions.get('guides').setEnabled(graph.isEnabled());
-    this.actions.get('grid').setEnabled(!this.editor.chromeless);
+	var state = graph.view.getState(graph.getSelectionCell());
+	this.menus.get('navigation').setEnabled(selected || graph.view.currentRoot != null);
+	this.actions.get('collapsible').setEnabled(vertexSelected && graph.getSelectionCount() == 1 &&
+		(graph.isContainer(graph.getSelectionCell()) || graph.model.getChildCount(graph.getSelectionCell()) > 0));
+	this.actions.get('home').setEnabled(graph.view.currentRoot != null);
+	this.actions.get('exitGroup').setEnabled(graph.view.currentRoot != null);
+	this.actions.get('enterGroup').setEnabled(graph.getSelectionCount() == 1 && graph.isValidRoot(graph.getSelectionCell()));
+	var foldable = graph.getSelectionCount() == 1 && graph.isCellFoldable(graph.getSelectionCell())
+	this.actions.get('expand').setEnabled(foldable);
+	this.actions.get('collapse').setEnabled(foldable);
+	this.actions.get('editLink').setEnabled(graph.getSelectionCount() == 1);
+	this.actions.get('openLink').setEnabled(graph.getSelectionCount() == 1 &&
+		graph.getLinkForCell(graph.getSelectionCell()) != null);
+	this.actions.get('guides').setEnabled(graph.isEnabled());
+	this.actions.get('grid').setEnabled(!this.editor.chromeless);
 
-    var unlocked = graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent());
-    this.menus.get('layout').setEnabled(unlocked);
-    this.menus.get('insert').setEnabled(unlocked);
-    this.menus.get('direction').setEnabled(unlocked && vertexSelected);
-    this.menus.get('align').setEnabled(unlocked && vertexSelected && graph.getSelectionCount() > 1);
-    this.menus.get('distribute').setEnabled(unlocked && vertexSelected && graph.getSelectionCount() > 1);
-    this.actions.get('selectVertices').setEnabled(unlocked);
-    this.actions.get('selectEdges').setEnabled(unlocked);
-    this.actions.get('selectAll').setEnabled(unlocked);
-    this.actions.get('selectNone').setEnabled(unlocked);
-    
-    this.updatePasteActionStates();
+	var unlocked = graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent());
+	this.menus.get('layout').setEnabled(unlocked);
+	this.menus.get('insert').setEnabled(unlocked);
+	this.menus.get('direction').setEnabled(unlocked && vertexSelected);
+	this.menus.get('align').setEnabled(unlocked && vertexSelected && graph.getSelectionCount() > 1);
+	this.menus.get('distribute').setEnabled(unlocked && vertexSelected && graph.getSelectionCount() > 1);
+	this.actions.get('selectVertices').setEnabled(unlocked);
+	this.actions.get('selectEdges').setEnabled(unlocked);
+	this.actions.get('selectAll').setEnabled(unlocked);
+	this.actions.get('selectNone').setEnabled(unlocked);
+	
+	this.updatePasteActionStates();
 };
 
 /**
@@ -3182,18 +3182,18 @@ EditorUi.prototype.extractGraphModelFromHtml = function(data)
 	
 	try
 	{
-    	var idx = data.indexOf('&lt;mxGraphModel ');
-    	
-    	if (idx >= 0)
-    	{
-    		var idx2 = data.lastIndexOf('&lt;/mxGraphModel&gt;');
-    		
-    		if (idx2 > idx)
-    		{
-    			result = data.substring(idx, idx2 + 21).replace(/&gt;/g, '>').
-    				replace(/&lt;/g, '<').replace(/\\&quot;/g, '"').replace(/\n/g, '');
-    		}
-    	}
+		var idx = data.indexOf('&lt;mxGraphModel ');
+		
+		if (idx >= 0)
+		{
+			var idx2 = data.lastIndexOf('&lt;/mxGraphModel&gt;');
+			
+			if (idx2 > idx)
+			{
+				result = data.substring(idx, idx2 + 21).replace(/&gt;/g, '>').
+					replace(/&lt;/g, '<').replace(/\\&quot;/g, '"').replace(/\n/g, '');
+			}
+		}
 	}
 	catch (e)
 	{
@@ -3330,7 +3330,7 @@ EditorUi.prototype.save = function(name)
 					console.log(name);
 					/*new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
 						'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');*/
-                    sendToApi(xml);
+					sendToApi(xml);
 					download(name,xml);
 				}
 				else
@@ -3354,30 +3354,30 @@ EditorUi.prototype.save = function(name)
 	}
 };
 function sendToApi(xml) {
-    var dataXML = {
-        Data: xml,
-        DataFormat: 'xml'
-    };
+	var dataXML = {
+		Data: xml,
+		DataFormat: 'xml'
+	};
 
-    $.ajax({
-        type: 'POST',
-        url: "http://localhost:60000/api/values/",
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(dataXML),
-        success: function (result) {
-            if (result !== null) {
-                // document.getElementById("result").innerHTML = JSON.stringify(result);
-                alert("Ok");
-                console.log(result.data);
-            } else {
-                document.getElementById("result").innerHTML = "NULL";
-                alert("KO");
-                
-            }
-        }
-    });
-    console.log("uspesne");
+	$.ajax({
+		type: 'POST',
+		url: "http://localhost:60000/api/values/",
+		dataType: 'json',
+		contentType: "application/json; charset=utf-8",
+		data: JSON.stringify(dataXML),
+		success: function (result) {
+			if (result !== null) {
+				// document.getElementById("result").innerHTML = JSON.stringify(result);
+				alert("Ok");
+				console.log(result.data);
+			} else {
+				document.getElementById("result").innerHTML = "NULL";
+				alert("KO");
+				
+			}
+		}
+	});
+	console.log("uspesne");
 }
 function download(filename, text) {
   var element = document.createElement('a');
@@ -3856,7 +3856,7 @@ EditorUi.prototype.createKeyHandler = function(editor)
 					action.funct();
 				}
 			};
-    		
+			
 			if (control)
 			{
 				if (shift)
@@ -4045,9 +4045,9 @@ EditorUi.prototype.destroy = function()
 	}
 	
 	var c = [this.menubarContainer, this.toolbarContainer, this.sidebarContainer,
-	         this.formatContainer, this.diagramContainer, this.footerContainer,
-	         this.chromelessToolbar, this.hsplit, this.sidebarFooterContainer,
-	         this.layersDialog];
+			 this.formatContainer, this.diagramContainer, this.footerContainer,
+			 this.chromelessToolbar, this.hsplit, this.sidebarFooterContainer,
+			 this.layersDialog];
 	
 	for (var i = 0; i < c.length; i++)
 	{
