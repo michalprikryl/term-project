@@ -346,7 +346,7 @@ Format.prototype.refresh = function()
 	
 	if (graph.isSelectionEmpty())
 	{
-		mxUtils.write(label, mxResources.get('Canvas', 'Canvas', 'Canvas'));
+		//mxUtils.write(label, mxResources.get('diagram'));
 		
 		// Adds button to hide the format panel since
 		// people don't seem to find the toolbar button
@@ -372,8 +372,8 @@ Format.prototype.refresh = function()
 			ui.actions.get('formatPanel').funct();
 		});
 		
-		div.appendChild(label);
-		this.panels.push(new DiagramFormatPanel(this, ui, div));
+		//div.appendChild(label);
+		//this.panels.push(new DiagramFormatPanel(this, ui, div));
 	}
 	else if (graph.isEditing())
 	{
@@ -4454,9 +4454,9 @@ DiagramFormatPanel.prototype.init = function()
 
 	if (graph.isEnabled())
 	{
-		//this.container.appendChild(this.addOptions(this.createPanel()));
-		//this.container.appendChild(this.addPaperSize(this.createPanel()));
-		//this.container.appendChild(this.addStyleOps(this.createPanel()));
+		this.container.appendChild(this.addOptions(this.createPanel()));
+		this.container.appendChild(this.addPaperSize(this.createPanel()));
+		this.container.appendChild(this.addStyleOps(this.createPanel()));
 	}
 };
 
@@ -4477,7 +4477,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 	if (graph.isEnabled())
 	{
 		// Guides
-		/*div.appendChild(this.createOption(mxResources.get('guides'), function()
+		div.appendChild(this.createOption(mxResources.get('guides'), function()
 		{
 			return graph.graphHandler.guidesEnabled;
 		}, function(checked)
@@ -4498,7 +4498,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 			{
 				ui.removeListener(this.listener);
 			}
-		}));*/
+		}));
 		
 		// Page View
 		div.appendChild(this.createOption(mxResources.get('pageView'), function()
@@ -4551,7 +4551,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 			}
 		});
 		
-		/*if (this.showBackgroundImageOption)
+		if (this.showBackgroundImageOption)
 		{
 			var btn = mxUtils.button(mxResources.get('image'), function(evt)
 			{
@@ -4568,7 +4568,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 			btn.style.width = '56px';
 		
 			bg.appendChild(btn);
-		}*/
+		}
 		
 		div.appendChild(bg);
 	}
@@ -4651,7 +4651,7 @@ DiagramFormatPanel.prototype.addGridOption = function(container)
 	
 	var input = document.createElement('input');
 	input.style.position = 'absolute';
-	input.style.textAlign = 'center';
+	input.style.textAlign = 'right';
 	input.style.width = '38px';
 	input.value = graph.getGridSize() + ' pt';
 	
@@ -4693,9 +4693,9 @@ DiagramFormatPanel.prototype.addGridOption = function(container)
 	
 	if (mxClient.IS_SVG)
 	{
-		input.style.marginTop = '-4px';
+		input.style.marginTop = '-2px';
 		input.style.right = '84px';
-		stepper.style.marginTop = '-19px';
+		stepper.style.marginTop = '-16px';
 		stepper.style.right = '72px';
 	
 		var panel = this.createColorOption(mxResources.get('grid'), function()

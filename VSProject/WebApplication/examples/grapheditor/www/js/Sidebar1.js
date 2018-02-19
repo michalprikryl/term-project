@@ -92,9 +92,6 @@ Sidebar.prototype.init = function()
 	
 	this.addSearchPalette(true);
     this.addGeneralPalette(true);
-    this.addActivityPallete(true);
-    this.addComplexActivityPallete(true);
-    this.addExampleActivityPallete(true);
     this.addUmlPalette(false);
 	//this.addMiscPalette(false);
 	//this.addAdvancedPalette(false);
@@ -1149,448 +1146,6 @@ Sidebar.prototype.createAdvancedShapes = function()
 	];
 };
 
-//samotny activity diagram
-Sidebar.prototype.addActivityPallete = function (expand) 
-{   
-    var sb = this;
-
-    var fns = [
-        this.createVertexTemplateEntry('ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Start', null, null, 'uml activity state start'), //changed start state
-        this.addEntry('uml activity state', function () {
-            var cell = new mxCell('Activity', new mxGeometry(0, 0, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell.vertex = true;
-
-            /*var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;');
-            edge.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            cell.insertEdge(edge, true);*/
-
-            return sb.createVertexTemplateFromCells([cell], 120, 100, 'Activity');
-        }),
-        this.addEntry('uml activity composite state', function () {
-            var cell = new mxCell('Composite State', new mxGeometry(0, 0, 160, 60),
-                'swimlane;html=1;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;collapsible=0;rounded=1;arcSize=30;strokeColor=#000000;fillColor=#ccffff;swimlaneFillColor=#ccffff;');
-            cell.vertex = true;
-
-            var cell1 = new mxCell('Subtitle', new mxGeometry(0, 0, 200, 26), 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;');
-            cell1.vertex = true;
-            cell.insert(cell1);
-
-            /*var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;');
-            edge.geometry.setTerminalPoint(new mxPoint(80, 120), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            cell.insertEdge(edge, true);*/
-
-            return sb.createVertexTemplateFromCells([cell], 160, 120, 'Composite State');
-        }),
-        this.addEntry('uml activity condition', function () {
-            var cell = new mxCell('Condition', new mxGeometry(0, 0, 80, 40), 'rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
-            cell.vertex = true;
-
-            /*var edge1 = new mxCell('no', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;');
-            edge1.geometry.setTerminalPoint(new mxPoint(180, 20), false);
-            edge1.geometry.relative = true;
-            edge1.geometry.x = -1;
-            edge1.edge = true;
-
-            cell.insertEdge(edge1, true);
-
-            var edge2 = new mxCell('yes', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=top;endArrow=open;endSize=8;strokeColor=#ff0000;');
-            edge2.geometry.setTerminalPoint(new mxPoint(40, 100), false);
-            edge2.geometry.relative = true;
-            edge2.geometry.x = -1;
-            edge2.edge = true;
-
-            cell.insertEdge(edge2, true);*/
-
-            return sb.createVertexTemplateFromCells([cell], 180, 100, 'Condition');
-        }),
-        this.addEntry('uml activity fork join', function () {
-            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
-            cell.vertex = true;
-
-           /* var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;');
-            edge.geometry.setTerminalPoint(new mxPoint(100, 80), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            cell.insertEdge(edge, true);*/
-
-            return sb.createVertexTemplateFromCells([cell], 200, 80, 'Fork/Join');
-        }),
-        this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'End', null, null, 'uml activity state end'),
-    ]
-
-    this.addPaletteFunctions('activity', mxResources.get('activity', '', 'Activity Diagram'), expand || false, fns);
-}
-//zlozitejsie tvary
-Sidebar.prototype.addComplexActivityPallete = function (expand) {
-    var sb = this;
-
-    var fns = [
-        this.addEntry('uml activity steps', function () {
-            var cell = new mxCell('Step1', new mxGeometry(0, 0, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell.vertex = true;
-
-            var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            cell.insertEdge(edge, true);  //true - output edge
-
-            var cell2 = new mxCell('Step2', new mxGeometry(0, 100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell2.vertex = true;
-
-            cell2.insertEdge(edge, false);  //false - input edge
-
-            var edge2 = new mxCell('', new mxGeometry(0, 140, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge2.geometry.setTerminalPoint(new mxPoint(60, 200), false);
-            edge2.geometry.relative = true;
-            edge2.edge = true;
-
-            cell2.insertEdge(edge2, true);
-
-            var cell3 = new mxCell('Step3', new mxGeometry(0, 200, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell3.vertex = true;
-
-            cell3.insertEdge(edge2, false);
-
-            return sb.createVertexTemplateFromCells([cell,edge,cell2, edge2,cell3], 120, 100, 'Steps');
-        }),
-        
-        this.addEntry('uml activity decision yes no', function () {
-
-            var cell0 = new mxCell('Activity', new mxGeometry(-20, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell0.vertex = true;
-
-            var edge = new mxCell('', new mxGeometry(0, -100, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            cell0.insertEdge(edge, true);
-
-            var cell = new mxCell('Condition', new mxGeometry(0, 0, 80, 40), 'rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
-            cell.vertex = true;
-
-            var edge1 = new mxCell('no', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge1.geometry.setTerminalPoint(new mxPoint(180, 20), false);
-            edge1.geometry.relative = true;
-            edge1.geometry.x = -1;
-            edge1.edge = true;
-
-            cell.insertEdge(edge1, true);
-            cell.insertEdge(edge, false);
-
-            var cell1 = new mxCell('Activity1', new mxGeometry(150, 0, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell1.vertex = true;
-
-            cell1.insertEdge(edge1, false);
-
-            var edge2 = new mxCell('yes', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=top;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge2.geometry.setTerminalPoint(new mxPoint(40, 100), false);
-            edge2.geometry.relative = true;
-            edge2.geometry.x = -1;
-            edge2.edge = true;
-
-            cell.insertEdge(edge2, true);
-
-            var cell2 = new mxCell('Activity2', new mxGeometry(-20, 100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell2.vertex = true;
-
-            cell2.insertEdge(edge2, false);
-
-            return sb.createVertexTemplateFromCells([cell0,edge,cell,edge1,edge2,cell1,cell2], 180, 100, 'Condition');
-        }),
-        this.addEntry('uml activity fork', function () {
-
-            var cell0 = new mxCell('Activity', new mxGeometry(15, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell0.vertex = true;
-
-            var edge = new mxCell('', new mxGeometry(0, -100, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            cell0.insertEdge(edge, true);
-
-            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'shape=line;html=1;strokeWidth=6;strokeColor=#000000;'); 
-            cell.vertex = true;;
- 
-            cell.insertEdge(edge, false);
-
-            var edge1 = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge1.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge1.geometry.relative = true;
-            edge1.edge = true;
-
-            cell.insertEdge(edge1, true);
-
-            var edge2 = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge2.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge2.geometry.relative = true;
-            edge2.edge = true;
-
-            cell.insertEdge(edge2, true);
-
-            var cell1 = new mxCell('Activity 1', new mxGeometry(-72, 80, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell1.vertex = true;
-
-            cell1.insertEdge(edge1, false);
-
-            var cell2 = new mxCell('Activity 2', new mxGeometry(103, 80, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell2.vertex = true;
-
-            cell2.insertEdge(edge2, false);
-
-            return sb.createVertexTemplateFromCells([cell0,edge,cell,edge1,edge2,cell1,cell2], 200, 80, 'Fork');
-        }),
-
-        this.addEntry('uml activity join', function () {
-
-            var edge1 = new mxCell('', new mxGeometry(0, -100, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge1.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge1.geometry.relative = true;
-            edge1.edge = true;
-
-            var edge2 = new mxCell('', new mxGeometry(0, -100, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge2.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge2.geometry.relative = true;
-            edge2.edge = true;
-
-            var cell1 = new mxCell('Activity 1', new mxGeometry(-72, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell1.vertex = true;
-
-            cell1.insertEdge(edge1, true);
-
-            var cell2 = new mxCell('Activity 2', new mxGeometry(103, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell2.vertex = true;
-
-            cell2.insertEdge(edge2, true);
-
-            var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
-            cell.vertex = true;;
-
-            cell.insertEdge(edge, true);
-            cell.insertEdge(edge1, false);
-            cell.insertEdge(edge2, false);
-
-            var cell0 = new mxCell('Activity', new mxGeometry(15, 80, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell0.vertex = true;
-
-            cell0.insertEdge(edge, false);
-
-            return sb.createVertexTemplateFromCells([cell0, edge, cell, edge1, edge2, cell1, cell2], 200, 80, 'Join');
-        }),
-    ]
-
-    this.addPaletteFunctions('activity', mxResources.get('activity', '', 'Complex Activity Diagram'), expand || false, fns);
-}
-
-Sidebar.prototype.addExampleActivityPallete = function (expand) {
-    var sb = this;
-
-    var fns = [
-        this.addEntry('uml activity steps', function () {
-            var cell = new mxCell('Step1', new mxGeometry(0, 0, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell.vertex = true;
-
-            var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            cell.insertEdge(edge, true);  //true - output edge
-
-            var cell2 = new mxCell('Step2', new mxGeometry(0, 100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell2.vertex = true;
-
-            cell2.insertEdge(edge, false);  //false - input edge
-
-            var edge2 = new mxCell('', new mxGeometry(0, 140, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge2.geometry.setTerminalPoint(new mxPoint(60, 200), false);
-            edge2.geometry.relative = true;
-            edge2.edge = true;
-
-            cell2.insertEdge(edge2, true);
-
-            var cell3 = new mxCell('Step3', new mxGeometry(0, 200, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell3.vertex = true;
-
-            cell3.insertEdge(edge2, false);
-
-            return sb.createVertexTemplateFromCells([cell, edge, cell2, edge2, cell3], 120, 100, 'Steps');
-        }),
-
-        this.addEntry('uml activity decision', function () {
-
-            var cell0 = new mxCell('Activity', new mxGeometry(-20, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell0.vertex = true;
-
-            var edge = new mxCell('', new mxGeometry(0, -100, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            cell0.insertEdge(edge, true);
-
-            var cell = new mxCell('Decision', new mxGeometry(0, 0, 80, 40), 'rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
-            cell.vertex = true;
-
-            var edge1 = new mxCell('no', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge1.geometry.setTerminalPoint(new mxPoint(180, 20), false);
-            edge1.geometry.relative = true;
-            edge1.geometry.x = -1;
-            edge1.edge = true;
-
-            cell.insertEdge(edge1, true);
-            cell.insertEdge(edge, false);
-
-            var cell1 = new mxCell('Activity1', new mxGeometry(150, 0, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell1.vertex = true;
-
-            cell1.insertEdge(edge1, false);
-
-            var edge2 = new mxCell('yes', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=top;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge2.geometry.setTerminalPoint(new mxPoint(40, 100), false);
-            edge2.geometry.relative = true;
-            edge2.geometry.x = -1;
-            edge2.edge = true;
-
-            cell.insertEdge(edge2, true);
-
-            var cell2 = new mxCell('Activity2', new mxGeometry(-20, 100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell2.vertex = true;
-
-            cell2.insertEdge(edge2, false);
-
-            return sb.createVertexTemplateFromCells([cell0, edge, cell, edge1, edge2, cell1, cell2], 180, 100, 'Condition');
-        }),
-        this.addEntry('uml activity payment', function () {
-
-            var cell0 = new mxCell('Pay', new mxGeometry(15, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell0.vertex = true;
-
-            var edge = new mxCell('', new mxGeometry(0, -100, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            cell0.insertEdge(edge, true);
-
-            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
-            cell.vertex = true;;
-
-            cell.insertEdge(edge, false);
-
-            var edge1 = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge1.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge1.geometry.relative = true;
-            edge1.edge = true;
-
-            cell.insertEdge(edge1, true);
-
-            var edge2 = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge2.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge2.geometry.relative = true;
-            edge2.edge = true;
-
-            cell.insertEdge(edge2, true);
-
-            var cell1 = new mxCell('Cash', new mxGeometry(-72, 80, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell1.vertex = true;
-
-            cell1.insertEdge(edge1, false);
-
-            var cell2 = new mxCell('Card', new mxGeometry(103, 80, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell2.vertex = true;
-
-            cell2.insertEdge(edge2, false);
-
-            return sb.createVertexTemplateFromCells([cell0, edge, cell, edge1, edge2, cell1, cell2], 200, 80, 'Fork');
-        }),
-
-        this.addEntry('uml activity join', function () {
-
-            var edge1 = new mxCell('', new mxGeometry(0, -100, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge1.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge1.geometry.relative = true;
-            edge1.edge = true;
-
-            var edge2 = new mxCell('', new mxGeometry(0, -100, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge2.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge2.geometry.relative = true;
-            edge2.edge = true;
-
-            var cell1 = new mxCell('Activity 1', new mxGeometry(-72, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell1.vertex = true;
-
-            cell1.insertEdge(edge1, true);
-
-            var cell2 = new mxCell('Activity 2', new mxGeometry(103, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell2.vertex = true;
-
-            cell2.insertEdge(edge2, true);
-
-            var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
-            edge.geometry.setTerminalPoint(new mxPoint(60, 100), false);
-            edge.geometry.relative = true;
-            edge.edge = true;
-
-            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
-            cell.vertex = true;;
-
-            cell.insertEdge(edge, true);
-            cell.insertEdge(edge1, false);
-            cell.insertEdge(edge2, false);
-
-            var cell0 = new mxCell('Activity', new mxGeometry(15, 80, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell0.vertex = true;
-
-            cell0.insertEdge(edge, false);
-
-            return sb.createVertexTemplateFromCells([cell0, edge, cell, edge1, edge2, cell1, cell2], 200, 80, 'Join');
-        }),
-    ]
-
-    this.addPaletteFunctions('activity', mxResources.get('activity', '', 'Examples of Activity Diagram'), expand || false, fns);
-}
-
 /**
  * Adds the general palette to the sidebar.
  */
@@ -1650,15 +1205,15 @@ Sidebar.prototype.addUmlPalette = function(expand)
 		{
 			return sb.createVertexTemplateFromCells([divider.clone()], divider.geometry.width, divider.geometry.height, 'Divider');
 		}),
-		/*this.addEntry(dt + 'spacer space gap separator', function()
+		this.addEntry(dt + 'spacer space gap separator', function()
 		{
 			var cell = new mxCell('', new mxGeometry(0, 0, 20, 14), 'text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=4;spacingRight=4;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;');
 			cell.vertex = true;
 			
 			return sb.createVertexTemplateFromCells([cell.clone()], cell.geometry.width, cell.geometry.height, 'Spacer');
-		}),*/
-		/*this.createVertexTemplateEntry('text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;',
-			80, 26, 'Title', 'Title', null, null, dt + 'title label'),*/
+		}),
+		this.createVertexTemplateEntry('text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;',
+			80, 26, 'Title', 'Title', null, null, dt + 'title label'),
 		this.addEntry(dt + 'component', function()
 		{
 		    var cell = new mxCell('&laquo;Annotation&raquo;<br/><b>Component</b>', new mxGeometry(0, 0, 180, 90), 'html=1;');
@@ -1752,9 +1307,8 @@ Sidebar.prototype.addUmlPalette = function(expand)
 		this.createVertexTemplateEntry('ellipse;shape=umlEntity;whiteSpace=wrap;html=1;', 80, 80, 'Entity Object', 'Entity Object', null, null, 'uml entity object'),
 		this.createVertexTemplateEntry('ellipse;shape=umlControl;whiteSpace=wrap;html=1;', 70, 80, 'Control Object', 'Control Object', null, null, 'uml control object'),
 		this.createVertexTemplateEntry('shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;', 30, 60, 'Actor', 'Actor', false, null, 'uml actor'),
-        this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;', 140, 70, 'Use Case', 'Use Case', null, null, 'uml use case usecase'),
-        //activity diagram
-		/*this.addEntry('uml activity state start', function()     
+		this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;', 140, 70, 'Use Case', 'Use Case', null, null, 'uml use case usecase'),
+		this.addEntry('uml activity state start', function()
 		{
 	    	var cell = new mxCell('', new mxGeometry(0, 0, 30, 30),
 	    		'ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;');
@@ -1768,8 +1322,8 @@ Sidebar.prototype.addUmlPalette = function(expand)
 			cell.insertEdge(edge, true);
 	    	
 			return sb.createVertexTemplateFromCells([cell, edge], 30, 90, 'Start');
-		}),*/
-		/*this.addEntry('uml activity state', function()
+		}),
+		this.addEntry('uml activity state', function()
 		{
 			var cell = new mxCell('Activity', new mxGeometry(0, 0, 120, 40),
 				'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ffffc0;strokeColor=#ff0000;');
@@ -1839,9 +1393,8 @@ Sidebar.prototype.addUmlPalette = function(expand)
 			cell.insertEdge(edge, true);
 		
 			return sb.createVertexTemplateFromCells([cell, edge], 200, 80, 'Fork/Join');
-        }),
-        this.createVertexTemplateEntry('ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;', 30, 30, '', 'Start', null, null, 'uml activity state start'), //changed start state
-		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;', 30, 30, '', 'End', null, null, 'uml activity state end'),*/
+		}),
+		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;', 30, 30, '', 'End', null, null, 'uml activity state end'),
 		this.createVertexTemplateEntry('shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;', 100, 300, ':Object', 'Lifeline', null, null, 'uml sequence participant lifeline'),
 		this.createVertexTemplateEntry('shape=umlLifeline;participant=umlActor;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;verticalAlign=top;spacingTop=36;labelBackgroundColor=#ffffff;outlineConnect=0;',
 				20, 300, '', 'Actor Lifeline', null, null, 'uml sequence participant lifeline actor'),
@@ -1904,21 +1457,21 @@ Sidebar.prototype.addUmlPalette = function(expand)
 	
 			return sb.createVertexTemplateFromCells([cell, edge], 10, 60, 'Self Call');
 		}),
-		this.addEntry('uml sequence invoke call delegation callback activation', function()   //opravene
+		this.addEntry('uml sequence invoke call delegation callback activation', function()
         {   
             var cell = new mxCell('', new mxGeometry(0, 0, 10, 80), 'html=1;points=[];perimeter=orthogonalPerimeter;');
             cell.vertex = true;
 
-            var edge1 = new mxCell('callback', new mxGeometry(0, 0, 0, 0), 'html=1;verticalAlign=bottom;endArrow=block;entryX=10;entryY=0;');
-            edge1.geometry.setTerminalPoint(new mxPoint(80, 0), true);
+            var edge1 = new mxCell('callback', new mxGeometry(0, 0, 0, 0), 'html=1;verticalAlign=bottom;endArrow=block;entryX=0;entryY=0;');
+            edge1.geometry.setTerminalPoint(new mxPoint(-70, 0), true);
             edge1.geometry.relative = true;
             edge1.edge = true; 
 
 
             cell.insertEdge(edge1, false);
 
-            var edge2 = new mxCell('return', new mxGeometry(0, 0, 0, 0), 'html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;exitX=10;exitY=0.95;');
-            edge2.geometry.setTerminalPoint(new mxPoint(80, 76), false);
+            var edge2 = new mxCell('return', new mxGeometry(0, 0, 0, 0), 'html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;exitX=0;exitY=0.95;');
+            edge2.geometry.setTerminalPoint(new mxPoint(-70, 76), false);
             edge2.geometry.relative = true;
             edge2.edge = true;
 
@@ -2463,7 +2016,7 @@ Sidebar.prototype.createDropHandler = function(cells, allowSplit, allowCellsInse
 		if (graph.isEnabled())
 		{
 			cells = graph.getImportableCells(cells);
-			
+			//console.log(cells);
 			if (cells.length > 0)
 			{
 				graph.stopEditing();
@@ -2490,6 +2043,7 @@ Sidebar.prototype.createDropHandler = function(cells, allowSplit, allowCellsInse
 						if (allowSplit && graph.isSplitTarget(target, cells, evt))
 						{
 							var clones = graph.cloneCells(cells);
+
 							graph.splitEdge(target, clones, null,
 								x - bounds.width / 2, y - bounds.height / 2);
 							select = clones;
@@ -2497,6 +2051,7 @@ Sidebar.prototype.createDropHandler = function(cells, allowSplit, allowCellsInse
 						else if (cells.length > 0)
 						{
 							select = graph.importCells(cells, x, y, target);
+							
 						}
 						
 						// Executes parent layout hooks for position/order
@@ -2515,6 +2070,7 @@ Sidebar.prototype.createDropHandler = function(cells, allowSplit, allowCellsInse
 								{
 									layout.moveCell(select[i], tx, ty);
 								}
+								console.log("ahoj");
 							}
 						}
 	
@@ -2525,6 +2081,11 @@ Sidebar.prototype.createDropHandler = function(cells, allowSplit, allowCellsInse
 					}
 					finally
 					{
+						for (var i = 0; i < graph.model.nextId; i++) {
+							//console.log(graph.model.cells[i]);	
+						}
+						
+
 						graph.model.endUpdate();
 					}
 	
