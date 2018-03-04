@@ -3361,7 +3361,7 @@ function sendToApi(xml) {
 
 	$.ajax({
 		type: 'POST',
-		url: "http://localhost:60000/api/values/",
+        url: "http://localhost:60000/api/values/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
 		dataType: 'json',
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(dataXML),
