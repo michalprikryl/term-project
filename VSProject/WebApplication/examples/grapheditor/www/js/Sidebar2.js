@@ -948,7 +948,7 @@ Sidebar.prototype.addGeneralPalette = function(expand)
 	 	//this.createVertexTemplateEntry('shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;', 120, 80, '', 'Step'),
 	 	//this.createVertexTemplateEntry('shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;', 120, 60, '', 'Trapezoid'),
 	 	//this.createVertexTemplateEntry('shape=tape;whiteSpace=wrap;html=1;', 120, 100, '', 'Tape'),
-	 	this.createVertexTemplateEntry('shape=note;whiteSpace=wrap;html=1;', 80, 100, '', 'Note'),
+	 	//this.createVertexTemplateEntry('shape=note;whiteSpace=wrap;html=1;', 80, 100, '', 'Note'),
 	    //this.createVertexTemplateEntry('shape=card;whiteSpace=wrap;html=1;', 80, 100, '', 'Card'),
 	    //this.createVertexTemplateEntry('shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;', 120, 80, '', 'Callout'),
 	 	this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;', 50, 50, '', 'Dashed Line', null, lineTags + 'dashed undirected no'),
@@ -1155,11 +1155,11 @@ Sidebar.prototype.addActivityPallete = function (expand)
     var sb = this;
 
     var fns = [
-        this.createVertexTemplateEntry('ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Start', null, null, 'uml activity state start'), //changed start state
+        this.createVertexTemplateEntry('type=start;ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Start', null, null, 'uml activity state start'), //changed start state
         this.addEntry('uml activity state', function () {
             var cell = new mxCell('Activity', new mxGeometry(0, 0, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
-            cell.vertex = true;
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+            cell.vertex = true;         
 
             /*var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;');
             edge.geometry.setTerminalPoint(new mxPoint(60, 100), false);
@@ -1172,7 +1172,7 @@ Sidebar.prototype.addActivityPallete = function (expand)
         }),
         this.addEntry('uml activity composite state', function () {
             var cell = new mxCell('Composite State', new mxGeometry(0, 0, 160, 60),
-                'swimlane;html=1;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;collapsible=0;rounded=1;arcSize=30;strokeColor=#000000;fillColor=#ccffff;swimlaneFillColor=#ccffff;');
+                'type=activityComposite;swimlane;html=1;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;collapsible=0;rounded=1;arcSize=30;strokeColor=#000000;fillColor=#ccffff;swimlaneFillColor=#ccffff;');
             cell.vertex = true;
 
             var cell1 = new mxCell('Subtitle', new mxGeometry(0, 0, 200, 26), 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;');
@@ -1189,7 +1189,7 @@ Sidebar.prototype.addActivityPallete = function (expand)
             return sb.createVertexTemplateFromCells([cell], 160, 120, 'Composite State');
         }),
         this.addEntry('uml activity condition', function () {
-            var cell = new mxCell('Condition', new mxGeometry(0, 0, 80, 40), 'rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
+            var cell = new mxCell('Condition', new mxGeometry(0, 0, 80, 40), 'type=condition;rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
             cell.vertex = true;
 
             /*var edge1 = new mxCell('no', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;');
@@ -1211,7 +1211,7 @@ Sidebar.prototype.addActivityPallete = function (expand)
             return sb.createVertexTemplateFromCells([cell], 180, 100, 'Condition');
         }),
         this.addEntry('uml activity fork join', function () {
-            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
+            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'type=forkJoin;shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
             cell.vertex = true;
 
            /* var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;');
@@ -1223,7 +1223,9 @@ Sidebar.prototype.addActivityPallete = function (expand)
 
             return sb.createVertexTemplateFromCells([cell], 200, 80, 'Fork/Join');
         }),
-        this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'End', null, null, 'uml activity state end'),
+        this.createVertexTemplateEntry('type=end;ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'End', null, null, 'uml activity state end'),
+        this.createVertexTemplateEntry('type=precondition;shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;', 140, 55, '<code>&lt;&lt;precondition&gt;&gt;</code>', 'Precondition', 'label', 'title'),
+        this.createVertexTemplateEntry('type=postcondition;shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;', 140, 55, '<code>&lt;&lt;postcondition&gt;&gt;</code>', 'Postcondition', 'label', 'title'),
     ]
 
     this.addPaletteFunctions('activity', mxResources.get('activity', '', 'Activity Diagram'), expand || false, fns);
