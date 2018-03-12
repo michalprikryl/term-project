@@ -311,6 +311,7 @@ west=West
 width=Width
 wordWrap=Word Wrap
 writingDirection=Writing Direction
+xml=Show XML		
 zoom=Zoom
 zoomIn=Zoom In
 zoomOut=Zoom Out
