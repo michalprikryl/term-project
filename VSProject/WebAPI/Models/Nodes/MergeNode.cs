@@ -5,12 +5,7 @@ namespace WebAPI.Models
 {
     public class MergeNode : Node
     {
-        public MergeNode(List<Edge> inEdges, List<Edge> outEdges)
-        {
-            Name = string.Empty;
-            InEdges = inEdges;
-            OutEdges = outEdges;
-        }
+        public MergeNode(int id, List<Edge> inEdges, List<Edge> outEdges) : base(id, string.Empty, inEdges, outEdges) { }
 
         public override string Name
         {

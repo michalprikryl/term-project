@@ -4,29 +4,24 @@ namespace WebAPI.Models
 {
     public class ActivityEdge : Edge
     {
-        public ActivityEdge(Node inNode, Node outNode)
+        public ActivityEdge(int id, Node inNode, Node outNode) : base(id, string.Empty)
         {
-            Name = string.Empty;
-            InNode = inNode;
-            OutNode = outNode;
+            this.inNode = inNode;
+            this.outNode = outNode;
         }
 
-        public override string Name
-        {
-            get => Name;
-            set => throw new NotSupportedException("Activity edge cannot have name!");
-        }
+        public override string Name { get => name; set => throw new System.NotSupportedException(); }
 
         public override Node InNode
         {
-            get => InNode;
-            set => InNode = value;
+            get => inNode;
+            set => inNode = value;
         }
 
         public override Node OutNode
         {
-            get => OutNode;
-            set => OutNode = value;
+            get => outNode;
+            set => outNode = value;
         }
     }
 }

@@ -2,29 +2,28 @@
 {
     public class NamedActivityEdge : Edge
     {
-        public NamedActivityEdge(string name, Node inNode, Node outNode)
+        public NamedActivityEdge(int id, string name, Node inNode, Node outNode) : base(id, name)
         {
-            Name = name;
-            InNode = inNode;
-            OutNode = outNode;
+            this.inNode = inNode;
+            this.outNode = outNode;
         }
 
         public override string Name
         {
-            get => Name;
-            set => Name = value;
+            get => name;
+            set => name = value;
         }
 
         public override Node InNode
         {
-            get => InNode;
-            set => InNode = value;
+            get => inNode;
+            set => inNode = value;
         }
 
         public override Node OutNode
         {
-            get => OutNode;
-            set => OutNode = value;
+            get => outNode;
+            set => outNode = value;
         }
     }
 }

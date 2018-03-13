@@ -5,12 +5,7 @@ namespace WebAPI.Models
 {
     public class ForkNode : Node
     {
-        public ForkNode(List<Edge> inEdges, List<Edge> outEdges)
-        {
-            Name = string.Empty;
-            InEdges = inEdges;
-            OutEdges = outEdges;
-        }
+        public ForkNode(int id, List<Edge> inEdges, List<Edge> outEdges) : base(id, string.Empty, inEdges, outEdges) { }
 
         public override string Name
         {

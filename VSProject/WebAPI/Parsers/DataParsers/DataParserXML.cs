@@ -6,6 +6,8 @@ using WebAPI.Models;
 using WebAPI.Models.DataAPI;
 using System;
 using WebAPI.Parsers.DiagramParsers;
+using WebAPI.Models.Nodes;
+using WebAPI.Models.Edges;
 
 namespace WebAPI.Parsers
 {
@@ -58,8 +60,23 @@ namespace WebAPI.Parsers
             }
             else if (xml.Graph.Root.MxCells.Count > 0)
             {
-                throw new ArgumentException("Graph cannot be empty.");
+                List<Node> nodes = new List<Node>();
+                List<Edge> edges = new List<Edge>();
+
+                foreach (MxCell c in xml.Graph.Root.MxCells)
+                {
+                    if ("1".Equals(c.Vertex))
+                    {
+                        nodes.Add(new ConcreteNode(Int32.Parse(c.Id), c.Value));
+                    }
+                    else if ("1".Equals(c.Edge))
+                    {
+                        edges.Add(new ConcreteEdge(Int32.Parse(c.Id), c.Value));
+                    }
+                }
             }
+
+            Console.WriteLine("DONE!");
         }
     }
 }

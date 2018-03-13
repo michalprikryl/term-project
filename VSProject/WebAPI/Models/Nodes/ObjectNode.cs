@@ -5,12 +5,7 @@ namespace WebAPI.Models
 {
     public class ObjectNode : Node
     {
-        public ObjectNode(string name, List<Edge> inEdges, List<Edge> outEdges)
-        {
-            Name = name;
-            InEdges = inEdges;
-            OutEdges = outEdges;
-        }
+        public ObjectNode(int id, string name, List<Edge> inEdges, List<Edge> outEdges) : base(id, name, inEdges, outEdges) { }
 
         public override string Name
         {

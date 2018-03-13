@@ -5,12 +5,7 @@ namespace WebAPI.Models
 {
     public class InitialNode : Node
     {
-        public InitialNode(List<Edge> outEdges)
-        {
-            Name = string.Empty;
-            OutEdges = outEdges;
-            InEdges = new List<Edge>();
-        }
+        public InitialNode(int id, List<Edge> outEdges) : base(id, string.Empty, new List<Edge>(), outEdges) { }
 
         public override string Name
         {

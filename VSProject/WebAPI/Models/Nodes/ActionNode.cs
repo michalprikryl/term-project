@@ -5,12 +5,7 @@ namespace WebAPI.Models
 {
     public class ActionNode : Node
     {
-        public ActionNode(string name, List<Edge> inEdges, List<Edge> outEdges)
-        {
-            Name = name;
-            InEdges = inEdges;
-            OutEdges = outEdges;
-        }
+        public ActionNode(int id, string name, List<Edge> inEdges, List<Edge> outEdges) : base(id, name, inEdges, outEdges) { }
 
         public override string Name
         {

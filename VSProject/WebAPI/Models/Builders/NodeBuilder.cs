@@ -32,7 +32,7 @@ namespace WebAPI.Models.Builders
 
         public static Node Build()
         {
-            switch (_typeVal)
+           /* switch (_typeVal)
             {
                 case ActivityDiagramNodes.Empty:
                     ClearBuilder();
@@ -61,7 +61,7 @@ namespace WebAPI.Models.Builders
                 case ActivityDiagramNodes.ActionNode:
                     ClearBuilder();
                     return new ActionNode(_nameVal, _inEdgesVal, _outEdgesVal);
-            }
+            } */
 
             return null;
         }
