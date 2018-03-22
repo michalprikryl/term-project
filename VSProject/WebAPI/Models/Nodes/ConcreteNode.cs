@@ -7,11 +7,11 @@ namespace WebAPI.Models.Nodes
 {
     public class ConcreteNode : Node
     {
-        public ConcreteNode(int id, String name) : base(id, name, new List<Edge>(), new List<Edge>()) {}
+        public ConcreteNode(int id) : base(id, String.Empty, new List<Edge>(), new List<Edge>()) {}
 
         public override string Name { get => this.name; set => this.name = value; }
-        public override List<Edge> InEdges { get => inEdges; set => throw new NotSupportedException(); }
-        public override List<Edge> OutEdges { get => outEdges; set => throw new NotSupportedException(); }
+        public override List<Edge> InEdges { get => inEdges; set => this.inEdges = value; }
+        public override List<Edge> OutEdges { get => outEdges; set => this.outEdges = value; }
 
         public void AddEdge(Edge e)
         {

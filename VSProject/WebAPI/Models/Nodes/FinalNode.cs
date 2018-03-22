@@ -5,7 +5,7 @@ namespace WebAPI.Models
 {
     public class FinalNode : Node
     {
-        public FinalNode(int id, string name, List<Edge> inEdges) : base(id, name, inEdges, new List<Edge>()) { }
+        public FinalNode(int id, List<Edge> inEdges) : base(id, String.Empty, inEdges, new List<Edge>()) { }
 
         public override string Name
         {

@@ -1,77 +1,146 @@
 ﻿using System;
 using System.Collections.Generic;
+using WebAPI.Models.Nodes;
 
 namespace WebAPI.Models.Builders
 {
-    public static class NodeBuilder
+    public class NodeBuilder
     {
-        private static ActivityDiagramNodes _typeVal = ActivityDiagramNodes.Empty;
-        private static string _nameVal = string.Empty;
-        private static List<Edge> _inEdgesVal = new List<Edge>();
-        private static List<Edge> _outEdgesVal = new List<Edge>();
 
-        public static void Type(ActivityDiagramNodes type)
+        public static Node BuildNode(ActivityDiagramNodes type, int id, String name)
         {
-            _typeVal = type;
-        }
-
-        public static void Name(string name)
-        {
-            _nameVal = name;
-        }
-
-        public static void InEdges(List<Edge> inEdges)
-        {
-            _inEdgesVal = inEdges;
-        }
-
-        public static void OutEdges(List<Edge> outEdges)
-        {
-            _outEdgesVal = outEdges;
-        }
-
-        public static Node Build()
-        {
-           /* switch (_typeVal)
+            if (name == null || name == String.Empty)
             {
-                case ActivityDiagramNodes.Empty:
-                    ClearBuilder();
-                    throw new NotSupportedException("Type for builder was not set!");
-                case ActivityDiagramNodes.InitialNode:
-                    ClearBuilder();
-                    return new InitialNode(_outEdgesVal);
-                case ActivityDiagramNodes.FinalNode:
-                    ClearBuilder();
-                    return new FinalNode(_nameVal, _inEdgesVal);
-                case ActivityDiagramNodes.ObjectNode:
-                    ClearBuilder();
-                    return new ObjectNode(_nameVal, _inEdgesVal, _outEdgesVal);
-                case ActivityDiagramNodes.DecisionNode:
-                    ClearBuilder();
-                    return new DecisionNode(_inEdgesVal, _outEdgesVal);
-                case ActivityDiagramNodes.MergeNode:
-                    ClearBuilder();
-                    return new MergeNode(_inEdgesVal, _outEdgesVal);
-                case ActivityDiagramNodes.JoinNode:
-                    ClearBuilder();
-                    return new JoinNode(_inEdgesVal, _outEdgesVal);
-                case ActivityDiagramNodes.ForkNode:
-                    ClearBuilder();
-                    return new ForkNode(_inEdgesVal, _outEdgesVal);
-                case ActivityDiagramNodes.ActionNode:
-                    ClearBuilder();
-                    return new ActionNode(_nameVal, _inEdgesVal, _outEdgesVal);
-            } */
-
-            return null;
+                if (type == ActivityDiagramNodes.FinalNode || type == ActivityDiagramNodes.InitialNode)
+                {
+                    return CreateNode(type, id, new List<Edge>());
+                }
+                else
+                {
+                    return CreateNode(type, id, new List<Edge>(), new List<Edge>());
+                }
+            } else
+            {
+                return CreateNode(type, id, name, new List<Edge>(), new List<Edge>());
+            }
         }
 
-        private static void ClearBuilder()
+        public static Node CreateNode(ActivityDiagramNodes type, int id, List<Edge> inEdges, List<Edge> outEdges)
         {
-            _nameVal = string.Empty;
-            _inEdgesVal = new List<Edge>();
-            _outEdgesVal = new List<Edge>();
-            _typeVal = ActivityDiagramNodes.Empty;
+            switch (type)
+            {
+                case ActivityDiagramNodes.DecisionNode:
+                    return new DecisionNode(id, inEdges, outEdges);
+                case ActivityDiagramNodes.ForkNode:
+                    return new ForkNode(id, inEdges, outEdges);
+                default:
+                    throw new ArgumentException("Wrong parameters for given node type!");
+            }
         }
+
+        public static Node CreateNode(ActivityDiagramNodes type, int id, string name, List<Edge> inEdges, List<Edge> outEdges)
+        {
+            switch (type)
+            {
+                case ActivityDiagramNodes.ObjectNode:
+                    return new ObjectNode(id, name, inEdges, outEdges);
+                case ActivityDiagramNodes.ActionNode:
+                    return new ActionNode(id, name, inEdges, outEdges);
+                default:
+                    throw new ArgumentException("Wrong parameters for given node type!");
+            }
+        }
+
+        public static Node CreateNode(ActivityDiagramNodes type, int id, List<Edge> edges)
+        {
+            switch (type)
+            { 
+                case ActivityDiagramNodes.InitialNode:
+                    return new InitialNode(id, edges);
+                case ActivityDiagramNodes.FinalNode:
+                    return new FinalNode(id, edges);
+                default:
+                    throw new ArgumentException("Wrong parameters for given node type!");
+            }
+        }
+
+        //ConcreteNode node = null;
+
+        //public static ConcreteNode Id(int id)
+        //{
+        //    return new ConcreteNode(id);
+        //}
+
+        //public static void Type(ActivityDiagramNodes type)
+        //{
+        //    _typeVal = type;
+        //}
+
+        //public static void Name(string name)
+        //{
+        //    _nameVal = name;
+        //}
+
+        //public static void InEdges(List<Edge> inEdges)
+        //{
+        //    _inEdgesVal = inEdges;
+        //}
+
+        //public static void OutEdges(List<Edge> outEdges)
+        //{
+        //    _outEdgesVal = outEdges;
+        //}
+
+        //public static Node Build()
+        //{
+        //    Node n = null;
+
+        //    try
+        //    {
+        //        switch (_typeVal)
+        //        {
+        //            case ActivityDiagramNodes.Empty:
+        //                throw new NotSupportedException("Type for builder was not set!");
+        //            case ActivityDiagramNodes.InitialNode:
+        //                n = new InitialNode(_id, _outEdgesVal);
+        //                break;
+        //            case ActivityDiagramNodes.FinalNode:
+        //                n = new FinalNode(_id, _nameVal, _inEdgesVal);
+        //                break;
+        //            case ActivityDiagramNodes.ObjectNode:
+        //                n = new ObjectNode(_id, _nameVal, _inEdgesVal, _outEdgesVal);
+        //                break;
+        //            case ActivityDiagramNodes.DecisionNode:
+        //                n = new DecisionNode(_id, _inEdgesVal, _outEdgesVal);
+        //                break;
+        //            case ActivityDiagramNodes.MergeNode:
+        //                n = new MergeNode(_id, _inEdgesVal, _outEdgesVal);
+        //                break;
+        //            case ActivityDiagramNodes.JoinNode:
+        //                n = new JoinNode(_id, _inEdgesVal, _outEdgesVal);
+        //                break;
+        //            case ActivityDiagramNodes.ForkNode:
+        //                n = new ForkNode(_id, _inEdgesVal, _outEdgesVal);
+        //                break;
+        //            case ActivityDiagramNodes.ActionNode:
+        //                n = new ActionNode(_id, _nameVal, _inEdgesVal, _outEdgesVal);
+        //                break;
+        //        }
+        //    } finally
+        //    {
+        //        ClearBuilder();
+        //    }
+
+        //    return null;
+        //}
+
+        //private static void ClearBuilder()
+        //{
+        //    _id = 0;
+        //    _nameVal = string.Empty;
+        //    _inEdgesVal = new List<Edge>();
+        //    _outEdgesVal = new List<Edge>();
+        //    _typeVal = ActivityDiagramNodes.Empty;
+        //}
     }
 }

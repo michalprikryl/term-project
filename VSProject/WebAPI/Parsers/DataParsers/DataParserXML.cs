@@ -8,6 +8,8 @@ using System;
 using WebAPI.Parsers.DiagramParsers;
 using WebAPI.Models.Nodes;
 using WebAPI.Models.Edges;
+using System.Text.RegularExpressions;
+using WebAPI.Models.Builders;
 
 namespace WebAPI.Parsers
 {
@@ -67,16 +69,19 @@ namespace WebAPI.Parsers
                 {
                     if ("1".Equals(c.Vertex))
                     {
-                        nodes.Add(new ConcreteNode(Int32.Parse(c.Id), c.Value));
+
+                        ActivityDiagramNodes type = StringUtils.ParseNodeTypeFromXmlStyle(c.Style);
+
+                        nodes.Add(NodeBuilder.BuildNode(type, Int32.Parse(c.Id), c.Value));
                     }
                     else if ("1".Equals(c.Edge))
                     {
                         edges.Add(new ConcreteEdge(Int32.Parse(c.Id), c.Value));
                     }
                 }
-            }
 
-            Console.WriteLine("DONE!");
+                Console.WriteLine("DONE!");
+            }
         }
     }
 }

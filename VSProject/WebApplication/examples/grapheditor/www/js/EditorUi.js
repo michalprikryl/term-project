@@ -2868,7 +2868,7 @@ EditorUi.prototype.save = function (name) {
 					/*new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
 						'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');*/
                     sendToApi(xml);
-                    download(name, xml);
+                    //download(name, xml);
                 }
                 else {
                     mxUtils.alert(mxResources.get('drawingTooLarge'));
