@@ -4,22 +4,37 @@ namespace WebAPI.Models
 {
     public abstract class Node
     {
-        protected readonly int id;
-        protected string name;
-        protected List<Edge> inEdges;
-        protected List<Edge> outEdges;
+        private readonly int _id;
+        private string _name;
+        private List<Edge> _inEdges;
+        private List<Edge> _outEdges;
 
-        public Node(int id, string name, List<Edge> inEdges, List<Edge> outEdges)
+        public Node(int id)
         {
-            this.id = id;
-            this.name = name;
-            this.inEdges = inEdges;
-            this.outEdges = outEdges;
+            _id = id;
         }
 
-        public int Id { get => id; }
-        public abstract string Name { get; set; }
-        public abstract List<Edge> InEdges { get; set; }
-        public abstract List<Edge> OutEdges { get; set; }
+        public int Id
+        {
+            get => _id;
+        }
+
+        public virtual string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
+
+        public virtual List<Edge> InEdges
+        {
+            get => _inEdges;
+            set => _inEdges = value;
+        }
+
+        public virtual List<Edge> OutEdges
+        {
+            get => _outEdges;
+            set => _outEdges = value;
+        }
     }
 }

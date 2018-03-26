@@ -29,6 +29,8 @@ namespace WebAPI.Models.DataAPI
         public string Value { get; set; }
         [XmlAttribute(AttributeName = "vertex")]
         public string Vertex { get; set; }
+        [XmlAttribute(AttributeName = "connectable")]
+        public string Connectable { get; set; }
     }
 
     [XmlRoot(ElementName = "mxGeometry")]

@@ -2,48 +2,89 @@
 using System.Collections.Generic;
 using System.Linq;
 using WebAPI.Models;
+using WebAPI.Models.Builders;
 using WebAPI.Models.DataAPI;
 
 namespace WebAPI.Parsers.DiagramParsers
 {
     public class ActivityParser : IDiagramParser
     {
-        private List<MxCell> _objects;
+        public List<Node> Nodes { get; set; }
+        public List<Edge> Edges { get; set; }
 
-        public List<Node> ParseDiagram(List<MxCell> objects)
+        public ActivityParser()
         {
-            List<Node> graph = new List<Node>();
+            Nodes = new List<Node>();
+            Edges = new List<Edge>();
+        }
 
-            _objects = objects;
+        public List<Node> ParseDiagram(List<MxCell> sourceNodes, List<MxCell> sourceTexts, List<MxCell> sourceEdges)
+        {
+            //nodes
+            CreateNodes(sourceNodes);
 
-            MxCell graphObject = objects.FirstOrDefault(ne => (ne.Id == "0" || ne.Id == "1") && ne.Parent == "0");
-            if (graphObject == null)
+            //edges
+            CreateEdges(sourceTexts, sourceEdges);
+
+            //assign edges to nodes
+            AssignEdgesToNodes();
+
+            Node graphObject = Nodes.FirstOrDefault(ne => ne.InEdges == null);
+            if (!(graphObject is InitialNode))
             {
                 throw new ArgumentException("Graph doesn't contain initial node.");
             }
-            else
+
+            graphObject = Nodes.FirstOrDefault(ne => ne.OutEdges == null);
+            if (!(graphObject is FinalNode))
             {
-                //graph.Add(new InitialNode())
+                throw new ArgumentException("Graph doesn't contain final node.");
             }
 
-            for (int i = 1; i < objects.Count; i++)
-            {
-                graphObject = objects.FirstOrDefault(ne => ne.Id == i.ToString());
-
-                if (graphObject == null)
-                {
-                    break;
-                }
-            }
-
-            return graph;
+            //nepamatuju si proc jsem dal navratovou hodnotu, tak to tu necham
+            return new List<Node>();
         }
 
-        //private Edge FindEdge(string id)
-        //{
-        //    MxCell xcell = _objects.FirstOrDefault(obj => obj.Parent == "1" && obj.Edge == "1" && obj.Source == id);
+        private void CreateNodes(List<MxCell> sourceNodes)
+        {
+            foreach (MxCell cell in sourceNodes)
+            {
+                ActivityDiagramNodes type = StringUtils.ParseNodeTypeFromXmlStyle(cell.Style);
 
-        //    NamedActivityEdge edge = new NamedActivityEdge(xcell.Value, xcell.);
-        //}
+                Nodes.Add(NodeBuilder.BuildNode(type, int.Parse(cell.Id), cell.Value));
+            }
+        }
+
+        private void AssignEdgesToNodes()
+        {
+            foreach (var node in Nodes)
+            {
+                if (node.InEdges != null)
+                {
+                    node.InEdges = Edges.Where(edge => edge.OutNode.Id == node.Id).ToList();
+                }
+
+                if (node.OutEdges != null)
+                {
+                    node.OutEdges = Edges.Where(edge => edge.InNode.Id == node.Id).ToList();
+                }
+            }
+        }
+
+        private void CreateEdges(List<MxCell> sourceTexts, List<MxCell> sourceEdges)
+        {
+            string edgeText;
+            int source, target;
+            foreach (MxCell cell in sourceEdges)
+            {
+                edgeText = sourceTexts.FirstOrDefault(text => text.Parent == cell.Id)?.Value;
+
+                ActivityDiagramEdge type = StringUtils.ParseEdgeTypeFromXmlText(edgeText);
+
+                source = int.Parse(cell.Source);
+                target = int.Parse(cell.Target);
+                Edges.Add(EdgeBuider.BuildEdge(type, int.Parse(cell.Id), edgeText, Nodes.FirstOrDefault(node => node.Id == source), Nodes.FirstOrDefault(node => node.Id == target)));
+            }
+        }
     }
 }

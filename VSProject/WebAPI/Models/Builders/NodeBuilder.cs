@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using WebAPI.Models.Nodes;
 
 namespace WebAPI.Models.Builders
 {
-    public class NodeBuilder
+    public static class NodeBuilder
     {
 
         public static Node BuildNode(ActivityDiagramNodes type, int id, String name)
         {
-            if (name == null || name == String.Empty)
+            if (string.IsNullOrEmpty(name))
             {
                 if (type == ActivityDiagramNodes.FinalNode || type == ActivityDiagramNodes.InitialNode)
                 {
@@ -19,18 +18,17 @@ namespace WebAPI.Models.Builders
                 {
                     return CreateNode(type, id, new List<Edge>(), new List<Edge>());
                 }
-            } else
+            }
+            else
             {
                 return CreateNode(type, id, name, new List<Edge>(), new List<Edge>());
             }
         }
 
-        public static Node CreateNode(ActivityDiagramNodes type, int id, List<Edge> inEdges, List<Edge> outEdges)
+        private static Node CreateNode(ActivityDiagramNodes type, int id, List<Edge> inEdges, List<Edge> outEdges)
         {
             switch (type)
             {
-                case ActivityDiagramNodes.DecisionNode:
-                    return new DecisionNode(id, inEdges, outEdges);
                 case ActivityDiagramNodes.ForkNode:
                     return new ForkNode(id, inEdges, outEdges);
                 default:
@@ -38,12 +36,14 @@ namespace WebAPI.Models.Builders
             }
         }
 
-        public static Node CreateNode(ActivityDiagramNodes type, int id, string name, List<Edge> inEdges, List<Edge> outEdges)
+        private static Node CreateNode(ActivityDiagramNodes type, int id, string name, List<Edge> inEdges, List<Edge> outEdges)
         {
             switch (type)
             {
                 case ActivityDiagramNodes.ObjectNode:
                     return new ObjectNode(id, name, inEdges, outEdges);
+                case ActivityDiagramNodes.DecisionNode:
+                    return new DecisionNode(id, name, inEdges, outEdges);
                 case ActivityDiagramNodes.ActionNode:
                     return new ActionNode(id, name, inEdges, outEdges);
                 default:
@@ -51,10 +51,10 @@ namespace WebAPI.Models.Builders
             }
         }
 
-        public static Node CreateNode(ActivityDiagramNodes type, int id, List<Edge> edges)
+        private static Node CreateNode(ActivityDiagramNodes type, int id, List<Edge> edges)
         {
             switch (type)
-            { 
+            {
                 case ActivityDiagramNodes.InitialNode:
                     return new InitialNode(id, edges);
                 case ActivityDiagramNodes.FinalNode:

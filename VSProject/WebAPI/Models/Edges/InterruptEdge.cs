@@ -4,26 +4,15 @@ namespace WebAPI.Models
 {
     public class InterruptEdge : Edge
     {
-
-        
-        public InterruptEdge(int id, string name, Node inNode, Node outNode) : base(id, name)
+        public InterruptEdge(int id, Node inNode, Node outNode) : base(id, string.Empty)
         {
-            this.inNode = inNode;
-            this.outNode = outNode;
+            InNode = inNode;
+            OutNode = outNode;
         }
 
-        public override string Name { get => name; set => throw new System.NotSupportedException(); }
-
-        public override Node InNode
+        public override string Name
         {
-            get => inNode;
-            set => inNode = value;
-        }
-
-        public override Node OutNode
-        {
-            get => outNode;
-            set => outNode = value;
+             set => throw new NotSupportedException();
         }
     }
 }
