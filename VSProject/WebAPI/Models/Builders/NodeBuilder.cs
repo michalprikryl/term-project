@@ -31,6 +31,8 @@ namespace WebAPI.Models.Builders
             {
                 case ActivityDiagramNodes.ForkNode:
                     return new ForkNode(id, inEdges, outEdges);
+                case ActivityDiagramNodes.DecisionNode:
+                    return new DecisionNode(id, inEdges, outEdges);
                 default:
                     throw new ArgumentException("Wrong parameters for given node type!");
             }
@@ -42,8 +44,6 @@ namespace WebAPI.Models.Builders
             {
                 case ActivityDiagramNodes.ObjectNode:
                     return new ObjectNode(id, name, inEdges, outEdges);
-                case ActivityDiagramNodes.DecisionNode:
-                    return new DecisionNode(id, name, inEdges, outEdges);
                 case ActivityDiagramNodes.ActionNode:
                     return new ActionNode(id, name, inEdges, outEdges);
                 default:

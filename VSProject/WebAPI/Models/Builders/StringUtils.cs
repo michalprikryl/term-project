@@ -42,7 +42,7 @@ namespace WebAPI.Models.Builders
             {
                 return ActivityDiagramNodes.ForkNode;
             }
-            else if (xmlStyle == FORK)
+            else if (xmlStyle == CONDITION)
             {
                 return ActivityDiagramNodes.DecisionNode;
             }

@@ -4,6 +4,7 @@ using System.Linq;
 using WebAPI.Models;
 using WebAPI.Models.Builders;
 using WebAPI.Models.DataAPI;
+using WebAPI.Models.Validators;
 
 namespace WebAPI.Parsers.DiagramParsers
 {
@@ -42,6 +43,12 @@ namespace WebAPI.Parsers.DiagramParsers
             }
 
             //nepamatuju si proc jsem dal navratovou hodnotu, tak to tu necham
+
+            if (!new ConsistencyValidator(this.Nodes).Validate())
+            {
+                throw new NotSupportedException("Diagram is not consistent!");
+            }
+
             return new List<Node>();
         }
 

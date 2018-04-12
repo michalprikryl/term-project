@@ -5,9 +5,9 @@ namespace WebAPI.Models
 {
     public class DecisionNode : Node
     {
-        public DecisionNode(int id, string name, List<Edge> inEdges, List<Edge> outEdges) : base(id)
+        public DecisionNode(int id, List<Edge> inEdges, List<Edge> outEdges) : base(id)
         {
-            Name = name;
+            Name = String.Empty;
             base.InEdges = inEdges;
             base.OutEdges = outEdges;
         }
