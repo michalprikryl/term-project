@@ -11,6 +11,7 @@ namespace Database
         public virtual DbSet<GraphNode> GraphNode { get; set; }
         public virtual DbSet<Language> Language { get; set; }
         public virtual DbSet<NodeType> NodeType { get; set; }
+        public virtual DbSet<Pattern> Pattern { get; set; }
         public virtual DbSet<Region> Region { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<WorkSpace> WorkSpace { get; set; }
@@ -136,6 +137,21 @@ namespace Database
                     .HasForeignKey(d => d.DiagramTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_NODETYPE_DIAGRAM");
+            });
+
+            modelBuilder.Entity<Pattern>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Jsonrepresenation)
+                    .IsRequired()
+                    .HasColumnName("JSONRepresenation");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.Text).HasMaxLength(256);
             });
 
             modelBuilder.Entity<Region>(entity =>

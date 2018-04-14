@@ -53,3 +53,81 @@ function send_to_API() {
         }
     });
 }
+
+
+function add_pattern() {
+    var pattern = {
+        Text: 'some pattern',
+        Name: 'pat',
+        JSON: '{"menu": { "id": "file", "value": "File", "popup": { "menuitem": [ {"value": "New", "onclick": "CreateNewDoc()"}, {"value": "Open", "onclick": "OpenDoc()"}, {"value": "Close", "onclick": "CloseDoc()"} ] } }}'
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: "http://localhost:60000/api/pattern/",
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(pattern),
+        success: function (result) {
+            if (result !== null) {
+                document.getElementById("result").innerHTML = JSON.stringify(result);
+
+                console.log(result.data);
+            } else {
+                document.getElementById("result").innerHTML = "NULL";
+            }
+        }
+    });
+}
+
+function get_patterns() {
+    $.get("http://localhost:60000/api/pattern/", function (data, status) {
+        document.getElementById("result").innerHTML = JSON.stringify(data);
+    });
+}
+
+function get_first_pattern() {
+    $.get("http://localhost:60000/api/pattern/11", function (data, status) {
+        document.getElementById("result").innerHTML = JSON.stringify(data);
+    });
+}
+
+function drop_pattern() {
+    $.ajax({
+        type: 'DELETE',
+        url: "http://localhost:60000/api/pattern/3",
+        success: function (result) {
+            if (result !== null) {
+                document.getElementById("result").innerHTML = JSON.stringify(result);
+
+                console.log(result.data);
+            } else {
+                document.getElementById("result").innerHTML = "NULL";
+            }
+        }
+    });
+}
+
+function update_pattern() {
+    var pattern = {
+        Text: 'some pattern update',
+        Name: 'pat update'
+    };
+
+    $.ajax({
+        type: 'PUT',
+        url: "http://localhost:60000/api/pattern/1",
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(pattern),
+        success: function (result) {
+            if (result !== null) {
+                document.getElementById("result").innerHTML = JSON.stringify(result);
+
+                console.log(result.data);
+            } else {
+                document.getElementById("result").innerHTML = "NULL";
+            }
+        }
+    });
+}
