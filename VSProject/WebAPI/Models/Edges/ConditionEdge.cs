@@ -2,29 +2,10 @@
 {
     public class ConditionEdge : Edge
     {
-        public ConditionEdge (string name, Node inNode, Node outNode)
+        public ConditionEdge (int id, string name, Node inNode, Node outNode) : base(id, name)
         {
-            Name = name;
             InNode = inNode;
             OutNode = outNode;
-        }
-
-        public override string Name
-        {
-            get => Name;
-            set => Name = value;
-        }
-
-        public override Node InNode
-        {
-            get => InNode;
-            set => InNode = value;
-        }
-
-        public override Node OutNode
-        {
-            get => OutNode;
-            set => OutNode = value;
         }
     }
 }

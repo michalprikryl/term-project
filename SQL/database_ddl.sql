@@ -83,6 +83,12 @@ CREATE TABLE GraphEdge (
 	CONSTRAINT FK_GRAPHEDGE_GRAPHNODE_TO FOREIGN KEY (ToNodeID) REFERENCES GraphNode(ID),
 );
 
+CREATE TABLE [dbo].[Pattern](
+	[ID] [int] IDENTITY(1,1) PRIMARY KEY,
+	[Name] [nvarchar](256) NOT NULL,
+	[Text] [nvarchar](256) NULL,
+	[JSONRepresenation] [nvarchar](max) NOT NULL,
+);
 
 /*CLEAN UP*/
 /*
@@ -98,6 +104,7 @@ DROP TABLE NodeType;
 DROP TABLE DiagramType;
 DROP TABLE [User];
 DROP TABLE [Language];
+DROP TABLE [Pattern];
 
 USE [master];
 go

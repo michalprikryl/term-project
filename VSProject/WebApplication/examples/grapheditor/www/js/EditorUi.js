@@ -2868,7 +2868,7 @@ EditorUi.prototype.save = function (name) {
 					/*new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
 						'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');*/
                     sendToApi(xml);
-                    download(name, xml);
+                    //download(name, xml);
                 }
                 else {
                     mxUtils.alert(mxResources.get('drawingTooLarge'));
@@ -2895,7 +2895,7 @@ function sendToApi(xml) {
 
     $.ajax({
         type: 'POST',
-        url: "http://localhost:60000/api/values/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
+        url: "http://localhost:60000/api/upload/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(dataXML),

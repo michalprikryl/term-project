@@ -2,6 +2,6 @@
 {
     public enum ActivityDiagramNodes
     {
-        InitialNode, FinalNode, DecisionNode, MergeNode, ForkNode, JoinNode, ObjectNode, ActionNode, Empty
+        InitialNode, FinalNode, DecisionNode, ForkNode, ObjectNode, ActionNode, Empty
     }
 }

@@ -1,30 +1,18 @@
-﻿namespace WebAPI.Models
+﻿using System;
+
+namespace WebAPI.Models
 {
     public class ObjectFlowEdge : Edge
     {
-        public ObjectFlowEdge (string name, Node inNode, Node outNode)
+        public ObjectFlowEdge (int id, Node inNode, Node outNode) : base(id, string.Empty)
         {
-            Name = name;
             InNode = inNode;
             OutNode = outNode;
         }
 
         public override string Name
         {
-            get => Name;
-            set => Name = value;
-        }
-
-        public override Node InNode
-        {
-            get => InNode;
-            set => InNode = value;
-        }
-
-        public override Node OutNode
-        {
-            get => OutNode;
-            set => OutNode = value;
+            set => throw new NotSupportedException();
         }
     }
 }

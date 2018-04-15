@@ -5,29 +5,37 @@ namespace WebAPI.Models
 {
     public class DecisionNode : Node
     {
-        public DecisionNode(List<Edge> inEdges, List<Edge> outEdges)
+        public DecisionNode(int id, List<Edge> inEdges, List<Edge> outEdges) : base(id)
         {
-            Name = string.Empty;
-            InEdges = inEdges;
-            OutEdges = outEdges;
-        }
-
-        public override string Name
-        {
-            get => Name;
-            set => throw new NotSupportedException("Cannot set name to decision node!");
+            Name = String.Empty;
+            base.InEdges = inEdges;
+            base.OutEdges = outEdges;
         }
 
         public override List<Edge> InEdges
         {
-            get => InEdges;
-            set => InEdges = value.Count == 1 ? value : throw new ArgumentException("Decision node cannot have more or less than one in edge!");
+            set
+            {
+                if (value.Count == 0)
+                {
+                    throw new ArgumentException("Decision node cannot have zero in edges!");
+                }
+
+                base.InEdges = value;
+            }
         }
 
         public override List<Edge> OutEdges
         {
-            get => OutEdges;
-            set => OutEdges = value.Count > 0 ? value : throw new ArgumentException("Decision node must have at least one out edge!");
+            set
+            {
+                if (value.Count == 0)
+                {
+                    throw new ArgumentException("Decision node cannot have zero out edges!");
+                }
+
+                base.OutEdges = value;
+            }
         }
     }
 }

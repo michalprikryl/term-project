@@ -5,29 +5,37 @@ namespace WebAPI.Models
 {
     public class ActionNode : Node
     {
-        public ActionNode(string name, List<Edge> inEdges, List<Edge> outEdges)
+        public ActionNode(int id, string name, List<Edge> inEdges, List<Edge> outEdges) : base(id)
         {
             Name = name;
-            InEdges = inEdges;
-            OutEdges = outEdges;
-        }
-
-        public override string Name
-        {
-            get => Name;
-            set => Name = value;
+            base.InEdges = inEdges;
+            base.OutEdges = outEdges;
         }
 
         public override List<Edge> InEdges
         {
-            get => InEdges;
-            set => InEdges = value.Count > 0 ? value : throw new ArgumentException("Action node cannot have zero in edges!");
+            set
+            {
+                if (value.Count == 0)
+                {
+                    throw new ArgumentException("Action node cannot have zero in edges!");
+                }
+
+                base.InEdges = value;
+            }
         }
 
         public override List<Edge> OutEdges
         {
-            get => OutEdges;
-            set => OutEdges = value;
+            set
+            {
+                if (value.Count == 0)
+                {
+                    throw new ArgumentException("Action node cannot have zero out edges!");
+                }
+
+                base.OutEdges = value;
+            }
         }
     }
 }
