@@ -4,29 +4,15 @@ namespace WebAPI.Models
 {
     public class InterruptEdge : Edge
     {
-        public InterruptEdge(Node inNode, Node outNode)
+        public InterruptEdge(int id, Node inNode, Node outNode) : base(id, string.Empty)
         {
-            Name = string.Empty;
             InNode = inNode;
             OutNode = outNode;
         }
 
         public override string Name
         {
-            get => Name;
-            set => throw new NotSupportedException("Interrupt edge cannot have name!");
-        }
-
-        public override Node InNode
-        {
-            get => InNode;
-            set => InNode = value;
-        }
-
-        public override Node OutNode
-        {
-            get => OutNode;
-            set => OutNode = value;
+             set => throw new NotSupportedException();
         }
     }
 }

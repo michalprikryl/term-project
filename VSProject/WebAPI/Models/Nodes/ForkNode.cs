@@ -5,29 +5,41 @@ namespace WebAPI.Models
 {
     public class ForkNode : Node
     {
-        public ForkNode(List<Edge> inEdges, List<Edge> outEdges)
+        public ForkNode(int id, List<Edge> inEdges, List<Edge> outEdges) : base(id)
         {
-            Name = string.Empty;
-            InEdges = inEdges;
-            OutEdges = outEdges;
+            base.InEdges = inEdges;
+            base.OutEdges = outEdges;
         }
 
         public override string Name
         {
-            get => Name;
             set => throw new NotSupportedException("Cannot set name to fork node!");
         }
 
         public override List<Edge> InEdges
         {
-            get => InEdges;
-            set => InEdges = value.Count == 1 ? value : throw new ArgumentException("Fork node cannot have more or less than one in edge!");
+            set
+            {
+                if (OutEdges.Count > 1 && value.Count > 1)
+                {
+                    throw new ArgumentException("Cannot set more than 1 in edge if out edges > 1");
+                }
+
+                base.InEdges = value;
+            }
         }
 
         public override List<Edge> OutEdges
         {
-            get => OutEdges;
-            set => OutEdges = value.Count > 0 ? value : throw new ArgumentException("Fork node must have at least one out edge!");
+            set
+            {
+                if (InEdges.Count > 1 && value.Count > 1)
+                {
+                    throw new ArgumentException("Cannot set more than 1 out edge if in edges > 1");
+                }
+
+                base.OutEdges = value;
+            }
         }
     }
 }

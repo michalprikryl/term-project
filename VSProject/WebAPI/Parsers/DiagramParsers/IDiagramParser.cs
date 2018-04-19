@@ -6,6 +6,6 @@ namespace WebAPI.Parsers.DiagramParsers
 {
     interface IDiagramParser
     {
-        List<Node> ParseDiagram(List<MxCell> objects);
+        List<Node> ParseDiagram(List<MxCell> sourceNodes, List<MxCell> sourceTexts, List<MxCell> sourceEdge);
     }
 }
