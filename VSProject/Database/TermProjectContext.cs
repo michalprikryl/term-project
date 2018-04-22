@@ -12,7 +12,7 @@ namespace Database
         public virtual DbSet<Language> Language { get; set; }
         public virtual DbSet<NodeType> NodeType { get; set; }
         public virtual DbSet<Pattern> Pattern { get; set; }
-        public virtual DbSet<Pattern> PatternType { get; set; }
+        public virtual DbSet<PatternType> PatternType { get; set; }
         public virtual DbSet<Region> Region { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<WorkSpace> WorkSpace { get; set; }
