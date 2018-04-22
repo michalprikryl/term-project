@@ -9,5 +9,8 @@ namespace Database.DBObjects
         public string Name { get; set; }
         public string Text { get; set; }
         public string Jsonrepresenation { get; set; }
+        public int PatternTypeId { get; set; }
+
+        public PatternType PatternType { get; set; }
     }
 }
