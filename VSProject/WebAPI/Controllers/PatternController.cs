@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
             string message;
             if (value.Validate())
             {
-                Pattern pattern = new Pattern { Jsonrepresenation = value.JSON, Name = value.Name, Text = value.Text };
+                Pattern pattern = new Pattern { Jsonrepresenation = value.JSON, Name = value.Name, Text = value.Text, PatternTypeId = value.PatternTypeID };
 
                 _db.Pattern.Add(pattern);
                 _db.SaveChanges();
@@ -85,6 +85,11 @@ namespace WebAPI.Controllers
                 if (value.Text != null)
                 {
                     pattern.Text = value.Text;
+                }
+
+                if(value.PatternTypeID != 0)
+                {
+                    pattern.PatternTypeId = value.PatternTypeID;
                 }
 
                 _db.SaveChanges();

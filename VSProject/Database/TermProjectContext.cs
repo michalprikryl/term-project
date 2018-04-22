@@ -12,6 +12,7 @@ namespace Database
         public virtual DbSet<Language> Language { get; set; }
         public virtual DbSet<NodeType> NodeType { get; set; }
         public virtual DbSet<Pattern> Pattern { get; set; }
+        public virtual DbSet<Pattern> PatternType { get; set; }
         public virtual DbSet<Region> Region { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<WorkSpace> WorkSpace { get; set; }
@@ -151,7 +152,26 @@ namespace Database
                     .IsRequired()
                     .HasMaxLength(256);
 
+                entity.Property(e => e.PatternTypeId)
+                    .HasColumnName("PatternTypeID")
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Text).HasMaxLength(256);
+
+                entity.HasOne(d => d.PatternType)
+                    .WithMany(p => p.Pattern)
+                    .HasForeignKey(d => d.PatternTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Pattern_PatternType");
+            });
+
+            modelBuilder.Entity<PatternType>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(256);
             });
 
             modelBuilder.Entity<Region>(entity =>
