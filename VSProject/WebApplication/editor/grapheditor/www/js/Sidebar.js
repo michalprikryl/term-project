@@ -1189,7 +1189,7 @@ Sidebar.prototype.addActivityPallete = function (expand)
             return sb.createVertexTemplateFromCells([cell], 160, 120, 'Composite State');
         }),
         this.addEntry('uml activity condition', function () {
-            var cell = new mxCell('Condition', new mxGeometry(0, 0, 80, 40), 'type=condition;rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
+            var cell = new mxCell('', new mxGeometry(0, 0, 80, 40), 'type=condition;rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
             cell.vertex = true;
 
             /*var edge1 = new mxCell('no', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;');
@@ -1236,7 +1236,7 @@ Sidebar.prototype.addComplexActivityPallete = function (expand) {
 
     var fns = [
         this.addEntry('uml activity steps', function () {
-            var cell = new mxCell('Step1', new mxGeometry(0, 0, 120, 40),
+            var cell = new mxCell('Activity1', new mxGeometry(0, 0, 120, 40),
                 'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell.vertex = true;
 
@@ -1247,7 +1247,7 @@ Sidebar.prototype.addComplexActivityPallete = function (expand) {
 
             cell.insertEdge(edge, true);  //true - output edge
 
-            var cell2 = new mxCell('Step2', new mxGeometry(0, 100, 120, 40),
+            var cell2 = new mxCell('Activity2', new mxGeometry(0, 100, 120, 40),
                 'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell2.vertex = true;
 
@@ -1260,7 +1260,7 @@ Sidebar.prototype.addComplexActivityPallete = function (expand) {
 
             cell2.insertEdge(edge2, true);
 
-            var cell3 = new mxCell('Step3', new mxGeometry(0, 200, 120, 40),
+            var cell3 = new mxCell('Activity3', new mxGeometry(0, 200, 120, 40),
                 'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell3.vertex = true;
 
@@ -1282,10 +1282,10 @@ Sidebar.prototype.addComplexActivityPallete = function (expand) {
 
             cell0.insertEdge(edge, true);
 
-            var cell = new mxCell('Condition', new mxGeometry(0, 0, 80, 40), 'rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
+            var cell = new mxCell('', new mxGeometry(0, 0, 80, 40), 'rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
             cell.vertex = true;
 
-            var edge1 = new mxCell('no', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
+            var edge1 = new mxCell('condition1', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
             edge1.geometry.setTerminalPoint(new mxPoint(180, 20), false);
             edge1.geometry.relative = true;
             edge1.geometry.x = -1;
@@ -1300,7 +1300,7 @@ Sidebar.prototype.addComplexActivityPallete = function (expand) {
 
             cell1.insertEdge(edge1, false);
 
-            var edge2 = new mxCell('yes', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=top;endArrow=open;endSize=8;strokeColor=#000000;');
+            var edge2 = new mxCell('condition2', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=top;endArrow=open;endSize=8;strokeColor=#000000;');
             edge2.geometry.setTerminalPoint(new mxPoint(40, 100), false);
             edge2.geometry.relative = true;
             edge2.geometry.x = -1;
@@ -1463,10 +1463,10 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
 
             cell0.insertEdge(edge, true);
 
-            var cell = new mxCell('Decision', new mxGeometry(0, 0, 80, 40), 'rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
+            var cell = new mxCell('', new mxGeometry(0, 0, 80, 40), 'rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
             cell.vertex = true;
 
-            var edge1 = new mxCell('no', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
+            var edge1 = new mxCell('true', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
             edge1.geometry.setTerminalPoint(new mxPoint(180, 20), false);
             edge1.geometry.relative = true;
             edge1.geometry.x = -1;
@@ -1481,7 +1481,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
 
             cell1.insertEdge(edge1, false);
 
-            var edge2 = new mxCell('yes', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=top;endArrow=open;endSize=8;strokeColor=#000000;');
+            var edge2 = new mxCell('false', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=top;endArrow=open;endSize=8;strokeColor=#000000;');
             edge2.geometry.setTerminalPoint(new mxPoint(40, 100), false);
             edge2.geometry.relative = true;
             edge2.geometry.x = -1;
