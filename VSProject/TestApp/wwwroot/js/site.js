@@ -131,3 +131,15 @@ function update_pattern() {
         }
     });
 }
+
+function get_pattern_types() {
+    $.get("http://localhost:60000/api/patterntype/", function (data, status) {
+        document.getElementById("result").innerHTML = JSON.stringify(data);
+    });
+}
+
+function get_first_pattern_type() {
+    $.get("http://localhost:60000/api/patterntype/1", function (data, status) {
+        document.getElementById("result").innerHTML = JSON.stringify(data);
+    });
+}

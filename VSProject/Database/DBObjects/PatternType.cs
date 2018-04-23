@@ -14,5 +14,13 @@ namespace Database.DBObjects
         public string Name { get; set; }
 
         public ICollection<Pattern> Pattern { get; set; }
+
+        public object GetObject
+        {
+            get
+            {
+                return new { Id, Name };
+            }
+        }
     }
 }

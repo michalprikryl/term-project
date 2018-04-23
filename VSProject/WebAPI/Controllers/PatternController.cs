@@ -15,22 +15,19 @@ namespace WebAPI.Controllers
 
         // GET: api/Pattern
         [HttpGet]
-        public IEnumerable<IActionResult> Get()
+        public IActionResult Get()
         {
-            foreach (var item in _db.Pattern)
-            {
-                yield return Json(item);
-            }
+            return Json(_db.Pattern.Select(type => type.GetObject));
         }
 
         // GET: api/Pattern/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             var pattern = _db.Pattern.FirstOrDefault(p => p.Id == id);
             if (pattern != null)
             {
-                return Json(pattern);
+                return Json(pattern.GetObject);
             }
             else
             {

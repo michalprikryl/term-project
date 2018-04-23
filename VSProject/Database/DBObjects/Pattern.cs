@@ -12,5 +12,13 @@ namespace Database.DBObjects
         public int PatternTypeId { get; set; }
 
         public PatternType PatternType { get; set; }
+
+        public object GetObject
+        {
+            get
+            {
+                return new { Id, Name, Text, Jsonrepresenation, PatternTypeId };
+            }
+        }
     }
 }
