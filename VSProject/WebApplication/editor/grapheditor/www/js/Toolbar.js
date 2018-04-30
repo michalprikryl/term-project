@@ -170,7 +170,9 @@ Toolbar.prototype.init = function()
 	this.addSeparator();
 
 	var insertMenu = this.addMenu('', mxResources.get('insert') + ' (' + mxResources.get('doubleClickTooltip') + ')', true, 'insert', null, true);
-	this.addDropDownArrow(insertMenu, 'geSprite-plus', 38, 48, -4, -3, 36, -8);
+    this.addDropDownArrow(insertMenu, 'geSprite-plus', 38, 48, -4, -3, 36, -8);
+    this.addSeparator();
+    this.addButton('', '', function () { window.location.replace('http://localhost:58771/editor/grapheditor/www/index.html'); });
 };
 
 /**
@@ -407,7 +409,7 @@ Toolbar.prototype.createTextToolbar = function()
 	});
 	
 	this.addSeparator();
-	
+    
 	// FIXME: Uses geButton here and geLabel in main menu
 	var insertMenu = this.addMenuFunction('', mxResources.get('insert'), true, mxUtils.bind(this, function(menu)
 	{
@@ -442,8 +444,8 @@ Toolbar.prototype.createTextToolbar = function()
 		insertMenu.style.width = (mxClient.IS_QUIRKS) ? '50px' : '30px';
 	}
 	
-	this.addSeparator();
-	
+    this.addSeparator();
+    
 	// KNOWN: All table stuff does not work with undo/redo
 	// KNOWN: Lost focus after click on submenu with text (not icon) in quirks and IE8. This is because the TD seems
 	// to catch the focus on click in these browsers. NOTE: Workaround in mxPopupMenu for icon items (without text).

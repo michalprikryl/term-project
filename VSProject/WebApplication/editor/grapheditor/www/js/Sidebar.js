@@ -93,6 +93,8 @@ Sidebar.prototype.init = function()
 	this.addSearchPalette(true);
     this.addActivityPallete(true);
     this.addExampleActivityPallete(true);
+    this.getFromApi();
+    
 };
 
 /**
@@ -1105,6 +1107,86 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
 
     this.addPaletteFunctions('activity', mxResources.get('activity', '', 'Examples of Activity Diagram'), expand || false, fns);
 }
+function ajaxCall() {
+    var ate = "";
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:60000/api/pattern/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        //data: {"ID":"10"},
+        //data: dat,
+        success: function (result) {
+            if (result !== null) {
+                ate = result;
+            } else {
+                ate = null;
+            }
+        }
+
+    });
+    return ate;
+}
+Sidebar.prototype.getFromApi = function () {
+
+    console.log("getFromApiTop");
+    var a = ajaxCall();
+    //console.log(a[1].jsonrepresenation);
+    var arr = [];
+    var name = [];
+    console.log("getFromApi");
+    for (var i = 0; i < a.length; i++) {
+
+
+        var tmp = JSON.parse(a[i].jsonrepresenation)
+        console.log(tmp);
+        try {
+            var doc = mxUtils.parseXml(tmp.JSONdata);
+            console.log(doc);
+            var model = new mxGraphModel();
+            var codec = new mxCodec(doc);
+            codec.decode(doc.documentElement, model);
+            //console.log("codec");
+            //console.log(codec.objects);
+            arr.push(codec.objects);
+            name.push(tmp.Name);
+            //this.loadRules(true, codec.objects, tmp.Name);
+        }
+        catch (e) {
+            mxUtils.alert(mxResources.get('invalidOrMissingFile') + ': ' + e.message);
+            //mxUtils.alert(e.message)
+        }
+    }
+    console.log(arr);
+    console.log(name);
+    this.loadRules(true, arr, name);
+};
+/*
+  Method shows rules from database at sidebar
+*/
+var index; // globalni promìná, která zpøístupòuje index v poli pøi pozdìjším volání funkci z pole
+Sidebar.prototype.loadRules = function (expand, arr, name) {
+    var sb = this;
+
+    /*var fns = [
+        this.addEntry('atempt', function () {
+
+
+            return sb.createVertexTemplateFromCells(arr, 150, 80, name);
+        }),
+    ];*/
+    var fns = [];
+
+    index = 0;
+    console.log('delka:' + arr.length);
+    for (var i = 0; i < arr.length; i++) {
+        index++
+        fns.push(this.addEntry('atempt', function () { index = index - 1; return sb.createVertexTemplateFromCells(arr[index], 150, 80, name[index]); }));
+    }
+
+    this.addPaletteFunctions('activity', mxResources.get('activitypo', '', 'Defined rules'), expand || false, fns);
+};
 
 /*Sidebar.prototype.addExampleActivityPallete = function (expand) {
     var sb = this;

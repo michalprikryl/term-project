@@ -2895,20 +2895,25 @@ EditorUi.prototype.save = function (name) {
 */
 var dataXML = {
         //set current(d){ this.Data.push(d);}
-        Data: '',
-        DataFormat: 'xml'
+        JSON: '',
+        Text: '',
+        Name: '',
+        
+        PatternTypeID:''
+        
     };
-    dataXML.SetData = function(xml){
-        dataXML.Data = xml;
-    }
-EditorUi.prototype.sendToApi = function () {
+
+EditorUi.prototype.sendToApi = function (name, description, pattern) {
 
     
-    dataXML.Data = mxUtils.getXml(this.editor.getGraphXml());
+    dataXML.JSON = mxUtils.getXml(this.editor.getGraphXml());
+    dataXML.Name = name;
+    dataXML.Text = description;
+    dataXML.PatternTypeID = pattern;
+    //var data = mxUtils.getXml(this.editor.getGraphXml());
+    dataXML.JSON = JSON.stringify(dataXML);
     
-    
-    
-    
+    console.log(dataXML);
     $.ajax({
         type: 'POST',
         url: "http://localhost:60000/api/pattern/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
@@ -2919,7 +2924,7 @@ EditorUi.prototype.sendToApi = function () {
             if (result !== null) {
                 // document.getElementById("result").innerHTML = JSON.stringify(result);
                 alert("Ok");
-                console.log(result.data);
+                console.log(result);
             } else {
                 document.getElementById("result").innerHTML = "NULL";
                 alert("KO");
@@ -2928,6 +2933,7 @@ EditorUi.prototype.sendToApi = function () {
         }
     });
     console.log("uspesne");
+    
 };
 function download(filename, text) {
     var element = document.createElement('a');

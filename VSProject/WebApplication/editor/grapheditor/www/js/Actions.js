@@ -84,7 +84,7 @@ Actions.prototype.init = function()
 	this.addAction('preview', function() { mxUtils.show(graph, null, 10, 10); });
 	
 	// Edit actions
-  this.addAction('ruleCreator', function(){window.location.replace('../../../../RuleCreator/examples/grapheditor/www/index.html');});
+    this.addAction('ruleCreator', function () { window.location.replace('http://localhost:58771/editor/grapheditor/www/index.html');});
 	this.addAction('undo', function() { ui.undo(); }, null, 'sprite-undo', Editor.ctrlKey + '+Z');
 	this.addAction('redo', function() { ui.redo(); }, null, 'sprite-redo', (!mxClient.IS_WIN) ? Editor.ctrlKey + '+Shift+Z' : Editor.ctrlKey + '+Y');
 	this.addAction('cut', function() { mxClipboard.cut(graph); }, null, 'sprite-cut', Editor.ctrlKey + '+X');

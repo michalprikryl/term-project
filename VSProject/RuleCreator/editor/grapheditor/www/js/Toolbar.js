@@ -9,7 +9,7 @@ function Toolbar(editorUi, container)
 	this.editorUi = editorUi;
 	this.container = container;
 	this.staticElements = [];
-	this.init();
+	this.init(this.editorUi);
 
 	// Global handler to hide the current menu
 	this.gestureHandler = mxUtils.bind(this, function(evt)
@@ -55,7 +55,10 @@ Toolbar.prototype.staticElements = null;
 Toolbar.prototype.init = function()
 {
 	var sw = screen.width;
-	
+	var ui = this.editorUi;
+	console.log(this.editorUi);
+	/*this.editorUi = editorUi;
+	this.container = container;*/
 	// Takes into account initial compact mode
 	sw -= (screen.height > 740) ? 56 : 0;
 	
@@ -171,6 +174,10 @@ Toolbar.prototype.init = function()
 
 	var insertMenu = this.addMenu('', mxResources.get('insert') + ' (' + mxResources.get('doubleClickTooltip') + ')', true, 'insert', null, true);
 	this.addDropDownArrow(insertMenu, 'geSprite-plus', 38, 48, -4, -3, 36, -8);
+	this.addSeparator();
+	this.addButton('', '', function () { window.location.replace('http://localhost:20260/editor/grapheditor/www/index.html'); });
+	this.addSeparator();
+	this.addButton('', '', function () { ui.showDialog(new SaveDialog(ui).container,300, 230, true, true); });
 };
 
 /**

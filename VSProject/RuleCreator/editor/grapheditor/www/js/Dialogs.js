@@ -847,9 +847,144 @@ var EditDiagramDialog = function(editorUi)
  */
 EditDiagramDialog.showNewWindowOption = true;
 
+function getPatternType()
+{
+	var aj = ajaxCallPatternType();
+	var select = document.createElement('select');
+	for (var i = 0; i < aj.length; i++) {
+		var option = document.createElement('option');
+		var name = document.createTextNode(aj[i].name);
+		option.appendChild(name);
+		option.value = aj[i].id;
+		select.appendChild(option);
+	}
+	return select;
+}
+function ajaxCallPatternType() {
+    var ate = "";
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:60000/api/PatternType/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        //data: {"ID":"10"},
+        //data: dat,
+        success: function (result) {
+            if (result !== null) {
+                ate = result;
+            } else {
+                ate = null;
+            }
+        }
+
+    });
+    return ate;
+}
 /**
  * Constructs a new export dialog.
  */
+var SaveDialog = function(editorUi)
+{
+	var graph = editorUi.editor.graph;
+	var bounds = graph.getGraphBounds();
+	var scale = graph.view.scale;
+	
+	var width = Math.ceil(bounds.width / scale);
+	var height = Math.ceil(bounds.height / scale);
+
+	var row, td;
+	
+	var table = document.createElement('table');
+	var tbody = document.createElement('tbody');
+	table.setAttribute('cellpadding', (mxClient.IS_SF) ? '0' : '2');
+	table.appendChild(tbody);
+
+	/*First row in dialog*/
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	var ruleName = document.createTextNode("Rule name:");
+	td.appendChild(ruleName);
+	row.appendChild(td);
+	var nameInput = document.createElement('input');
+	nameInput.setAttribute('value', 'Random rule name');
+	nameInput.style.width = '180px';
+	td = document.createElement('td');
+	td.appendChild(nameInput);
+	row.appendChild(td);
+	tbody.appendChild(row);
+	/**/
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	var type = document.createTextNode("Type:");
+	td.appendChild(type);
+	row.appendChild(td);
+	var select = getPatternType();
+	console.log(select);
+	td = document.createElement('td');
+	td.appendChild(select);
+	row.appendChild(td);
+	tbody.appendChild(row);
+	/*Second row in dialog*/
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	var description = document.createTextNode("Description:");
+	td.appendChild(description);
+	row.appendChild(td);
+	var descriptionText = document.createElement('textarea');
+	descriptionText.setAttribute('value', 'Description of rule');
+	descriptionText.setAttribute('style', 'resize: none;')
+	descriptionText.rows = 5;
+	descriptionText.style.width = '180px';
+	td = document.createElement('td');
+	td.appendChild(descriptionText);
+	row.appendChild(td);
+	tbody.appendChild(row);
+	/*Dialog buttons*/
+	row = document.createElement('tr');
+
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	row.appendChild(td);
+	td = document.createElement('td');
+	var saveBtn = mxUtils.button(mxResources.get('save'), mxUtils.bind(this, function()
+	{
+		console.log(nameInput.value + "    " + descriptionText.value);
+		editorUi.sendToApi(nameInput.value,descriptionText.value);
+		editorUi.hideDialog();
+	}));
+	saveBtn.className = 'geBtn gePrimaryBtn';
+	
+	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+	{
+		editorUi.hideDialog();
+	});
+	cancelBtn.className = 'geBtn';
+	
+	if (editorUi.editor.cancelFirst)
+	{
+		td.appendChild(cancelBtn);
+		td.appendChild(saveBtn);
+	}
+	else
+	{
+		td.appendChild(saveBtn);
+		td.appendChild(cancelBtn);
+	}
+	row.appendChild(td);
+	tbody.appendChild(row);
+	this.container = table;
+	
+	
+
+}
 var ExportDialog = function(editorUi)
 {
 	var graph = editorUi.editor.graph;

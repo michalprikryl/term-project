@@ -1020,17 +1020,20 @@ function ajaxCall() {
 }
 Sidebar.prototype.getFromApi = function () {
 
+    console.log("getFromApiTop");
     var a = ajaxCall();
+    console.log(a);
     //console.log(a[1].jsonrepresenation);
     var arr = [];
     var name = [];
+    console.log("getFromApi");
     for (var i = 0; i < a.length; i++) {
 
 
         var tmp = JSON.parse(a[i].jsonrepresenation)
         console.log(tmp);
         try {
-            var doc = mxUtils.parseXml(tmp.JSONdata);
+            var doc = mxUtils.parseXml(tmp.JSON);
             console.log(doc);
             var model = new mxGraphModel();
             var codec = new mxCodec(doc);
@@ -1070,7 +1073,7 @@ Sidebar.prototype.loadRules = function (expand, arr, name) {
     console.log('delka:' + arr.length);
     for (var i = 0; i < arr.length; i++) {
         index++
-        fns.push(this.addEntry('atempt', function () { index = index - 1;; return sb.createVertexTemplateFromCells(arr[index], 150, 80, name[index]); }));
+        fns.push(this.addEntry('atempt', function () { index = index - 1; return sb.createVertexTemplateFromCells(arr[index], 150, 80, name[index]); }));
     }
 
     this.addPaletteFunctions('activity', mxResources.get('activitypo', '', 'Defined rules'), expand || false, fns);
