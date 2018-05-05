@@ -7,7 +7,7 @@ namespace WebAPI.Models.Validators
 {
     interface IValidator
     {
-        Boolean Validate();
+        bool Validate();
 
     }
 }

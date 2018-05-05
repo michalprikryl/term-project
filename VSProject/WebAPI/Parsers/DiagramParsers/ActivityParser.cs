@@ -44,7 +44,7 @@ namespace WebAPI.Parsers.DiagramParsers
 
             //nepamatuju si proc jsem dal navratovou hodnotu, tak to tu necham
 
-            if (!new ConsistencyValidator(this.Nodes).Validate())
+            if (!new ConsistencyValidator(Nodes).Validate())
             {
                 throw new NotSupportedException("Diagram is not consistent!");
             }

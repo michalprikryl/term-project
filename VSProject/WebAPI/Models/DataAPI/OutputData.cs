@@ -9,4 +9,10 @@
             Result = result;
         }
     }
+
+    public class CheckData
+    {
+        public bool Proper { get; set; }
+        public string Message { get; set; }
+    }
 }

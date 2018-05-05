@@ -1,5 +1,6 @@
 ﻿using Database;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using WebAPI.Models.DataAPI;
 using WebAPI.Parsers;
 
@@ -15,31 +16,23 @@ namespace WebAPI.Controllers
         {
             OutputData response = new OutputData("Everything is OK.");
 
-            DataFormatEnum format;
-            switch (model.DataFormat)
+            try
             {
-                case "xml":
-                    format = DataFormatEnum.XML;
-                    break;
-                case "json":
-                    format = DataFormatEnum.JSON;
-                    break;
-                case "xmi":
-                    format = DataFormatEnum.XMI;
-                    break;
-                default:
-                    format = DataFormatEnum.Unsupported;
-                    break;
-            }
+                var format = DataFormat.GetDataFormatByString(model.DataFormat);
 
-            if (format != DataFormatEnum.Unsupported)
-            {
-                Parser parser = new Parser(format);
-                parser.ParseData(model.Data);
+                if (format != DataFormatEnum.Unsupported)
+                {
+                    Parser parser = new Parser(format);
+                    parser.ParseData(model.Data);
+                }
+                else
+                {
+                    response.Result = "Unsupported data format.";
+                }
             }
-            else
+            catch (Exception e)
             {
-                response.Result = "Unsupported data format.";
+                response.Result = e.Message;
             }
 
             return Json(response);

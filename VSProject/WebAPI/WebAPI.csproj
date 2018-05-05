@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Utils\" />
+    <Compile Remove="Models\Utils\**" />
+    <Content Remove="Models\Utils\**" />
+    <EmbeddedResource Remove="Models\Utils\**" />
+    <None Remove="Models\Utils\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
