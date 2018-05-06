@@ -383,6 +383,7 @@ Sidebar.prototype.addDataEntry = function (tags, width, height, title, data) {
  * Hides the current tooltip.
  */
 Sidebar.prototype.addEntry = function (tags, fn) {
+  
     if (this.taglist != null && tags != null && tags.length > 0) {
         // Replaces special characters
         var tmp = tags.toLowerCase().replace(/[\/\,\(\)]/g, ' ').split(' ');
@@ -1026,14 +1027,15 @@ Sidebar.prototype.getFromApi = function () {
     //console.log(a[1].jsonrepresenation);
     var arr = [];
     var name = [];
+    var ids = [];
     console.log("getFromApi");
     for (var i = 0; i < a.length; i++) {
 
 
-        var tmp = JSON.parse(a[i].jsonrepresenation)
-        console.log(tmp);
+        /*var tmp = JSON.parse(a[i].jsonrepresenation)
+        console.log(tmp);*/
         try {
-            var doc = mxUtils.parseXml(tmp.JSON);
+            var doc = mxUtils.parseXml(a[i].jsonrepresenation);
             console.log(doc);
             var model = new mxGraphModel();
             var codec = new mxCodec(doc);
@@ -1041,7 +1043,8 @@ Sidebar.prototype.getFromApi = function () {
             //console.log("codec");
             //console.log(codec.objects);
             arr.push(codec.objects);
-            name.push(tmp.Name);
+            name.push(a[i].Name);
+            ids.push(a[i].id);
             //this.loadRules(true, codec.objects, tmp.Name);
         }
         catch (e) {
@@ -1051,13 +1054,13 @@ Sidebar.prototype.getFromApi = function () {
     }
     console.log(arr);
     console.log(name);
-    this.loadRules(true, arr, name);
+    this.loadRules(true, arr, name,ids);
 };
 /*
   Method shows rules from database at sidebar
 */
 var index; // globalni proměná, která zpřístupňuje index v poli při pozdějším volání funkci z pole
-Sidebar.prototype.loadRules = function (expand, arr, name) {
+Sidebar.prototype.loadRules = function (expand, arr, name,ids) {
     var sb = this;
 
     /*var fns = [
@@ -1073,10 +1076,11 @@ Sidebar.prototype.loadRules = function (expand, arr, name) {
     console.log('delka:' + arr.length);
     for (var i = 0; i < arr.length; i++) {
         index++
-        fns.push(this.addEntry('atempt', function () { index = index - 1; return sb.createVertexTemplateFromCells(arr[index], 150, 80, name[index]); }));
+        fns.push(this.addEntry('atempt', function () { index = index - 1; return sb.createVertexTemplateFromCells(arr[index], 150, 80, name[index],ids[index]); }));
     }
 
-    this.addPaletteFunctions('activity', mxResources.get('activitypo', '', 'Defined rules'), expand || false, fns);
+    this.addPaletteFunctions('activity1', mxResources.get('activitypo', '', 'Defined rules'), expand || false, fns);
+    console.log(this.taglist);
 };
 
 /*Sidebar.prototype.addExampleActivityPallete = function (expand) {
@@ -1344,12 +1348,41 @@ Sidebar.prototype.createThumb = function (cells, width, height, parent, title, s
 
     return bounds;
 };
+function deleteFromDb(id)
+{
+    var tmp = JSON.stringify(id);
+    console.log(tmp);
+    $.ajax({
+        type: 'DELETE',
+        url: "http://localhost:60000/api/pattern/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        //data: {"ID":"10"},
+        data: tmp,
+        success: function (result) {
+            if (result !== null) {
+                alert(result);
+            } else {
+                alert(result);
+            }
+        }
 
+    });
+}
 /**
  * Creates and returns a new palette item for the given image.
  */
-Sidebar.prototype.createItem = function (cells, title, showLabel, showTitle, width, height, allowCellsInserted) {
+Sidebar.prototype.createItem = function (cells, title, showLabel, showTitle, width, height, allowCellsInserted,dbID) {
     var elt = document.createElement('a');
+    elt.id = dbID;
+    elt.addEventListener('click',function(){
+        if(deleteMode === true)
+        {
+            console.log("Atempt delete");
+            deleteFromDb(this.id);
+        }
+    });
     elt.setAttribute('href', 'javascript:void(0);');
     elt.className = 'geItem';
     elt.style.overflow = 'hidden';
@@ -1363,9 +1396,9 @@ Sidebar.prototype.createItem = function (cells, title, showLabel, showTitle, wid
     }
 
     // Blocks default click action
-    mxEvent.addListener(elt, 'click', function (evt) {
+    /*mxEvent.addListener(elt, 'click', function (evt) {
         mxEvent.consume(evt);
-    });
+    });*/
 
     this.createThumb(cells, this.thumbWidth, this.thumbHeight, elt, title, showLabel, showTitle, width, height);
     var bounds = new mxRectangle(0, 0, width, height);
@@ -1468,6 +1501,7 @@ Sidebar.prototype.createDropHandler = function (cells, allowSplit, allowCellsIns
     allowCellsInserted = (allowCellsInserted != null) ? allowCellsInserted : true;
 
     return mxUtils.bind(this, function (graph, evt, target, x, y) {
+        console.log("Kdyz kliknu sem");
         if (graph.isEnabled()) {
             cells = graph.getImportableCells(cells);
 
@@ -2484,10 +2518,10 @@ Sidebar.prototype.createVertexTemplateFromData = function (data, width, height, 
 /**
  * Creates a drop handler for inserting the given cells.
  */
-Sidebar.prototype.createVertexTemplateFromCells = function (cells, width, height, title, showLabel, showTitle, allowCellsInserted) {
+Sidebar.prototype.createVertexTemplateFromCells = function (cells, width, height, title, dbID, showLabel, showTitle, allowCellsInserted) {
     // Use this line to convert calls to this function with lots of boilerplate code for creating cells
     //console.trace('xml', this.graph.compress(mxUtils.getXml(this.graph.encodeCells(cells))), cells);
-    return this.createItem(cells, title, showLabel, showTitle, width, height, allowCellsInserted);
+    return this.createItem(cells, title, showLabel, showTitle, width, height, allowCellsInserted,dbID);
 };
 
 /**
@@ -2639,7 +2673,7 @@ Sidebar.prototype.addFoldingHandler = function (title, content, funct) {
  */
 Sidebar.prototype.removePalette = function (id) {
     var elts = this.palettes[id];
-
+    console.log(elts);
     if (elts != null) {
         this.palettes[id] = null;
 
@@ -2649,7 +2683,7 @@ Sidebar.prototype.removePalette = function (id) {
 
         return true;
     }
-
+    console.log("false");
     return false;
 };
 

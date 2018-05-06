@@ -2490,7 +2490,8 @@ EditorUi.prototype.createUi = function () {
 
     // Creates the sidebar
     this.sidebar = (this.editor.chromeless) ? null : this.createSidebar(this.sidebarContainer);
-
+    console.log("SIDEBAR");
+    console.log(sidebar);
     if (this.sidebar != null) {
         this.container.appendChild(this.sidebarContainer);
     }
@@ -2911,7 +2912,7 @@ EditorUi.prototype.sendToApi = function (name, description, pattern) {
     dataXML.Text = description;
     dataXML.PatternTypeID = pattern;
     //var data = mxUtils.getXml(this.editor.getGraphXml());
-    dataXML.JSON = JSON.stringify(dataXML);
+    //dataXML.JSON = JSON.stringify(dataXML);
     
     console.log(dataXML);
     $.ajax({
@@ -2919,15 +2920,18 @@ EditorUi.prototype.sendToApi = function (name, description, pattern) {
         url: "http://localhost:60000/api/pattern/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
+        async: false,
         data: JSON.stringify(dataXML),
         success: function (result) {
             if (result !== null) {
                 // document.getElementById("result").innerHTML = JSON.stringify(result);
                 alert("Ok");
                 console.log(result);
+                //return true;
             } else {
                 document.getElementById("result").innerHTML = "NULL";
                 alert("KO");
+                //return false;
 
             }
         }

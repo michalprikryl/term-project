@@ -1138,11 +1138,11 @@ Sidebar.prototype.getFromApi = function () {
     console.log("getFromApi");
     for (var i = 0; i < a.length; i++) {
 
-
-        var tmp = JSON.parse(a[i].jsonrepresenation)
-        console.log(tmp);
+        console.log(a[i].jsonrepresenation);
+        //var tmp = JSON.parse(a[i].jsonrepresenation)
+        //console.log(tmp);
         try {
-            var doc = mxUtils.parseXml(tmp.JSONdata);
+            var doc = mxUtils.parseXml(a[i].jsonrepresenation);
             console.log(doc);
             var model = new mxGraphModel();
             var codec = new mxCodec(doc);
@@ -1150,7 +1150,7 @@ Sidebar.prototype.getFromApi = function () {
             //console.log("codec");
             //console.log(codec.objects);
             arr.push(codec.objects);
-            name.push(tmp.Name);
+            name.push(a[i].Name);
             //this.loadRules(true, codec.objects, tmp.Name);
         }
         catch (e) {

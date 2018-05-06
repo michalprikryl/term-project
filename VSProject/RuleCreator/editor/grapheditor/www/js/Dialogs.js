@@ -889,7 +889,15 @@ var SaveDialog = function(editorUi)
 	var graph = editorUi.editor.graph;
 	var bounds = graph.getGraphBounds();
 	var scale = graph.view.scale;
+	console.log("attempt");	
+	console.log(editorUi.sidebar);
+
+	var side = editorUi.sidebar;
+	/*console.log(side.palettes);
+	console.log(side.palettes.activity.length)*/
 	
+
+
 	var width = Math.ceil(bounds.width / scale);
 	var height = Math.ceil(bounds.height / scale);
 
@@ -957,13 +965,18 @@ var SaveDialog = function(editorUi)
 	var saveBtn = mxUtils.button(mxResources.get('save'), mxUtils.bind(this, function()
 	{
 		console.log(nameInput.value + "    " + descriptionText.value);
-		editorUi.sendToApi(nameInput.value,descriptionText.value);
+		var index = select.options[select.selectedIndex].value;
+		side.removePalette('activity1');
+		editorUi.sendToApi(nameInput.value,descriptionText.value,index);
 		editorUi.hideDialog();
+		
+		side.getFromApi();
 	}));
 	saveBtn.className = 'geBtn gePrimaryBtn';
 	
 	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
 	{
+
 		editorUi.hideDialog();
 	});
 	cancelBtn.className = 'geBtn';
