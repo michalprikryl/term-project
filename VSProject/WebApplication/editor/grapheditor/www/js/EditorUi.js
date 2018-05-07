@@ -2902,8 +2902,7 @@ function sendToApi(xml) {
         success: function (result) {
             if (result !== null) {
                 // document.getElementById("result").innerHTML = JSON.stringify(result);
-                alert("Ok");
-                console.log(result.data);
+                alert(result.result);
             } else {
                 document.getElementById("result").innerHTML = "NULL";
                 alert("KO");

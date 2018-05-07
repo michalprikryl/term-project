@@ -27,7 +27,7 @@ namespace WebAPI.Models.Validators
         {
             HashSet<NodeWrapper> nodesInProcess = new HashSet<NodeWrapper>
             {
-                new NodeWrapper(_nodes.First())
+                new NodeWrapper(_nodes.FirstOrDefault(n => n is InitialNode) ?? _nodes.First())
             };
 
             while (true)

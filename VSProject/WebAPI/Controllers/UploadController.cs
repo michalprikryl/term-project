@@ -24,10 +24,13 @@ namespace WebAPI.Controllers
                 if (format != DataFormatEnum.Unsupported)
                 {
                     Parser parser = new Parser(format);
-                    parser.ParseData(model.Data);
+                    var graph = parser.ParseData(model.Data);
 
-                    PatternValidator validator = new PatternValidator(_db, format);
-                    validator.Validate();
+                    PatternValidator validator = new PatternValidator(_db, format, graph);
+                    if (!validator.Validate())
+                    {
+                        response.Result = "Diagram is not containing any rule!";
+                    }
                 }
                 else
                 {

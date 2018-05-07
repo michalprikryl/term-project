@@ -916,7 +916,7 @@ Sidebar.prototype.addActivityPallete = function (expand)
             return sb.createVertexTemplateFromCells([cell], 180, 100, 'Condition');
         }),
         this.addEntry('uml activity fork join', function () {
-            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'type=forkJoin;shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
+            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'type=forkJoin;type=forkJoin;shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
             cell.vertex = true;
 
             return sb.createVertexTemplateFromCells([cell], 200, 80, 'Fork/Join');
@@ -933,7 +933,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
     var fns = [
         this.addEntry('uml activity steps', function () {
             var cell = new mxCell('Activity1', new mxGeometry(0, 0, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell.vertex = true;
 
             var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
@@ -944,7 +944,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
             cell.insertEdge(edge, true);  //true - output edge
 
             var cell2 = new mxCell('Activity2', new mxGeometry(0, 100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell2.vertex = true;
 
             cell2.insertEdge(edge, false);  //false - input edge
@@ -957,7 +957,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
             cell2.insertEdge(edge2, true);
 
             var cell3 = new mxCell('Activity3', new mxGeometry(0, 200, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell3.vertex = true;
 
             cell3.insertEdge(edge2, false);
@@ -968,7 +968,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
         this.addEntry('uml activity decision yes no', function () {
 
             var cell0 = new mxCell('Activity', new mxGeometry(-20, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell0.vertex = true;
 
             var edge = new mxCell('', new mxGeometry(0, -100, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
@@ -981,7 +981,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
             var cell = new mxCell('', new mxGeometry(0, 0, 80, 40), 'rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
             cell.vertex = true;
 
-            var edge1 = new mxCell('condition1', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
+            var edge1 = new mxCell('condition1', new mxGeometry(0, 0, 0, 0), 'type=condition;edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
             edge1.geometry.setTerminalPoint(new mxPoint(180, 20), false);
             edge1.geometry.relative = true;
             edge1.geometry.x = -1;
@@ -991,7 +991,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
             cell.insertEdge(edge, false);
 
             var cell1 = new mxCell('Activity1', new mxGeometry(150, 0, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell1.vertex = true;
 
             cell1.insertEdge(edge1, false);
@@ -1005,7 +1005,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
             cell.insertEdge(edge2, true);
 
             var cell2 = new mxCell('Activity2', new mxGeometry(-20, 100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell2.vertex = true;
 
             cell2.insertEdge(edge2, false);
@@ -1015,7 +1015,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
         this.addEntry('uml activity fork', function () {
 
             var cell0 = new mxCell('Activity', new mxGeometry(15, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell0.vertex = true;
 
             var edge = new mxCell('', new mxGeometry(0, -100, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
@@ -1025,7 +1025,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
 
             cell0.insertEdge(edge, true);
 
-            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'shape=line;html=1;strokeWidth=6;strokeColor=#000000;'); 
+            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'type=forkJoin;shape=line;html=1;strokeWidth=6;strokeColor=#000000;'); 
             cell.vertex = true;;
  
             cell.insertEdge(edge, false);
@@ -1045,13 +1045,13 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
             cell.insertEdge(edge2, true);
 
             var cell1 = new mxCell('Activity 1', new mxGeometry(-72, 80, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell1.vertex = true;
 
             cell1.insertEdge(edge1, false);
 
             var cell2 = new mxCell('Activity 2', new mxGeometry(103, 80, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell2.vertex = true;
 
             cell2.insertEdge(edge2, false);
@@ -1072,13 +1072,13 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
             edge2.edge = true;
 
             var cell1 = new mxCell('Activity 1', new mxGeometry(-72, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell1.vertex = true;
 
             cell1.insertEdge(edge1, true);
 
             var cell2 = new mxCell('Activity 2', new mxGeometry(103, -100, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell2.vertex = true;
 
             cell2.insertEdge(edge2, true);
@@ -1088,7 +1088,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
             edge.geometry.relative = true;
             edge.edge = true;
 
-            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
+            var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'type=forkJoin;shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
             cell.vertex = true;;
 
             cell.insertEdge(edge, true);
@@ -1096,7 +1096,7 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
             cell.insertEdge(edge2, false);
 
             var cell0 = new mxCell('Activity', new mxGeometry(15, 80, 120, 40),
-                'rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
+                'type=activity;rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#ccffff;strokeColor=#000000;');
             cell0.vertex = true;
 
             cell0.insertEdge(edge, false);
