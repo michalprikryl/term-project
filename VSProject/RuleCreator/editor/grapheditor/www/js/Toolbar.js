@@ -179,6 +179,7 @@ Toolbar.prototype.init = function()
 	this.addSeparator();
 	this.addButton('', 'Save rule', function () { ui.showDialog(new SaveDialog(ui).container,300, 230, true, true); });
 	this.addButton('','Delete rule',function(){deleteMode = !deleteMode;});
+	this.addButton('','Update rule',function(){ui.showDialog(new UpdateDialog(ui).container,300, 230, true, true); });
 };
 var deleteMode = false;
 /**

@@ -860,6 +860,28 @@ function getPatternType()
 	}
 	return select;
 }
+function getGraphs(editorUi,aj)
+{
+	
+	var select = document.createElement('select');
+	select.onchange = function(){
+		var txt = document.getElementById("descriptionField");
+		var t = document.createTextNode(data[select.selectedIndex].text);
+		txt.value = txt.value.replace(txt.value,data[select.selectedIndex].text);
+		txt.appendChild(t);
+		
+	}
+	for (var i = 0; i < aj.length; i++) {
+		var option = document.createElement('option');
+		var name = document.createTextNode(aj[i].name);
+		option.appendChild(name);
+		option.value = aj[i].id;
+
+		select.appendChild(option);
+
+	}
+	return select;
+}
 function ajaxCallPatternType() {
     var ate = "";
     $.ajax({
@@ -880,6 +902,101 @@ function ajaxCallPatternType() {
 
     });
     return ate;
+}
+var data;
+var UpdateDialog = function(editorUi)
+{
+
+	var graph = editorUi.editor.graph;
+	var bounds = graph.getGraphBounds();
+	var scale = graph.view.scale;
+	console.log("attempt");	
+	console.log(editorUi.sidebar);
+
+	var side = editorUi.sidebar;
+	var width = Math.ceil(bounds.width / scale);
+	var height = Math.ceil(bounds.height / scale);
+
+	var row, td;
+	
+	var table = document.createElement('table');
+	var tbody = document.createElement('tbody');
+	table.setAttribute('cellpadding', (mxClient.IS_SF) ? '0' : '2');
+	table.appendChild(tbody);
+
+
+	data = ajaxCall();
+	console.log(data);
+	/*first row*/
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	var ruleName = document.createTextNode("Rule name:");
+	td.appendChild(ruleName);
+	row.appendChild(td);
+	td = document.createElement('td');
+	var select = getGraphs(editorUi,data);
+	td.appendChild(select);
+	row.appendChild(td);
+	tbody.appendChild(row);
+	/*second row*/
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	var description = document.createTextNode("Description:");
+	td.appendChild(description);
+	row.appendChild(td);
+	td = document.createElement('td');
+	var descriptionText = document.createElement('textarea');
+	descriptionText.setAttribute('value', "");
+	descriptionText.setAttribute('style', 'resize: none;')
+	descriptionText.rows = 5;
+	descriptionText.style.width = '180px';
+	descriptionText.setAttribute('id',"descriptionField");
+
+	td.appendChild(descriptionText);
+	row.appendChild(td);
+	tbody.appendChild(row);
+
+	row = document.createElement('tr');
+
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	row.appendChild(td);
+	td = document.createElement('td');
+	var saveBtn = mxUtils.button(mxResources.get('save'), mxUtils.bind(this, function()
+	{
+		//console.log(nameInput.value + "    " + descriptionText.value);
+		var index = select.options[select.selectedIndex].value;
+		side.removePalette('activity1');
+		editorUi.updateRule(index,select.options[select.selectedIndex].text,descriptionText.value,data[select.selectedIndex].patternTypeId);
+		editorUi.hideDialog();
+		
+		side.getFromApi();
+	}));
+	saveBtn.className = 'geBtn gePrimaryBtn';
+	
+	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+	{
+
+		editorUi.hideDialog();
+	});
+	cancelBtn.className = 'geBtn';
+	
+	if (editorUi.editor.cancelFirst)
+	{
+		td.appendChild(cancelBtn);
+		td.appendChild(saveBtn);
+	}
+	else
+	{
+		td.appendChild(saveBtn);
+		td.appendChild(cancelBtn);
+	}
+	row.appendChild(td);
+	tbody.appendChild(row);
+	this.container = table;
 }
 /**
  * Constructs a new export dialog.

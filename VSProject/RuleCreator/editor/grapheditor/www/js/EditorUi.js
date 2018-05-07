@@ -2888,7 +2888,40 @@ EditorUi.prototype.save = function (name) {
         }
     }
 };
+/*var updatedGraph{
+      JSON: '',
+        Text: '',
+        Name: '',
+        PatternTypeID:''
+};*/
+EditorUi.prototype.updateRule = function(id,name, description, pattern)
+{
+    dataXML.JSON = mxUtils.getXml(this.editor.getGraphXml());
+    dataXML.Name = name;
+    dataXML.Text = description;
+    dataXML.PatternTypeID = pattern;
+    $.ajax({
+        type: 'PUT',
+        url: "http://localhost:60000/api/pattern/" + id, // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        data: JSON.stringify(dataXML),
+        success: function (result) {
+            if (result !== null) {
+                // document.getElementById("result").innerHTML = JSON.stringify(result);
+                alert("Ok");
+                console.log(result);
+                //return true;
+            } else {
+                document.getElementById("result").innerHTML = "NULL";
+                alert("KO");
+                //return false;
 
+            }
+        }
+    });
+}
 /*var dataXML = {
         Data: xml,
         DataFormat: 'xml'

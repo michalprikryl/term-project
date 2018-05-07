@@ -1074,11 +1074,11 @@ Sidebar.prototype.loadRules = function (expand, arr, name,ids) {
     ];*/
     var fns = [];
 
-    index = 0;
+    index = -1;
     console.log('delka:' + arr.length);
     for (var i = 0; i < arr.length; i++) {
-        index++
-        fns.push(this.addEntry('atempt', function () { index = index - 1; return sb.createVertexTemplateFromCells(arr[index], 150, 80, name[index],ids[index]); }));
+        //index++
+        fns.push(this.addEntry('atempt', function () { index = index + 1; return sb.createVertexTemplateFromCells(arr[index], 150, 80, name[index],ids[index]); }));
     }
 
     this.addPaletteFunctions('activity1', mxResources.get('activitypo', '', 'Defined rules'), expand || false, fns);
