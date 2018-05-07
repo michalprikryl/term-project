@@ -178,7 +178,7 @@ Toolbar.prototype.init = function()
 	this.addButton('', 'Graph editor', function () { window.location.replace('http://localhost:20260/editor/grapheditor/www/index.html'); });
 	this.addSeparator();
 	this.addButton('', 'Save rule', function () { ui.showDialog(new SaveDialog(ui).container,300, 230, true, true); });
-	this.addButton('','Delete rule',function(){deleteMode = !deleteMode;})
+	this.addButton('','Delete rule',function(){deleteMode = !deleteMode;});
 };
 var deleteMode = false;
 /**
@@ -775,6 +775,7 @@ Toolbar.prototype.addItem = function(sprite, key, c, ignoreDisabled)
  */
 Toolbar.prototype.addButton = function(classname, tooltip, funct, c)
 {
+	
 	var elt = this.createButton(classname);
 	c = (c != null) ? c : this.container;
 	
@@ -861,7 +862,7 @@ Toolbar.prototype.createButton = function(classname)
 	elt.className = 'geButton';
 
 	var inner = document.createElement('div');
-	
+
 	if (classname != null)
 	{
 		inner.className = 'geSprite ' + classname;

@@ -4,7 +4,9 @@
 /**
  * Construcs a new sidebar for the given editor.
  */
+ var e;
 function Sidebar(editorUi, container) {
+    e = editorUi;
     this.editorUi = editorUi;
     this.container = container;
     this.palettes = new Object();
@@ -1350,21 +1352,21 @@ Sidebar.prototype.createThumb = function (cells, width, height, parent, title, s
 };
 function deleteFromDb(id)
 {
-    var tmp = JSON.stringify(id);
-    console.log(tmp);
+    
+    
     $.ajax({
         type: 'DELETE',
-        url: "http://localhost:60000/api/pattern/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
+        url: "http://localhost:60000/api/pattern/" + id, // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         async: false,
         //data: {"ID":"10"},
-        data: tmp,
+        
         success: function (result) {
             if (result !== null) {
-                alert(result);
+                //alert(result);
             } else {
-                alert(result);
+                //alert(result);
             }
         }
 
@@ -1381,6 +1383,8 @@ Sidebar.prototype.createItem = function (cells, title, showLabel, showTitle, wid
         {
             console.log("Atempt delete");
             deleteFromDb(this.id);
+            e.sidebar.removePalette('activity1');
+            e.sidebar.getFromApi();           
         }
     });
     elt.setAttribute('href', 'javascript:void(0);');
@@ -1500,6 +1504,7 @@ Sidebar.prototype.updateShapes = function (source, targets) {
 Sidebar.prototype.createDropHandler = function (cells, allowSplit, allowCellsInserted, bounds) {
     allowCellsInserted = (allowCellsInserted != null) ? allowCellsInserted : true;
 
+    
     return mxUtils.bind(this, function (graph, evt, target, x, y) {
         console.log("Kdyz kliknu sem");
         if (graph.isEnabled()) {
