@@ -4,22 +4,29 @@ using System.Linq;
 using WebAPI.Models;
 using WebAPI.Models.Builders;
 using WebAPI.Models.DataAPI;
+using WebAPI.Models.Graphs;
 using WebAPI.Models.Validators;
 
 namespace WebAPI.Parsers.DiagramParsers
 {
     public class ActivityParser : IDiagramParser
     {
-        public List<Node> Nodes { get; set; }
-        public List<Edge> Edges { get; set; }
+        private bool _check;
 
-        public ActivityParser()
+        public Graph Graph { get; set; }
+
+        public ActivityParser(bool check)
         {
-            Nodes = new List<Node>();
-            Edges = new List<Edge>();
+            _check = check;
+
+            Graph = new Graph
+            {
+                Nodes = new List<Node>(),
+                Edges = new List<Edge>()
+            };
         }
 
-        public List<Node> ParseDiagram(List<MxCell> sourceNodes, List<MxCell> sourceTexts, List<MxCell> sourceEdges)
+        public Graph ParseDiagram(List<MxCell> sourceNodes, List<MxCell> sourceTexts, List<MxCell> sourceEdges)
         {
             //nodes
             CreateNodes(sourceNodes);
@@ -30,26 +37,27 @@ namespace WebAPI.Parsers.DiagramParsers
             //assign edges to nodes
             AssignEdgesToNodes();
 
-            Node graphObject = Nodes.FirstOrDefault(ne => ne.InEdges == null);
-            if (!(graphObject is InitialNode))
+            if (_check)
             {
-                throw new ArgumentException("Graph doesn't contain initial node.");
+                Node graphObject = Graph.Nodes.FirstOrDefault(ne => ne.InEdges == null);
+                if (!(graphObject is InitialNode))
+                {
+                    throw new ArgumentException("Graph doesn't contain initial node.");
+                }
+
+                graphObject = Graph.Nodes.FirstOrDefault(ne => ne.OutEdges == null);
+                if (!(graphObject is FinalNode))
+                {
+                    throw new ArgumentException("Graph doesn't contain final node.");
+                }
+
+                if (!new ConsistencyValidator(Graph.Nodes).Validate())
+                {
+                    throw new NotSupportedException("Diagram is not consistent!");
+                }
             }
 
-            graphObject = Nodes.FirstOrDefault(ne => ne.OutEdges == null);
-            if (!(graphObject is FinalNode))
-            {
-                throw new ArgumentException("Graph doesn't contain final node.");
-            }
-
-            //nepamatuju si proc jsem dal navratovou hodnotu, tak to tu necham
-
-            if (!new ConsistencyValidator(Nodes).Validate())
-            {
-                throw new NotSupportedException("Diagram is not consistent!");
-            }
-
-            return new List<Node>();
+            return Graph;
         }
 
         private void CreateNodes(List<MxCell> sourceNodes)
@@ -58,22 +66,22 @@ namespace WebAPI.Parsers.DiagramParsers
             {
                 ActivityDiagramNodes type = StringUtils.ParseNodeTypeFromXmlStyle(cell.Style);
 
-                Nodes.Add(NodeBuilder.BuildNode(type, int.Parse(cell.Id), cell.Value));
+                Graph.Nodes.Add(NodeBuilder.BuildNode(type, int.Parse(cell.Id), cell.Value, _check));
             }
         }
 
         private void AssignEdgesToNodes()
         {
-            foreach (var node in Nodes)
+            foreach (var node in Graph.Nodes)
             {
                 if (node.InEdges != null)
                 {
-                    node.InEdges = Edges.Where(edge => edge.OutNode.Id == node.Id).ToList();
+                    node.InEdges = Graph.Edges.Where(edge => edge.OutNode.Id == node.Id).ToList();
                 }
 
                 if (node.OutEdges != null)
                 {
-                    node.OutEdges = Edges.Where(edge => edge.InNode.Id == node.Id).ToList();
+                    node.OutEdges = Graph.Edges.Where(edge => edge.InNode.Id == node.Id).ToList();
                 }
             }
         }
@@ -90,7 +98,7 @@ namespace WebAPI.Parsers.DiagramParsers
 
                 source = int.Parse(cell.Source);
                 target = int.Parse(cell.Target);
-                Edges.Add(EdgeBuider.BuildEdge(type, int.Parse(cell.Id), edgeText, Nodes.FirstOrDefault(node => node.Id == source), Nodes.FirstOrDefault(node => node.Id == target)));
+                Graph.Edges.Add(EdgeBuider.BuildEdge(type, int.Parse(cell.Id), edgeText, Graph.Nodes.FirstOrDefault(node => node.Id == source), Graph.Nodes.FirstOrDefault(node => node.Id == target)));
             }
         }
     }

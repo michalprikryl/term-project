@@ -5,7 +5,7 @@ namespace WebAPI.Models
 {
     public class DecisionNode : Node
     {
-        public DecisionNode(int id, List<Edge> inEdges, List<Edge> outEdges) : base(id)
+        public DecisionNode(int id, List<Edge> inEdges, List<Edge> outEdges, bool check = true) : base(id, check)
         {
             Name = String.Empty;
             base.InEdges = inEdges;
@@ -16,7 +16,7 @@ namespace WebAPI.Models
         {
             set
             {
-                if (value.Count == 0)
+                if (_check && value.Count == 0)
                 {
                     throw new ArgumentException("Decision node cannot have zero in edges!");
                 }
@@ -29,7 +29,7 @@ namespace WebAPI.Models
         {
             set
             {
-                if (value.Count == 0)
+                if (_check && value.Count == 0)
                 {
                     throw new ArgumentException("Decision node cannot have zero out edges!");
                 }

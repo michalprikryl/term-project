@@ -5,7 +5,7 @@ namespace WebAPI.Models.Nodes
 {
     public class ConcreteNode : Node
     {
-        public ConcreteNode(int id) : base(id) { }
+        public ConcreteNode(int id, bool check = true) : base(id, check) { }
 
         public void AddEdge(Edge e)
         {

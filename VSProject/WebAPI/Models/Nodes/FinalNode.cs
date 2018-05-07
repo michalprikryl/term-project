@@ -5,7 +5,7 @@ namespace WebAPI.Models
 {
     public class FinalNode : Node
     {
-        public FinalNode(int id, List<Edge> inEdges) : base(id)
+        public FinalNode(int id, List<Edge> inEdges, bool check = true) : base(id, check)
         {
             base.InEdges = inEdges;
         }
@@ -19,7 +19,7 @@ namespace WebAPI.Models
         {
             set
             {
-                if (value.Count == 0)
+                if (_check && value.Count == 0)
                 {
                     throw new ArgumentException("Final node cannot have zero in edges!");
                 }

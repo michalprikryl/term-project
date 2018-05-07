@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Models;
 using WebAPI.Models.DataAPI;
+using WebAPI.Models.Graphs;
 
 namespace WebAPI.Parsers
 {
     public interface IDataParser
     {
-        List<Node> ParseData(string data);
+        Graph ParseData(string data);
     }
 }

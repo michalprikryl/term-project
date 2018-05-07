@@ -5,7 +5,7 @@ namespace WebAPI.Models
 {
     public class InitialNode : Node
     {
-        public InitialNode(int id, List<Edge> outEdges) : base(id)
+        public InitialNode(int id, List<Edge> outEdges, bool check = true) : base(id, check)
         {
             base.OutEdges = outEdges;
         }
@@ -24,7 +24,7 @@ namespace WebAPI.Models
         {
             set
             {
-                if (value.Count == 0)
+                if (_check && value.Count == 0)
                 {
                     throw new ArgumentException("Initial node cannot have zero out edges!");
                 }

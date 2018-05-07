@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
-using WebAPI.Models;
+﻿using WebAPI.Models.Graphs;
 
 namespace WebAPI.Parsers
 {
     public class Parser
     {
+        private bool _check;
+
         public DataFormatEnum Type { get; private set; }
 
-        public Parser(DataFormatEnum type)
+        public Parser(DataFormatEnum type, bool check = true)
         {
             Type = type;
+            _check = check;
         }
 
-        public List<Node> ParseData(string data)
+        public Graph ParseData(string data)
         {
             IDataParser parser;
             switch (Type)
@@ -24,10 +26,10 @@ namespace WebAPI.Parsers
                 //    parser = new DataParserXMI();
                 //    break;
                 case DataFormatEnum.XML:
-                    parser = new DataParserXML();
+                    parser = new DataParserXML(_check);
                     break;
                 default:
-                    parser = new DataParserXML();
+                    parser = new DataParserXML(_check);
                     break;
             }
 

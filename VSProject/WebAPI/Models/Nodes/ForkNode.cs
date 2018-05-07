@@ -5,7 +5,7 @@ namespace WebAPI.Models
 {
     public class ForkNode : Node
     {
-        public ForkNode(int id, List<Edge> inEdges, List<Edge> outEdges) : base(id)
+        public ForkNode(int id, List<Edge> inEdges, List<Edge> outEdges, bool check = true) : base(id, check)
         {
             base.InEdges = inEdges;
             base.OutEdges = outEdges;
@@ -20,7 +20,7 @@ namespace WebAPI.Models
         {
             set
             {
-                if (OutEdges.Count > 1 && value.Count > 1)
+                if (_check && OutEdges.Count > 1 && value.Count > 1)
                 {
                     throw new ArgumentException("Cannot set more than 1 in edge if out edges > 1");
                 }
@@ -33,7 +33,7 @@ namespace WebAPI.Models
         {
             set
             {
-                if (InEdges.Count > 1 && value.Count > 1)
+                if (_check && InEdges.Count > 1 && value.Count > 1)
                 {
                     throw new ArgumentException("Cannot set more than 1 out edge if in edges > 1");
                 }

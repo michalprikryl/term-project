@@ -2,24 +2,27 @@
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-using WebAPI.Models;
 using WebAPI.Models.DataAPI;
 using System;
 using WebAPI.Parsers.DiagramParsers;
 using System.Linq;
+using WebAPI.Models.Graphs;
 
 namespace WebAPI.Parsers
 {
     public class DataParserXML : IDataParser
     {
+        private bool _check;
+
         public DiagramType DiagramType { get; set; }
 
-        public DataParserXML()
+        public DataParserXML(bool check = true)
         {
             DiagramType = DiagramType.Activity;
+            _check = check;
         }
 
-        public List<Node> ParseData(string data)
+        public Graph ParseData(string data)
         {
             InputXML xml = SerializeXML(data);
 
@@ -31,10 +34,10 @@ namespace WebAPI.Parsers
             switch (DiagramType)
             {
                 case DiagramType.Activity:
-                    parser = new ActivityParser();
+                    parser = new ActivityParser(_check);
                     break;
                 default:
-                    parser = new ActivityParser();
+                    parser = new ActivityParser(_check);
                     break;
             }
 

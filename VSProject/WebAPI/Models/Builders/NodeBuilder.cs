@@ -6,59 +6,59 @@ namespace WebAPI.Models.Builders
     public static class NodeBuilder
     {
 
-        public static Node BuildNode(ActivityDiagramNodes type, int id, String name)
+        public static Node BuildNode(ActivityDiagramNodes type, int id, string name, bool check)
         {
             if (string.IsNullOrEmpty(name))
             {
                 if (type == ActivityDiagramNodes.FinalNode || type == ActivityDiagramNodes.InitialNode)
                 {
-                    return CreateNode(type, id, new List<Edge>());
+                    return CreateNode(type, id, new List<Edge>(), check);
                 }
                 else
                 {
-                    return CreateNode(type, id, new List<Edge>(), new List<Edge>());
+                    return CreateNode(type, id, new List<Edge>(), new List<Edge>(), check);
                 }
             }
             else
             {
-                return CreateNode(type, id, name, new List<Edge>(), new List<Edge>());
+                return CreateNode(type, id, name, new List<Edge>(), new List<Edge>(), check);
             }
         }
 
-        private static Node CreateNode(ActivityDiagramNodes type, int id, List<Edge> inEdges, List<Edge> outEdges)
-        {
+        private static Node CreateNode(ActivityDiagramNodes type, int id, List<Edge> inEdges, List<Edge> outEdges, bool check)
+        { 
             switch (type)
             {
                 case ActivityDiagramNodes.ForkNode:
-                    return new ForkNode(id, inEdges, outEdges);
+                    return new ForkNode(id, inEdges, outEdges, check);
                 case ActivityDiagramNodes.DecisionNode:
-                    return new DecisionNode(id, inEdges, outEdges);
+                    return new DecisionNode(id, inEdges, outEdges, check);
                 default:
                     throw new ArgumentException("Wrong parameters for given node type!");
             }
         }
 
-        private static Node CreateNode(ActivityDiagramNodes type, int id, string name, List<Edge> inEdges, List<Edge> outEdges)
+        private static Node CreateNode(ActivityDiagramNodes type, int id, string name, List<Edge> inEdges, List<Edge> outEdges, bool check)
         {
             switch (type)
             {
                 case ActivityDiagramNodes.ObjectNode:
-                    return new ObjectNode(id, name, inEdges, outEdges);
+                    return new ObjectNode(id, name, inEdges, outEdges, check);
                 case ActivityDiagramNodes.ActionNode:
-                    return new ActionNode(id, name, inEdges, outEdges);
+                    return new ActionNode(id, name, inEdges, outEdges, check);
                 default:
                     throw new ArgumentException("Wrong parameters for given node type!");
             }
         }
 
-        private static Node CreateNode(ActivityDiagramNodes type, int id, List<Edge> edges)
+        private static Node CreateNode(ActivityDiagramNodes type, int id, List<Edge> edges, bool check)
         {
             switch (type)
             {
                 case ActivityDiagramNodes.InitialNode:
-                    return new InitialNode(id, edges);
+                    return new InitialNode(id, edges, check);
                 case ActivityDiagramNodes.FinalNode:
-                    return new FinalNode(id, edges);
+                    return new FinalNode(id, edges, check);
                 default:
                     throw new ArgumentException("Wrong parameters for given node type!");
             }

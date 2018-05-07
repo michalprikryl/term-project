@@ -4,14 +4,16 @@ namespace WebAPI.Models
 {
     public abstract class Node
     {
+        protected bool _check;
         private readonly int _id;
         private string _name;
         private List<Edge> _inEdges;
         private List<Edge> _outEdges;
 
-        public Node(int id)
+        public Node(int id, bool check = true)
         {
             _id = id;
+            _check = check;
         }
 
         public int Id

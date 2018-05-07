@@ -5,7 +5,7 @@ namespace WebAPI.Models
 {
     public class ActionNode : Node
     {
-        public ActionNode(int id, string name, List<Edge> inEdges, List<Edge> outEdges) : base(id)
+        public ActionNode(int id, string name, List<Edge> inEdges, List<Edge> outEdges, bool check = true) : base(id, check)
         {
             Name = name;
             base.InEdges = inEdges;
@@ -16,7 +16,7 @@ namespace WebAPI.Models
         {
             set
             {
-                if (value.Count == 0)
+                if (_check && value.Count == 0)
                 {
                     throw new ArgumentException("Action node cannot have zero in edges!");
                 }
@@ -29,7 +29,7 @@ namespace WebAPI.Models
         {
             set
             {
-                if (value.Count == 0)
+                if (_check && value.Count == 0)
                 {
                     throw new ArgumentException("Action node cannot have zero out edges!");
                 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using WebAPI.Models.DataAPI;
+using WebAPI.Models.Validators;
 using WebAPI.Parsers;
 
 namespace WebAPI.Controllers
@@ -24,6 +25,9 @@ namespace WebAPI.Controllers
                 {
                     Parser parser = new Parser(format);
                     parser.ParseData(model.Data);
+
+                    PatternValidator validator = new PatternValidator(_db, format);
+                    validator.Validate();
                 }
                 else
                 {
