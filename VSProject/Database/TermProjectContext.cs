@@ -40,6 +40,10 @@ namespace Database
 
                 entity.Property(e => e.WorkSpaceId).HasColumnName("WorkSpaceID");
 
+                entity.Property(e => e.Xmlrepresentation)
+                    .IsRequired()
+                    .HasColumnName("XMLRepresentation");
+
                 entity.HasOne(d => d.WorkSpace)
                     .WithMany(p => p.Graph)
                     .HasForeignKey(d => d.WorkSpaceId)

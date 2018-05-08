@@ -2,6 +2,8 @@
 {
     public class InputData
     {
+        public string Name { get; set; }
+
         public string Data { get; set; }
 
         public string DataFormat { get; set; }

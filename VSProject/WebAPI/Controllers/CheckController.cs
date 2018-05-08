@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using WebAPI.Models.DataAPI;
+using WebAPI.Models.Validators;
 using WebAPI.Parsers;
 
 namespace WebAPI.Controllers
@@ -24,7 +25,13 @@ namespace WebAPI.Controllers
                 if (format != DataFormatEnum.Unsupported)
                 {
                     Parser parser = new Parser(format);
-                    parser.ParseData(model.Data);
+                    var graph = parser.ParseData(model.Data);
+
+                    PatternValidator validator = new PatternValidator(_db, format, graph);
+                    if (!validator.Validate())
+                    {
+                        check.Message = "Diagram is not containing any rule!";
+                    }
                 }
                 else
                 {
@@ -33,7 +40,7 @@ namespace WebAPI.Controllers
 
                 check.Proper = true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 check.Message = e.Message;
             }

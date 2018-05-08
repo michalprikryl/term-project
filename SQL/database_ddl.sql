@@ -54,6 +54,7 @@ CREATE TABLE WorkSpace (
 CREATE TABLE Graph (
 	ID INTEGER IDENTITY(1,1) PRIMARY KEY,
 	[Name] NVARCHAR(256) NOT NULL,
+  [XMLRepresentation] [nvarchar](max) NOT NULL,
 	WorkSpaceID INTEGER NOT NULL,
 	CONSTRAINT FK_GRAPH_WORKSPACE FOREIGN KEY (WorkSpaceID) REFERENCES WorkSpace(ID)
 );
@@ -92,7 +93,7 @@ CREATE TABLE [Pattern](
 	[ID] [int] IDENTITY(1,1) PRIMARY KEY,
 	[Name] [nvarchar](256) NOT NULL,
 	[Text] [nvarchar](256) NULL,
-	[JSONRepresenation] [nvarchar](max) NOT NULL,
+	[JSONRepresentation] [nvarchar](max) NOT NULL,
   [PatternTypeID] INTEGER NOT NULL,
   CONSTRAINT FK_PATTERN_PATTERNTYPE FOREIGN KEY (PatternTypeID) REFERENCES PatternType(ID)
 );

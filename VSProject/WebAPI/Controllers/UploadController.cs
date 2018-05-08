@@ -4,6 +4,7 @@ using System;
 using WebAPI.Models.DataAPI;
 using WebAPI.Models.Validators;
 using WebAPI.Parsers;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -15,7 +16,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]InputData model)
         {
-            OutputData response = new OutputData("Everything is OK.");
+            OutputData response = new OutputData("Everything is OK - graph was saved to DB.");
 
             try
             {
@@ -30,7 +31,12 @@ namespace WebAPI.Controllers
                     if (!validator.Validate())
                     {
                         response.Result = "Diagram is not containing any rule!";
+
+                        goto end;
                     }
+
+                    GraphToDB graphToDB = new GraphToDB(_db);
+                    graphToDB.SaveGraph(graph, model);
                 }
                 else
                 {
@@ -41,6 +47,8 @@ namespace WebAPI.Controllers
             {
                 response.Result = e.Message;
             }
+
+            end:
 
             return Json(response);
         }
