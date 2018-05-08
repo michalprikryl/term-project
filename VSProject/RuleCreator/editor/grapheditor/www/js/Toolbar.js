@@ -175,11 +175,11 @@ Toolbar.prototype.init = function()
 	var insertMenu = this.addMenu('', mxResources.get('insert') + ' (' + mxResources.get('doubleClickTooltip') + ')', true, 'insert', null, true);
 	this.addDropDownArrow(insertMenu, 'geSprite-plus', 38, 48, -4, -3, 36, -8);
 	this.addSeparator();
-	this.addButton('', 'Graph editor', function () { window.location.replace('http://localhost:20260/editor/grapheditor/www/index.html'); });
+    this.addButton('geGrapheditor', 'Graph editor', function () { window.location.replace('http://localhost:20260/editor/grapheditor/www/index.html'); });
 	this.addSeparator();
-	this.addButton('', 'Save rule', function () { ui.showDialog(new SaveDialog(ui).container,300, 230, true, true); });
-	this.addButton('','Delete rule',function(){deleteMode = !deleteMode;});
-	this.addButton('','Update rule',function(){ui.showDialog(new UpdateDialog(ui).container,300, 230, true, true); });
+    this.addButton('geSave', 'Save rule', function () { ui.showDialog(new SaveDialog(ui).container, 300, 230, true, true); });
+	this.addButton('geDelete','Delete rule',function(){deleteMode = !deleteMode;});
+	this.addButton('geUpdate','Update rule',function(){ui.showDialog(new UpdateDialog(ui).container, 300, 230, true, true); });
 };
 var deleteMode = false;
 /**

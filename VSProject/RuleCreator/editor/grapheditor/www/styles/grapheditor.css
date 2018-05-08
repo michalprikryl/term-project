@@ -516,6 +516,30 @@ div.mxWindow .geButton {
 	background-color: rgb(54, 115, 181);
 	background-image: none;
 }
+.geSave {
+	font-size:1pt;
+	background-image:url('savemup.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+}
+.geDelete {
+	font-size:1pt;
+	background-image:url('deletemup.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+}
+.geUpdate {
+	font-size:1pt;
+	background-image:url('updatemup.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+}
+.geGrapheditor {
+	font-size:1pt;
+	background-image:url('editormup.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+}
 @media print {
 	div.geNoPrint { display: none !important; }
 }
