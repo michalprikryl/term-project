@@ -16,6 +16,7 @@ namespace Database.DBObjects
         public int GraphId { get; set; }
         public int NodeTypeId { get; set; }
         public int? RegionId { get; set; }
+        public int DiagramNodeId { get; set; }
 
         public Graph Graph { get; set; }
         public NodeType NodeType { get; set; }

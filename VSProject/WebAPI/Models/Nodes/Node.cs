@@ -23,7 +23,10 @@ namespace WebAPI.Models
 
         public virtual string Name
         {
-            get => _name;
+            get
+            {
+                return _name ?? string.Empty;
+            }
             set => _name = value;
         }
 

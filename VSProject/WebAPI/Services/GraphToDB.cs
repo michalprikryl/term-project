@@ -1,5 +1,6 @@
 ﻿using Database;
 using Database.DBObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebAPI.Models;
@@ -27,6 +28,7 @@ namespace WebAPI.Services
             _nodeTypes = new Dictionary<string, int>();
         }
 
+        #region Save new Graph
         public void SaveGraph(GraphAPI graphAPI, InputData data)
         {
             Graph graph = new Graph
@@ -57,23 +59,11 @@ namespace WebAPI.Services
 
         private Dictionary<int, int> SaveNodes(List<Node> nodes, int graphId)
         {
-            GraphNode graphNode;
             int regionId = CreateRegion();
             Dictionary<int, int> nodesIDsInDB = new Dictionary<int, int>();
             foreach (var node in nodes)
             {
-                graphNode = new GraphNode
-                {
-                    Text = node.Name ?? string.Empty,
-                    GraphId = graphId,
-                    RegionId = regionId,
-                    NodeTypeId = GetNodeTypeID(node)
-                };
-
-                _db.GraphNode.Add(graphNode);
-                _db.SaveChanges();
-
-                nodesIDsInDB.Add(node.Id, graphNode.Id);
+                nodesIDsInDB.Add(node.Id, CreateNodeInDB(node, graphId, regionId));
             }
 
             return nodesIDsInDB;
@@ -83,16 +73,80 @@ namespace WebAPI.Services
         {
             foreach (var edge in edges)
             {
-                _db.GraphEdge.Add(new GraphEdge
-                {
-                    Text = edge.Name ?? string.Empty,
-                    FromNodeId = nodesInDB[edge.InNode.Id],
-                    ToNodeId = nodesInDB[edge.OutNode.Id]
-                });
-
-                _db.SaveChanges();
+                CreateEdgeInDB(nodesInDB, edge);
             }
         }
+        #endregion
+
+        #region Update graph
+        public void UpdateGraph(GraphAPI graphAPI, InputDataID data)
+        {
+            Graph graph = _db.Graph.FirstOrDefault(g => g.Id == data.GraphID);
+            if (graph != null)
+            {
+                graph.Name = data.Name;
+                graph.Xmlrepresentation = data.Data;
+
+                _db.SaveChanges();
+
+                UpdateEdges(graphAPI.Edges, UpdateNodes(graphAPI.Nodes, graph.Id), graph.Id);
+            }
+            else
+            {
+                throw new ArgumentException("Unknown graph ID!");
+            }
+        }
+
+        private Dictionary<int, int> UpdateNodes(List<Node> nodes, int graphId)
+        {
+            int nodeId;
+            GraphNode graphNode;
+            int regionId = GetGraphRegionId(graphId);
+            Dictionary<int, int> nodesIDsInDB = new Dictionary<int, int>();
+            foreach (var node in nodes)
+            {
+                graphNode = _db.GraphNode.FirstOrDefault(n => n.GraphId == graphId && n.DiagramNodeId == node.Id);
+                if (graphNode != null)
+                {
+                    nodeId = graphNode.Id;
+
+                    graphNode.Text = node.Name;
+                    graphNode.NodeTypeId = GetNodeTypeID(node);
+
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    nodeId = CreateNodeInDB(node, graphId, regionId);
+                }
+
+                nodesIDsInDB.Add(node.Id, nodeId);
+            }
+
+            return nodesIDsInDB;
+        }
+
+        private void UpdateEdges(List<Edge> edges, Dictionary<int, int> nodesInDB, int graphId)
+        {
+            GraphEdge graphEdge;
+            foreach (var edge in edges)
+            {
+                graphEdge = _db.GraphEdge.FirstOrDefault(e => e.DiagramEdgeId == edge.Id && e.FromNode.GraphId == graphId);
+                if(graphEdge != null)
+                {
+                    graphEdge.Text = edge.Name;
+                    graphEdge.FromNodeId = nodesInDB[edge.InNode.Id];
+                    graphEdge.ToNodeId = nodesInDB[edge.OutNode.Id];
+
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    CreateEdgeInDB(nodesInDB, edge);
+                }
+            }
+        }
+        #endregion
 
         private int GetNodeTypeID(Node node)
         {
@@ -147,6 +201,39 @@ namespace WebAPI.Services
             }
 
             return nodeTypeID;
+        }
+
+        private int GetGraphRegionId(int graphId)
+        {
+            return _db.GraphNode.FirstOrDefault(g => g.GraphId == graphId)?.RegionId ?? CreateRegion();
+        }
+
+        private int CreateNodeInDB(Node node, int graphId, int regionId)
+        {
+            GraphNode graphNode = new GraphNode
+            {
+                Text = node.Name,
+                GraphId = graphId,
+                RegionId = regionId,
+                NodeTypeId = GetNodeTypeID(node)
+            };
+
+            _db.GraphNode.Add(graphNode);
+            _db.SaveChanges();
+
+            return graphNode.Id;
+        }
+
+        private void CreateEdgeInDB(Dictionary<int, int> nodesInDB, Edge edge)
+        {
+            _db.GraphEdge.Add(new GraphEdge
+            {
+                Text = edge.Name,
+                FromNodeId = nodesInDB[edge.InNode.Id],
+                ToNodeId = nodesInDB[edge.OutNode.Id]
+            });
+
+            _db.SaveChanges();
         }
     }
 }

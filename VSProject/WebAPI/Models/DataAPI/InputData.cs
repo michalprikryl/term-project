@@ -8,4 +8,9 @@
 
         public string DataFormat { get; set; }
     }
+
+    public class InputDataID : InputData
+    {
+        public int GraphID { get; set; }
+    }
 }

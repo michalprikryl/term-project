@@ -55,6 +55,8 @@ namespace Database
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.DiagramEdgeId).HasColumnName("DiagramEdgeID");
+
                 entity.Property(e => e.FromNodeId).HasColumnName("FromNodeID");
 
                 entity.Property(e => e.Text)
@@ -79,6 +81,8 @@ namespace Database
             modelBuilder.Entity<GraphNode>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.DiagramNodeId).HasColumnName("DiagramNodeID");
 
                 entity.Property(e => e.GraphId).HasColumnName("GraphID");
 

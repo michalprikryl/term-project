@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using WebAPI.Models.DataAPI;
-using WebAPI.Models.Validators;
-using WebAPI.Parsers;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -20,23 +19,7 @@ namespace WebAPI.Controllers
 
             try
             {
-                var format = DataFormat.GetDataFormatByString(model.DataFormat);
-
-                if (format != DataFormatEnum.Unsupported)
-                {
-                    Parser parser = new Parser(format);
-                    var graph = parser.ParseData(model.Data);
-
-                    PatternValidator validator = new PatternValidator(_db, format, graph);
-                    if (!validator.Validate())
-                    {
-                        check.Message = "Diagram is not containing any rule!";
-                    }
-                }
-                else
-                {
-                    check.Message = "Unsupported data format.";
-                }
+                RawParser.WorkWithGraph(model, _db, false);
 
                 check.Proper = true;
             }
