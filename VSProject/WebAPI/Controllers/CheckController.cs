@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using WebAPI.Models.DataAPI;
-using WebAPI.Parsers;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -19,21 +19,11 @@ namespace WebAPI.Controllers
 
             try
             {
-                var format = DataFormat.GetDataFormatByString(model.DataFormat);
-
-                if (format != DataFormatEnum.Unsupported)
-                {
-                    Parser parser = new Parser(format);
-                    parser.ParseData(model.Data);
-                }
-                else
-                {
-                    check.Message = "Unsupported data format.";
-                }
+                RawParser.WorkWithGraph(model, _db, false);
 
                 check.Proper = true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 check.Message = e.Message;
             }

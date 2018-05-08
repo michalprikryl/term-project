@@ -13,7 +13,7 @@
         /// <returns></returns>
         public bool Validate()
         {
-            return !(string.IsNullOrEmpty(Text) || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(JSON));
+            return !(Text == null || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(JSON));
         }
     }
 }

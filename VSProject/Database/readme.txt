@@ -2,7 +2,7 @@
 
 pozor - maze puvodni soubory
 
-nutne mit jako StartUp project projekt Database
+nutne mit jako Default project projekt Database (primo v selectboxu v okne)
 
 zada se (samozrejme spravny nazev serveru) ->
 Scaffold-DbContext "Server=MICHAL-PC3;Database=TermProject;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -Output tmp/DBObjects [-t nazevTabulky] [-f]

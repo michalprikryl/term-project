@@ -2910,8 +2910,8 @@ EditorUi.prototype.updateRule = function(id,name, description, pattern)
         success: function (result) {
             if (result !== null) {
                 // document.getElementById("result").innerHTML = JSON.stringify(result);
-                alert("Ok");
-                console.log(result);
+                alert(result.message);
+                //console.log(result);
                 //return true;
             } else {
                 document.getElementById("result").innerHTML = "NULL";
@@ -2958,8 +2958,8 @@ EditorUi.prototype.sendToApi = function (name, description, pattern) {
         success: function (result) {
             if (result !== null) {
                 // document.getElementById("result").innerHTML = JSON.stringify(result);
-                alert("Ok");
-                console.log(result);
+                alert(result.message);
+                //console.log(result);
                 //return true;
             } else {
                 document.getElementById("result").innerHTML = "NULL";

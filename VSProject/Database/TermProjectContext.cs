@@ -40,6 +40,10 @@ namespace Database
 
                 entity.Property(e => e.WorkSpaceId).HasColumnName("WorkSpaceID");
 
+                entity.Property(e => e.Xmlrepresentation)
+                    .IsRequired()
+                    .HasColumnName("XMLRepresentation");
+
                 entity.HasOne(d => d.WorkSpace)
                     .WithMany(p => p.Graph)
                     .HasForeignKey(d => d.WorkSpaceId)
@@ -50,6 +54,8 @@ namespace Database
             modelBuilder.Entity<GraphEdge>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.DiagramEdgeId).HasColumnName("DiagramEdgeID");
 
                 entity.Property(e => e.FromNodeId).HasColumnName("FromNodeID");
 
@@ -75,6 +81,8 @@ namespace Database
             modelBuilder.Entity<GraphNode>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.DiagramNodeId).HasColumnName("DiagramNodeID");
 
                 entity.Property(e => e.GraphId).HasColumnName("GraphID");
 

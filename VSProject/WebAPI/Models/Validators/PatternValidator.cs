@@ -43,7 +43,7 @@ namespace WebAPI.Models.Validators
                 }
             }
 
-            return foundPatterns.Count != 0;
+            return foundPatterns.Count != 0 || patternGraphs.Count == 0;
         }
 
         private bool FindNodes(Node patterns, Node graphs)

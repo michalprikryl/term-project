@@ -978,10 +978,10 @@ Sidebar.prototype.addExampleActivityPallete = function (expand) {
 
             cell0.insertEdge(edge, true);
 
-            var cell = new mxCell('', new mxGeometry(0, 0, 80, 40), 'rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
+            var cell = new mxCell('', new mxGeometry(0, 0, 80, 40), 'type=condition;rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
             cell.vertex = true;
 
-            var edge1 = new mxCell('condition1', new mxGeometry(0, 0, 0, 0), 'type=condition;edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
+            var edge1 = new mxCell('condition1', new mxGeometry(0, 0, 0, 0), 'edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#000000;');
             edge1.geometry.setTerminalPoint(new mxPoint(180, 20), false);
             edge1.geometry.relative = true;
             edge1.geometry.x = -1;

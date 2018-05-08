@@ -9,6 +9,7 @@ namespace Database.DBObjects
         public int FromNodeId { get; set; }
         public int ToNodeId { get; set; }
         public string Text { get; set; }
+        public int DiagramEdgeId { get; set; }
 
         public GraphNode FromNode { get; set; }
         public GraphNode ToNode { get; set; }
