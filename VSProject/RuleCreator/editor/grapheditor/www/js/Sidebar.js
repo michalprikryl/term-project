@@ -1045,7 +1045,7 @@ Sidebar.prototype.getFromApi = function () {
             //console.log("codec");
             //console.log(codec.objects);
             arr.push(codec.objects);
-            name.push(a[i].Name);
+            name.push(a[i].name);
             ids.push(a[i].id);
             //this.loadRules(true, codec.objects, tmp.Name);
         }
