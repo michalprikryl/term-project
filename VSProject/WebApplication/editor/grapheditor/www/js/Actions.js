@@ -71,6 +71,10 @@ Actions.prototype.init = function()
 	}).isEnabled = isGraphEnabled;
     this.addAction('save', function () { ui.saveFileWithoutName(); }, null, null, Editor.ctrlKey + '+S').isEnabled = isGraphEnabled;
     this.addAction('xml', function () { ui.showXML(); }, null, null, Editor.ctrlKey + '+Space').isEnabled = isGraphEnabled;
+    this.addAction('saveToDb',function(){ui.showDialog(new SaveDialog(ui).container, 300, 230, true, true);},null,null,'').isEnabled = isGraphEnabled;
+    this.addAction('loadFromDb',function(){ui.showDialog(new LoadGraphDialog(ui).container, 300, 150, true, true);},null,null,'').isEnabled = isGraphEnabled;
+    this.addAction('updateDb',function(){ui.showDialog(new UpdateGraphDialog(ui).container, 300, 150, true, true);},null,null,'').isEnabled = isGraphEnabled;
+    this.addAction('deleteDb',function(){ui.showDialog(new DeleteGraphDialog(ui).container, 300, 150, true, true);},null,null,'').isEnabled = isGraphEnabled;
 	this.addAction('saveAs...', function() { ui.saveFile(true); }, null, null, Editor.ctrlKey + '+Shift+S').isEnabled = isGraphEnabled;
 	this.addAction('export...', function() { ui.showDialog(new ExportDialog(ui).container, 300, 230, true, true); });
 	this.addAction('editDiagram...', function()
