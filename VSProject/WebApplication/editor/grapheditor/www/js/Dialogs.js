@@ -521,6 +521,34 @@ function UpdateGraph(id, name, editorUi) {
 
     });
 }
+
+/*function CheckGraph(editorUi) {
+    udataXML.Data = mxUtils.getXml(editorUi.editor.getGraphXml());
+    udataXML.DataFormat = "xml";
+    console.log(udataXML);
+
+    $.ajax({
+        type: 'POST',
+        url: "http://localhost:60000/api/check/", 
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        data: JSON.stringify(udataXML),
+        success: function (result) {
+            if (result !== null) {
+                if (result.proper) {
+                    alert("Graf je OK");
+                } else {
+                    alert(result.message);
+                }
+            } else {
+                //  ate = null;
+            }
+        }
+
+    });
+}*/
+
 var UpdateGraphDialog = function (editorUi) {
     var graph = editorUi.editor.graph;
     var bounds = graph.getGraphBounds();
@@ -591,13 +619,8 @@ var UpdateGraphDialog = function (editorUi) {
     tbody.appendChild(row);
 
 
-
-
-
     this.container = table;
 }
-
-
 
 function ajaxCallPatternType() {
     var ate = "";

@@ -1012,8 +1012,6 @@ var SaveDialog = function(editorUi)
 	var side = editorUi.sidebar;
 	/*console.log(side.palettes);
 	console.log(side.palettes.activity.length)*/
-	
-
 
 	var width = Math.ceil(bounds.width / scale);
 	var height = Math.ceil(bounds.height / scale);
@@ -1112,8 +1110,6 @@ var SaveDialog = function(editorUi)
 	tbody.appendChild(row);
 	this.container = table;
 	
-	
-
 }
 var ExportDialog = function(editorUi)
 {

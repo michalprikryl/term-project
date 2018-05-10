@@ -54,8 +54,8 @@ Toolbar.prototype.staticElements = null;
  */
 Toolbar.prototype.init = function()
 {
-	var sw = screen.width;
-	
+    var sw = screen.width;
+    var ui = this.editorUi;
 	// Takes into account initial compact mode
 	sw -= (screen.height > 740) ? 56 : 0;
 	
@@ -172,8 +172,37 @@ Toolbar.prototype.init = function()
 	var insertMenu = this.addMenu('', mxResources.get('insert') + ' (' + mxResources.get('doubleClickTooltip') + ')', true, 'insert', null, true);
     this.addDropDownArrow(insertMenu, 'geSprite-plus', 38, 48, -4, -3, 36, -8);
     this.addSeparator();
-    this.addButton('', '', function () { window.location.replace('http://localhost:58771/editor/grapheditor/www/index.html'); });
+    this.addButton('geGrapheditor', 'Rule Creator', function () { window.location.replace('http://localhost:58771/editor/grapheditor/www/index.html'); });
+    this.addButton('geCheck', 'Check', function () { CheckGraph(ui); });
 };
+
+function CheckGraph(editorUi) {
+    udataXML.Data = mxUtils.getXml(editorUi.editor.getGraphXml());
+    udataXML.DataFormat = "xml";
+    console.log(udataXML);
+
+    $.ajax({
+        type: 'POST',
+        url: "http://localhost:60000/api/check/",
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        data: JSON.stringify(udataXML),
+        success: function (result) {
+            console.log(result);
+            if (result !== null) {
+                if (result.proper) {
+                    alert("Graf je OK");
+                } else {
+                    alert(result.message);
+                }
+            } else {
+                //  ate = null;
+            }
+        }
+
+    });
+}
 
 /**
  * Adds the toolbar elements.
