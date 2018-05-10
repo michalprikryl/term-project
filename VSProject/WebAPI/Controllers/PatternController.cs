@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
             string message;
             if (value.Validate())
             {
-                Pattern pattern = new Pattern { Jsonrepresenation = value.JSON, Name = value.Name, Text = value.Text, PatternTypeId = value.PatternTypeID };
+                Pattern pattern = new Pattern { Jsonrepresenation = value.JSON.DeleteParentNodes(), Name = value.Name, Text = value.Text, PatternTypeId = value.PatternTypeID };
 
                 _db.Pattern.Add(pattern);
                 _db.SaveChanges();
@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
             {
                 if(value.JSON != null)
                 {
-                    pattern.Jsonrepresenation = value.JSON; 
+                    pattern.Jsonrepresenation = value.JSON.DeleteParentNodes(); 
                 }
 
                 if (value.Name != null)
