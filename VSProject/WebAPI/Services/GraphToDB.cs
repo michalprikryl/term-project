@@ -89,7 +89,11 @@ namespace WebAPI.Services
 
                 _db.SaveChanges();
 
-                UpdateEdges(graphAPI.Edges, UpdateNodes(graphAPI.Nodes, graph.Id), graph.Id);
+                int regionId = GetGraphRegionId(graph.Id);
+
+                DeleteNodesAndEdgesInDB(graph.Id);
+
+                UpdateEdges(graphAPI.Edges, UpdateNodes(graphAPI.Nodes, graph.Id, regionId), graph.Id);
             }
             else
             {
@@ -97,30 +101,33 @@ namespace WebAPI.Services
             }
         }
 
-        private Dictionary<int, int> UpdateNodes(List<Node> nodes, int graphId)
+        private Dictionary<int, int> UpdateNodes(List<Node> nodes, int graphId, int regionId)
         {
-            int nodeId;
-            GraphNode graphNode;
-            int regionId = GetGraphRegionId(graphId);
+            //int nodeId;
+            //GraphNode graphNode;
             Dictionary<int, int> nodesIDsInDB = new Dictionary<int, int>();
             foreach (var node in nodes)
             {
-                graphNode = _db.GraphNode.FirstOrDefault(n => n.GraphId == graphId && n.DiagramNodeId == node.Id);
-                if (graphNode != null)
-                {
-                    nodeId = graphNode.Id;
+                //update pro pripad, ze by node v diagramu mely pevne ID
+                //graphNode = _db.GraphNode.FirstOrDefault(n => n.GraphId == graphId && n.DiagramNodeId == node.Id);
+                //if (graphNode != null)
+                //{
+                //    nodeId = graphNode.Id;
 
-                    graphNode.Text = node.Name;
-                    graphNode.NodeTypeId = GetNodeTypeID(node);
+                //    graphNode.Text = node.Name;
+                //    graphNode.NodeTypeId = GetNodeTypeID(node);
 
-                    _db.SaveChanges();
-                }
-                else
-                {
-                    nodeId = CreateNodeInDB(node, graphId, regionId);
-                }
+                //    _db.SaveChanges();
+                //}
+                //else
+                //{
+                //    nodeId = CreateNodeInDB(node, graphId, regionId);
+                //}
 
-                nodesIDsInDB.Add(node.Id, nodeId);
+                //nodesIDsInDB.Add(node.Id, nodeId);
+
+                //update nejde jinak, protoze node v diagramu nemaji pevne ID..
+                nodesIDsInDB.Add(node.Id, CreateNodeInDB(node, graphId, regionId));
             }
 
             return nodesIDsInDB;
@@ -128,22 +135,25 @@ namespace WebAPI.Services
 
         private void UpdateEdges(List<Edge> edges, Dictionary<int, int> nodesInDB, int graphId)
         {
-            GraphEdge graphEdge;
+            //GraphEdge graphEdge;
             foreach (var edge in edges)
             {
-                graphEdge = _db.GraphEdge.FirstOrDefault(e => e.DiagramEdgeId == edge.Id && e.FromNode.GraphId == graphId);
-                if(graphEdge != null)
-                {
-                    graphEdge.Text = edge.Name;
-                    graphEdge.FromNodeId = nodesInDB[edge.InNode.Id];
-                    graphEdge.ToNodeId = nodesInDB[edge.OutNode.Id];
+                //ani edge nemaji v diagramu pevne ID
+                //graphEdge = _db.GraphEdge.FirstOrDefault(e => e.DiagramEdgeId == edge.Id && e.FromNode.GraphId == graphId);
+                //if(graphEdge != null)
+                //{
+                //    graphEdge.Text = edge.Name;
+                //    graphEdge.FromNodeId = nodesInDB[edge.InNode.Id];
+                //    graphEdge.ToNodeId = nodesInDB[edge.OutNode.Id];
 
-                    _db.SaveChanges();
-                }
-                else
-                {
-                    CreateEdgeInDB(nodesInDB, edge);
-                }
+                //    _db.SaveChanges();
+                //}
+                //else
+                //{
+                //    CreateEdgeInDB(nodesInDB, edge);
+                //}
+
+                CreateEdgeInDB(nodesInDB, edge);
             }
         }
         #endregion
@@ -233,6 +243,13 @@ namespace WebAPI.Services
                 ToNodeId = nodesInDB[edge.OutNode.Id]
             });
 
+            _db.SaveChanges();
+        }
+
+        private void DeleteNodesAndEdgesInDB(int graphId)
+        {
+            _db.GraphEdge.RemoveRange(_db.GraphEdge.Where(e => e.FromNode.GraphId == graphId));
+            _db.GraphNode.RemoveRange(_db.GraphNode.Where(e => e.GraphId == graphId));
             _db.SaveChanges();
         }
     }
