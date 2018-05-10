@@ -362,6 +362,588 @@ var AboutDialog = function(editorUi)
 	this.container = div;
 };
 
+var DeleteGraphDialog = function(editorUi)
+{
+	var graph = editorUi.editor.graph;
+	var bounds = graph.getGraphBounds();
+	var scale = graph.view.scale;
+	var side = editorUi.sidebar;
+
+	var width = Math.ceil(bounds.width / scale);
+	var height = Math.ceil(bounds.height / scale);
+
+	var row, td;
+	
+	var table = document.createElement('table');
+	var tbody = document.createElement('tbody');
+	table.setAttribute('cellpadding', (mxClient.IS_SF) ? '0' : '2');
+	table.appendChild(tbody);
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	var ruleName = document.createTextNode("Graph name:");
+	td.appendChild(ruleName);
+	row.appendChild(td);
+	td = document.createElement('td');
+	var select = CreateSelectGraphs();
+	td.appendChild(select);
+	row.appendChild(td);
+
+	tbody.appendChild(row);
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	row.appendChild(td);
+	tbody.appendChild(row);
+	/*BUTTONS*/
+	row = document.createElement('tr');
+
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	row.appendChild(td);
+	td = document.createElement('td');
+	var saveBtn = mxUtils.button(mxResources.get('delete'), mxUtils.bind(this, function()
+	{
+		
+		//var index = select.options[select.selectedIndex].value;
+		var index = select.selectedIndex;
+		console.log(index);
+		//side.removePalette('activity1');
+		editorUi.showDialog(new YesNoDialog(editorUi,this).container, 200, 100, true, true);
+	//ui.showDialog(new DeleteGraphDialog(ui).container, 200, 150, true, true);
+		//editorUi.sendToApi(nameInput.value);
+		//editorUi.hideDialog();
+		
+		//side.getFromApi();
+	}));
+	saveBtn.className = 'geBtn gePrimaryBtn';
+	
+	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+	{
+
+		editorUi.hideDialog();
+	});
+	cancelBtn.className = 'geBtn';
+	
+	if (editorUi.editor.cancelFirst)
+	{
+		td.appendChild(cancelBtn);
+		td.appendChild(saveBtn);
+	}
+	else
+	{
+		td.appendChild(saveBtn);
+		td.appendChild(cancelBtn);
+	}
+	row.appendChild(td);
+	tbody.appendChild(row);
+	
+
+
+
+
+	this.container = table;
+}
+
+var YesNoDialog = function(editorUi,atp)
+{
+	var graph = editorUi.editor.graph;
+	var bounds = graph.getGraphBounds();
+	var scale = graph.view.scale;
+	var side = editorUi.sidebar;
+
+	var width = Math.ceil(bounds.width / scale);
+	var height = Math.ceil(bounds.height / scale);
+
+	var row, td;
+	
+	var table = document.createElement('table');
+	var tbody = document.createElement('tbody');
+	table.setAttribute('cellpadding', (mxClient.IS_SF) ? '0' : '2');
+	table.appendChild(tbody);
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.colSpan = 2;
+	//td.style.width = '150px';
+	var ruleName = document.createTextNode("Are you sure you want to delete?");
+	//td.style = 
+	td.appendChild(ruleName);
+	row.appendChild(td);
+	tbody.appendChild(row);
+
+
+	row = document.createElement('tr');
+
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	//td.style.width = '100px';
+	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+	{
+
+		editorUi.hideDialog();
+		
+	});
+	cancelBtn.className = 'geBtn';
+	td.appendChild(cancelBtn);
+	row.appendChild(td);
+	td = document.createElement('td');
+	var saveBtn = mxUtils.button(mxResources.get('yes'), mxUtils.bind(this, function()
+	{
+		
+		//var index = select.options[select.selectedIndex].value;
+		var select = document.getElementById("GraphNames");
+		var index = select.options[select.selectedIndex].value;
+		
+		DeleteGraph(index);
+		//editorUi.hideDialog();
+		editorUi.hideDialogs();
+		//atp.hideDialog();
+		//side.removePalette('activity1');
+		//editorUi.showDialog(new YesNoDialog(editorUi).container, 200, 100, true, true);
+
+	}));
+	saveBtn.className = 'geBtn gePrimaryBtn';
+	
+	
+	
+	if (editorUi.editor.cancelFirst)
+	{
+		//td.appendChild(cancelBtn);
+		td.appendChild(saveBtn);
+	}
+	else
+	{
+		td.appendChild(saveBtn);
+		//td.appendChild(cancelBtn);
+	}
+	row.appendChild(td);
+	tbody.appendChild(row);
+	
+
+	this.container = table;
+}
+
+function DeleteGraph(id) {
+    
+    $.ajax({
+        type: 'DELETE',
+        url: "http://localhost:60000/api/upload/" + id, // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        //data: {"ID":"10"},
+        //data: dat,
+        success: function (result) {
+            if (result !== null) {
+                
+            } else {
+                //ate = null;
+            }
+        }
+
+    });
+    
+}
+var udataXML = {
+        Name: '',
+        Data: '',
+        DataFormat: 'xml',
+        GraphID:''
+    };
+
+function UpdateGraph(id,name,editorUi)
+{
+		udataXML.Name = name;
+		udataXML.Data = mxUtils.getXml(editorUi.editor.getGraphXml());
+		udataXML.GraphID = id;
+		console.log(udataXML);
+
+	  $.ajax({
+        type: 'PUT',
+        url: "http://localhost:60000/api/upload/"+id, // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        //data: {"ID":"10"},
+        data: JSON.stringify(udataXML),
+        success: function (result) {
+            if (result !== null) {
+                alert(result);
+            } else {
+              //  ate = null;
+            }
+        }
+
+    });
+}
+var UpdateGraphDialog = function(editorUi)
+{
+	var graph = editorUi.editor.graph;
+	var bounds = graph.getGraphBounds();
+	var scale = graph.view.scale;
+	var side = editorUi.sidebar;
+
+	var width = Math.ceil(bounds.width / scale);
+	var height = Math.ceil(bounds.height / scale);
+
+	var row, td;
+	
+	var table = document.createElement('table');
+	var tbody = document.createElement('tbody');
+	table.setAttribute('cellpadding', (mxClient.IS_SF) ? '0' : '2');
+	table.appendChild(tbody);
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	var ruleName = document.createTextNode("Graph name:");
+	td.appendChild(ruleName);
+	row.appendChild(td);
+	td = document.createElement('td');
+	var select = CreateSelectGraphs();
+	td.appendChild(select);
+	row.appendChild(td);
+
+	tbody.appendChild(row);
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	row.appendChild(td);
+	tbody.appendChild(row);
+	/*BUTTONS*/
+	row = document.createElement('tr');
+
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	row.appendChild(td);
+	td = document.createElement('td');
+	var saveBtn = mxUtils.button(mxResources.get('update'), mxUtils.bind(this, function()
+	{
+		
+		//var index = select.options[select.selectedIndex].value;
+		var index = select.options[select.selectedIndex].value;
+		var name = select.options[select.selectedIndex].text;
+		console.log(index);
+		UpdateGraph(index,name,editorUi);
+		editorUi.hideDialog();
+
+	}));
+	saveBtn.className = 'geBtn gePrimaryBtn';
+	
+	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+	{
+
+		editorUi.hideDialog();
+	});
+	cancelBtn.className = 'geBtn';
+	
+	if (editorUi.editor.cancelFirst)
+	{
+		td.appendChild(cancelBtn);
+		td.appendChild(saveBtn);
+	}
+	else
+	{
+		td.appendChild(saveBtn);
+		td.appendChild(cancelBtn);
+	}
+	row.appendChild(td);
+	tbody.appendChild(row);
+	
+
+
+
+
+	this.container = table;
+}
+
+
+
+function ajaxCallPatternType() {
+    var ate = "";
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:60000/api/PatternType/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        //data: {"ID":"10"},
+        //data: dat,
+        success: function (result) {
+            if (result !== null) {
+                ate = result;
+            } else {
+                ate = null;
+            }
+        }
+
+    });
+    return ate;
+}
+function GetGraphs() {
+    var ate = "";
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:60000/api/Download/", // http://localhost:60000/api/upload/ -- na tuto URL se budou posilat diagramy (XML)
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        //data: {"ID":"10"},
+        //data: dat,
+        success: function (result) {
+            if (result !== null) {
+                ate = result;
+            } else {
+                ate = null;
+            }
+        }
+
+    });
+    console.log(ate);
+    return ate;
+}
+var graphs;
+function CreateSelectGraphs()
+{
+	graphs = GetGraphs();
+	var select = document.createElement('select');
+	select.id = "GraphNames";
+	for (var i = 0; i < graphs.length; i++) {
+		var option = document.createElement('option');
+		var name = document.createTextNode(graphs[i].name);
+		option.appendChild(name);
+		option.value = graphs[i].id;
+		select.appendChild(option);
+	}
+	return select;
+}
+var LoadGraphDialog = function(editorUi)
+{
+	var graph = editorUi.editor.graph;
+	var bounds = graph.getGraphBounds();
+	var scale = graph.view.scale;
+	var side = editorUi.sidebar;
+
+	var width = Math.ceil(bounds.width / scale);
+	var height = Math.ceil(bounds.height / scale);
+
+	var row, td;
+	
+	var table = document.createElement('table');
+	var tbody = document.createElement('tbody');
+	table.setAttribute('cellpadding', (mxClient.IS_SF) ? '0' : '2');
+	table.appendChild(tbody);
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	var ruleName = document.createTextNode("Graph name:");
+	td.appendChild(ruleName);
+	row.appendChild(td);
+	td = document.createElement('td');
+	var select = CreateSelectGraphs();
+	td.appendChild(select);
+	row.appendChild(td);
+
+	tbody.appendChild(row);
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	row.appendChild(td);
+	tbody.appendChild(row);
+	/*BUTTONS*/
+	row = document.createElement('tr');
+
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	row.appendChild(td);
+	td = document.createElement('td');
+	var saveBtn = mxUtils.button(mxResources.get('load'), mxUtils.bind(this, function()
+	{
+		
+		//var index = select.options[select.selectedIndex].value;
+		var index = select.selectedIndex;
+		console.log(index);
+		//side.removePalette('activity1');
+		try
+			{
+				var doc = mxUtils.parseXml(graphs[index].xmlrepresentation);
+				var model = new mxGraphModel();
+				var codec = new mxCodec(doc);
+				codec.decode(doc.documentElement, model);
+				
+				var children = model.getChildren(model.getChildAt(model.getRoot(), 0));
+				editorUi.editor.graph.setSelectionCells(editorUi.editor.graph.importCells(children));
+			}
+			catch (e)
+			{
+				mxUtils.alert(mxResources.get('invalidOrMissingFile') + ': ' + e.message);
+			}
+
+
+		//editorUi.sendToApi(nameInput.value);
+		editorUi.hideDialog();
+		
+		//side.getFromApi();
+	}));
+	saveBtn.className = 'geBtn gePrimaryBtn';
+	
+	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+	{
+
+		editorUi.hideDialog();
+	});
+	cancelBtn.className = 'geBtn';
+	
+	if (editorUi.editor.cancelFirst)
+	{
+		td.appendChild(cancelBtn);
+		td.appendChild(saveBtn);
+	}
+	else
+	{
+		td.appendChild(saveBtn);
+		td.appendChild(cancelBtn);
+	}
+	row.appendChild(td);
+	tbody.appendChild(row);
+	this.container = table;
+}
+
+
+
+
+
+
+
+
+function getPatternType()
+{
+	var aj = ajaxCallPatternType();
+	var select = document.createElement('select');
+	for (var i = 0; i < aj.length; i++) {
+		var option = document.createElement('option');
+		var name = document.createTextNode(aj[i].name);
+		option.appendChild(name);
+		option.value = aj[i].id;
+		select.appendChild(option);
+	}
+	return select;
+}
+var SaveDialog = function(editorUi)
+{
+	var graph = editorUi.editor.graph;
+	var bounds = graph.getGraphBounds();
+	var scale = graph.view.scale;
+	var side = editorUi.sidebar;
+	/*console.log(side.palettes);
+	console.log(side.palettes.activity.length)*/
+	
+
+
+	var width = Math.ceil(bounds.width / scale);
+	var height = Math.ceil(bounds.height / scale);
+
+	var row, td;
+	
+	var table = document.createElement('table');
+	var tbody = document.createElement('tbody');
+	table.setAttribute('cellpadding', (mxClient.IS_SF) ? '0' : '2');
+	table.appendChild(tbody);
+
+	/*First row in dialog*/
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	var ruleName = document.createTextNode("Rule name:");
+	td.appendChild(ruleName);
+	row.appendChild(td);
+	var nameInput = document.createElement('input');
+	nameInput.setAttribute('value', 'Name');
+	nameInput.style.width = '180px';
+	td = document.createElement('td');
+	td.appendChild(nameInput);
+	row.appendChild(td);
+	tbody.appendChild(row);
+	/**/
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	var type = document.createTextNode("Type:");
+	td.appendChild(type);
+	row.appendChild(td);
+	var select = getPatternType();
+	console.log(select);
+	td = document.createElement('td');
+	td.appendChild(select);
+	row.appendChild(td);
+	tbody.appendChild(row);
+	/*Second row in dialog*/
+	row = document.createElement('tr');
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	var description = document.createTextNode("Description:");
+	td.appendChild(description);
+	row.appendChild(td);
+	var descriptionText = document.createElement('textarea');
+	descriptionText.setAttribute('value', 'Description of rule');
+	descriptionText.setAttribute('style', 'resize: none;')
+	descriptionText.rows = 5;
+	descriptionText.style.width = '180px';
+	td = document.createElement('td');
+	td.appendChild(descriptionText);
+	row.appendChild(td);
+	tbody.appendChild(row);
+	/*Dialog buttons*/
+	row = document.createElement('tr');
+
+	td = document.createElement('td');
+	td.style.fontSize = '10pt';
+	td.style.width = '100px';
+	row.appendChild(td);
+	td = document.createElement('td');
+	var saveBtn = mxUtils.button(mxResources.get('save'), mxUtils.bind(this, function()
+	{
+		console.log(nameInput.value + "    " + descriptionText.value);
+		var index = select.options[select.selectedIndex].value;
+		//side.removePalette('activity1');
+		editorUi.sendToApi(nameInput.value);
+		editorUi.hideDialog();
+		
+		//side.getFromApi();
+	}));
+	saveBtn.className = 'geBtn gePrimaryBtn';
+	
+	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+	{
+
+		editorUi.hideDialog();
+	});
+	cancelBtn.className = 'geBtn';
+	
+	if (editorUi.editor.cancelFirst)
+	{
+		td.appendChild(cancelBtn);
+		td.appendChild(saveBtn);
+	}
+	else
+	{
+		td.appendChild(saveBtn);
+		td.appendChild(cancelBtn);
+	}
+	row.appendChild(td);
+	tbody.appendChild(row);
+	this.container = table;
+	
+	
+
+}
+
 /**
  * Constructs a new filename dialog.
  */

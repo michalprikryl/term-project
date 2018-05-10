@@ -2677,7 +2677,10 @@ EditorUi.prototype.showDialog = function (elt, w, h, modal, closable, onClose) {
     }
 
     this.dialog = new Dialog(this, elt, w, h, modal, closable, onClose);
+    console.log(this.dialog);
     this.dialogs.push(this.dialog);
+    console.log("dialogy");
+    console.log(this.dialogs);
 };
 
 /**
@@ -2697,7 +2700,25 @@ EditorUi.prototype.hideDialog = function (cancel) {
         this.editor.fireEvent(new mxEventObject('hideDialog'));
     }
 };
+EditorUi.prototype.hideDialogs = function(cancel)
+{
+       if (this.dialogs != null && this.dialogs.length > 0) {
+        for (var i = this.dialogs.length - 1; i >= 0 ; i--) {
+          
+        
+        var dlg = this.dialogs.pop();
+        dlg.close(cancel);
+        this.dialog = this.dialogs[i];
+        //this.dialog = (this.dialogs.length > 0) ? this.dialogs[this.dialogs.length - 1] : null;
 
+        if (this.dialog == null && this.editor.graph.container.style.visibility != 'hidden') {
+            this.editor.graph.container.focus();
+        }
+
+        this.editor.fireEvent(new mxEventObject('hideDialog'));
+    }
+    }
+};
 /**
  * Display a color dialog.
  */
@@ -2849,7 +2870,7 @@ EditorUi.prototype.save = function (name) {
         }
 
         var xml = mxUtils.getXml(this.editor.getGraphXml());
-
+        console.log(xml);
         try {
             if (Editor.useLocalStorage) {
                 console.log("s local stroage");
@@ -2867,7 +2888,7 @@ EditorUi.prototype.save = function (name) {
                     console.log(name);
 					/*new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
 						'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');*/
-                    sendToApi(xml);
+                    //sendToApi(xml);
                     //download(name, xml);
                 }
                 else {
@@ -2887,11 +2908,15 @@ EditorUi.prototype.save = function (name) {
         }
     }
 };
-function sendToApi(xml) {
-    var dataXML = {
-        Data: xml,
+var dataXML = {
+        Name: '',
+        Data: '',
         DataFormat: 'xml'
     };
+EditorUi.prototype.sendToApi = function(name) {
+    console.log(this.editor);
+    dataXML.Name = name;
+    dataXML.Data = mxUtils.getXml(this.editor.getGraphXml());
 
     $.ajax({
         type: 'POST',
