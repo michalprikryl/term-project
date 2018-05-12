@@ -913,7 +913,7 @@ Sidebar.prototype.addActivityPallete = function (expand)
             var cell = new mxCell('', new mxGeometry(0, 0, 80, 40), 'type=condition;rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
             cell.vertex = true;
 
-            return sb.createVertexTemplateFromCells([cell], 180, 100, 'Decision Node');
+            return sb.createVertexTemplateFromCells([cell], 180, 100, 'Decision/Merge');
         }),
         this.addEntry('uml activity fork join', function () {
             var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'type=forkJoin;type=forkJoin;shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
