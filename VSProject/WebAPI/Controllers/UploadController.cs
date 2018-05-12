@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody]InputDataID model)
+        public IActionResult Put(int id, [FromBody]InputDataID model)
         {
             OutputData response = new OutputData("Everything is OK - graph was updated to DB.");
 
