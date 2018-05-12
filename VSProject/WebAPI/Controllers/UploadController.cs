@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using WebAPI.Models.DataAPI;
-using WebAPI.Services;
+using GLibrary.Services;
 
 namespace WebAPI.Controllers
 {
@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
 
             try
             {
-                RawParser.WorkWithGraph(model, _db);
+                RawParser.WorkWithGraph(model.GetLibraryModel(), _db);
             }
             catch (Exception e)
             {
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
 
             try
             {
-                RawParser.WorkWithGraph(model, _db);
+                RawParser.WorkWithGraph(model.GetLibraryModel(), _db);
             }
             catch (Exception e)
             {

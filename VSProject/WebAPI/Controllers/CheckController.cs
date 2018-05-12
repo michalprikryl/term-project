@@ -1,8 +1,8 @@
 ﻿using Database;
+using GLibrary.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using WebAPI.Models.DataAPI;
-using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
 
             try
             {
-                RawParser.WorkWithGraph(model, _db, false);
+                RawParser.WorkWithGraph(model.GetLibraryModel(), _db, false);
 
                 check.Proper = true;
             }

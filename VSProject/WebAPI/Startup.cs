@@ -27,10 +27,9 @@ namespace WebAPI
         {
             // CORS
             services.AddCors();
-
             // Add framework services.
             services.AddMvc();
-
+            // Add database context.
             services.AddDbContext<TermProjectContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
         }
 
