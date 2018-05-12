@@ -805,7 +805,7 @@ Sidebar.prototype.addActivityPallete = function (expand) {
             var cell = new mxCell('', new mxGeometry(0, 0, 80, 40), 'type=condition;rhombus;whiteSpace=wrap;html=1;fillColor=#ccffff;strokeColor=#000000;');
             cell.vertex = true;
 
-            return sb.createVertexTemplateFromCells([cell], 180, 100, 'Condition');
+            return sb.createVertexTemplateFromCells([cell], 180, 100, 'Decision Node');
         }),
         this.addEntry('uml activity fork join', function () {
             var cell = new mxCell('', new mxGeometry(0, 0, 150, 10), 'type=forkJoin;shape=line;html=1;strokeWidth=6;strokeColor=#000000;');
@@ -1197,7 +1197,9 @@ Sidebar.prototype.createItem = function (cells, title, showLabel, showTitle, wid
             console.log("Atempt delete");
             deleteFromDb(this.id);
             e.sidebar.removePalette('activity1');
-            e.sidebar.getFromApi();           
+            e.sidebar.getFromApi();
+        } else {
+
         }
     });
     elt.setAttribute('href', 'javascript:void(0);');
@@ -1216,14 +1218,14 @@ Sidebar.prototype.createItem = function (cells, title, showLabel, showTitle, wid
     /*mxEvent.addListener(elt, 'click', function (evt) {
         mxEvent.consume(evt);
     });*/
-
+    
     this.createThumb(cells, this.thumbWidth, this.thumbHeight, elt, title, showLabel, showTitle, width, height);
     var bounds = new mxRectangle(0, 0, width, height);
-
+ 
     if (cells.length > 1 || cells[0].vertex) {
         var ds = this.createDragSource(elt, this.createDropHandler(cells, true, allowCellsInserted,
             bounds), this.createDragPreview(width, height), cells, bounds);
-        this.addClickHandler(elt, ds, cells);
+         this.addClickHandler(elt, ds, cells);   //ked toto zakomentujem tak sa pri kliknuti neda naplochu graf a delete gunguje ako ma
 
         // Uses guides for vertices only if enabled in graph
         ds.isGuidesEnabled = mxUtils.bind(this, function () {
@@ -1233,8 +1235,9 @@ Sidebar.prototype.createItem = function (cells, title, showLabel, showTitle, wid
     else if (cells[0] != null && cells[0].edge) {
         var ds = this.createDragSource(elt, this.createDropHandler(cells, false, allowCellsInserted,
             bounds), this.createDragPreview(width, height), cells, bounds);
-        this.addClickHandler(elt, ds, cells);
+        this.addClickHandler(elt, ds, cells); //aj toto
     }
+    
 
     // Shows a tooltip with the rendered cell
     if (!mxClient.IS_IOS) {
