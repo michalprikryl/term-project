@@ -11,13 +11,12 @@ namespace GLibrary.Models.Validators
     {
         private TermProjectContext _db;
         private DataFormatEnum _format;
-
-        public Graph Graph { get; set; }
+        private Graph _graph;
 
         public PatternValidator(TermProjectContext db, DataFormatEnum format, Graph graph)
         {
             _db = db;
-            Graph = graph;
+            _graph = graph;
             _format = format;
         }
 
@@ -31,7 +30,7 @@ namespace GLibrary.Models.Validators
             {
                 firstNode = pattern.Graph.Nodes.First();
 
-                foreach (var node in Graph.Nodes)
+                foreach (var node in _graph.Nodes)
                 {
                     if (node.Name == firstNode.Name)
                     {

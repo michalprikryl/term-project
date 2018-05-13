@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GLibrary.Models;
-using GLibrary.Models.Builders;
+using GLibrary.Builders;
 using GLibrary.Models.DataAPI;
 using GLibrary.Models.Graphs;
 using GLibrary.Models.Validators;

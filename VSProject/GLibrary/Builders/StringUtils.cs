@@ -1,7 +1,8 @@
-﻿using System;
+﻿using GLibrary.Models;
+using System;
 using System.Text.RegularExpressions;
 
-namespace GLibrary.Models.Builders
+namespace GLibrary.Builders
 {
     public class StringUtils
     {

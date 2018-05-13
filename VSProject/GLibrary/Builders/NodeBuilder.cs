@@ -1,7 +1,8 @@
-﻿using System;
+﻿using GLibrary.Models;
+using System;
 using System.Collections.Generic;
 
-namespace GLibrary.Models.Builders
+namespace GLibrary.Builders
 {
     public static class NodeBuilder
     {

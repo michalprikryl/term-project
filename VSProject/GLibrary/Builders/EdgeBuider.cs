@@ -1,7 +1,8 @@
 ﻿using System;
 using GLibrary.Models.Edges;
+using GLibrary.Models;
 
-namespace GLibrary.Models.Builders
+namespace GLibrary.Builders
 {
     public static class EdgeBuider
     {
