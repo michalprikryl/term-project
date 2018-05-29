@@ -96,8 +96,14 @@ namespace GLibrary.Parsers.DiagramParsers
 
                 ActivityDiagramEdge type = StringUtils.ParseEdgeTypeFromXmlText(edgeText);
 
+                if(cell.Source == null || cell.Target == null)
+                {
+                    throw new ArgumentException("Graph contains an edge without source/target node.");
+                }
+
                 source = int.Parse(cell.Source);
                 target = int.Parse(cell.Target);
+
                 Graph.Edges.Add(EdgeBuider.BuildEdge(type, int.Parse(cell.Id), edgeText, Graph.Nodes.FirstOrDefault(node => node.Id == source), Graph.Nodes.FirstOrDefault(node => node.Id == target)));
             }
         }

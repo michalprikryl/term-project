@@ -3,6 +3,8 @@ using Database;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models.Pattern;
 using Database.DBObjects;
+using GLibrary.Services;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -40,20 +42,36 @@ namespace WebAPI.Controllers
         {
             int? id = null;
             string message;
-            if (value.Validate())
+            try
             {
-                Pattern pattern = new Pattern { Jsonrepresenation = value.JSON.DeleteParentNodes(), Name = value.Name, Text = value.Text, PatternTypeId = value.PatternTypeID };
+                if (value.Validate())
+                {
+                    string patternString = value.JSON.DeleteParentNodes();
 
-                _db.Pattern.Add(pattern);
-                _db.SaveChanges();
+                    if (PatternParser.CheckPattern(patternString))
+                    {
+                        message = "Pattern was saved.";
+                    }
+                    else
+                    {
+                        message = "Pattern was saved, but pattern is not consistent!";
+                    }
 
-                id = pattern.Id;
+                    Pattern pattern = new Pattern { Jsonrepresenation = patternString, Name = value.Name, Text = value.Text, PatternTypeId = value.PatternTypeID };
 
-                message = "Pattern was saved";
+                    _db.Pattern.Add(pattern);
+                    _db.SaveChanges();
+
+                    id = pattern.Id;
+                }
+                else
+                {
+                    message = "Pattern wasn't saved.";
+                }
             }
-            else
+            catch (Exception e)
             {
-                message = "Pattern wasn't saved.";
+                message = $"{e.Message} - pattern wasn't saved.";
             }
 
             return Json(new { Message = message, ID = id });
@@ -65,36 +83,55 @@ namespace WebAPI.Controllers
         {
             string message;
 
-            var pattern = _db.Pattern.FirstOrDefault(p => p.Id == id);
-            if (pattern != null)
+            try
             {
-                if(value.JSON != null)
+                var pattern = _db.Pattern.FirstOrDefault(p => p.Id == id);
+                if (pattern != null)
                 {
-                    pattern.Jsonrepresenation = value.JSON.DeleteParentNodes(); 
-                }
+                    if (value.JSON != null)
+                    {
+                        string patternString = value.JSON.DeleteParentNodes();
+                        pattern.Jsonrepresenation = patternString;
 
-                if (value.Name != null)
+                        if (PatternParser.CheckPattern(patternString))
+                        {
+                            message = "Pattern was updated.";
+                        }
+                        else
+                        {
+                            message = "Pattern was updated, but pattern is not consistent!";
+                        }
+
+                        if (value.Name != null)
+                        {
+                            pattern.Name = value.Name;
+                        }
+
+                        if (value.Text != null)
+                        {
+                            pattern.Text = value.Text;
+                        }
+
+                        if (value.PatternTypeID != 0)
+                        {
+                            pattern.PatternTypeId = value.PatternTypeID;
+                        }
+
+                        _db.SaveChanges();
+                    }
+                    else
+                    {
+                        message = "Pattern wasn't saved.";
+                    }
+                }
+                else
                 {
-                    pattern.Name = value.Name;
+                    message = "Unknown pattern ID.";
                 }
-
-                if (value.Text != null)
-                {
-                    pattern.Text = value.Text;
-                }
-
-                if(value.PatternTypeID != 0)
-                {
-                    pattern.PatternTypeId = value.PatternTypeID;
-                }
-
-                _db.SaveChanges();
-
-                message = "Pattern was updated.";
             }
-            else
+            catch (Exception e)
             {
-                message = "Unknown pattern ID.";
+                message = $"{e.Message} - pattern wasn't saved.";
             }
 
             return Json(new { Message = message });

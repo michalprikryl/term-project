@@ -13,7 +13,7 @@ namespace GLibrary.Services
             List<GraphPattern> patterns = new List<GraphPattern>();
             foreach (var item in db.Pattern)
             {
-                patterns.Add( new GraphPattern { Graph = parser.ParseData(item.Jsonrepresenation), PatternTypeId = item.PatternTypeId });
+                patterns.Add(new GraphPattern { Graph = parser.ParseData(item.Jsonrepresenation), PatternTypeId = item.PatternTypeId });
             }
 
             return patterns;
